@@ -19,6 +19,8 @@ const kpis = [
     eyebrow="Chapter 05"
     title="Energy Use, Costs<br/>and Carbon<br/>Footprint"
     subtitle="Quantitative baseline · Rathaus Oberägeri · 2025"
+    image="/Oberaegeri_Luftbild2.jpg"
+    imageAlt="Aerial view of Oberägeri"
   />
 
   <div class="container">
@@ -58,6 +60,10 @@ const kpis = [
       </tbody>
     </DataTable>
   </Section>
+
+  <div class="ch5-banner reveal-fade">
+    <img src="/5dee7156b0538.jpeg" alt="Rathaus Oberägeri" />
+  </div>
 
   <!-- 5.3 -->
   <Section chip="Chapter 05 / 03" label="Section 5.3" title="CO₂ Emissions, Electricity and Heating Costs 2025" id="s-5-3">
@@ -117,6 +123,21 @@ const kpis = [
   </Section>
 
 </Base>
+
+<style>
+  .ch5-banner{
+    width:100%;
+    height:clamp(280px,32vw,460px);
+    overflow:hidden;
+  }
+  .ch5-banner img{
+    width:100%;height:100%;
+    object-fit:cover;
+    object-position:center 40%;
+    transition:transform 0.6s var(--ease-out);
+  }
+  .ch5-banner:hover img{transform:scale(1.02)}
+</style>
 
 <style is:global>
   .lead{

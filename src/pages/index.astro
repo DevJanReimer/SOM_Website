@@ -9,26 +9,72 @@ import Section from '../components/Section.astro';
   <Hero
     eyebrow="Sustainable Operations Management · 2026"
     title="Carbon-reduction<br/>analysis of the<br/><em>Rathaus Oberägeri</em>"
-    subtitle="A four-chapter study of the building's energy use, costs and CO₂ footprint — and the rooftop solar levers that could shrink them."
+    subtitle="A study of the building's energy use, costs and CO₂ footprint — and the rooftop solar levers that could shrink them."
+    image="/67b84a4ecef4e.jpeg"
+    imageAlt="Rathaus Oberägeri"
+    authors="Valentin Nägeli · Ellette Sidler-Dever · Jan-Akim A. Reimer&#10;University of Zurich"
   />
+
+  <!-- Stats strip -->
+  <section class="stats-strip">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat reveal">
+          <span class="stat-n" data-target="41150">0</span>
+          <span class="stat-unit">kWh</span>
+          <span class="stat-label">Electricity 2025</span>
+        </div>
+        <div class="stat reveal reveal-delay-1">
+          <span class="stat-n" data-target="6244">0</span>
+          <span class="stat-unit"></span>
+          <span class="stat-label">Residents</span>
+        </div>
+        <div class="stat reveal reveal-delay-2">
+          <span class="stat-n" data-target="703" data-decimal="1">0</span>
+          <span class="stat-unit">%</span>
+          <span class="stat-label">Energiestadt Score</span>
+        </div>
+        <div class="stat reveal reveal-delay-3">
+          <span class="stat-n" data-target="25">0</span>
+          <span class="stat-unit">yr</span>
+          <span class="stat-label">Analysis Horizon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Overview -->
+  <section class="overview">
+    <div class="container">
+      <div class="overview-inner reveal">
+        <div class="overview-label">Overview</div>
+        <p class="overview-text">
+          This research examines the <em>energy optimization potential of the municipal administration in Oberägeri</em> through analysis of public infrastructure. The study evaluates technological alternatives — including photovoltaic systems, efficient lighting, and intelligent heating management — to develop actionable recommendations to align municipal operations with long-term climate goals.
+        </p>
+      </div>
+    </div>
+  </section>
 
   <!-- Quick chapter index -->
   <section class="chapter-index">
     <div class="container">
       <div class="grid">
-        <a href="/chapter-4" class="card reveal reveal-delay-1" data-astro-prefetch>
+        <a href="/chapter-4" class="card tilt-card reveal reveal-delay-1" data-astro-prefetch>
+          <div class="card-glow" aria-hidden="true"></div>
           <span class="n">04</span>
           <h3 class="serif">Literature Review</h3>
           <p>Swiss energy policy, public-building efficiency, solar thermal, photovoltaics, emergency power.</p>
           <span class="arrow">→</span>
         </a>
-        <a href="/chapter-5" class="card reveal reveal-delay-2" data-astro-prefetch>
+        <a href="/chapter-5" class="card tilt-card reveal reveal-delay-2" data-astro-prefetch>
+          <div class="card-glow" aria-hidden="true"></div>
           <span class="n">05</span>
           <h3 class="serif">Energy &amp; Carbon Baseline</h3>
           <p>The town hall's 2025 electricity, heat, costs and CO₂ — measured, calculated, broken down.</p>
           <span class="arrow">→</span>
         </a>
-        <a href="/chapter-6" class="card reveal reveal-delay-3" data-astro-prefetch>
+        <a href="/chapter-6" class="card tilt-card reveal reveal-delay-3" data-astro-prefetch>
+          <div class="card-glow" aria-hidden="true"></div>
           <span class="n">06</span>
           <h3 class="serif">Carbon-Reduction Calculator</h3>
           <p>Interactive what-if model — adjust PV and solar-thermal sliders to see CO₂, costs, payback, NPV.</p>
@@ -38,64 +84,162 @@ import Section from '../components/Section.astro';
     </div>
   </section>
 
-  <!-- Chapter 1 -->
-  <Section
-    chip="Chapter 01"
-    label="Introduction"
-    title="Introduction"
-    id="chapter-1"
-  >
-    <p class="placeholder-note">
-      <em>Content for Chapter 1 will be inserted here from the existing site.</em>
-    </p>
-    <p>The Rathaus in Oberägeri is the administrative heart of a municipality of roughly 6,500 inhabitants in Canton Zug. It hosts the municipal administration, two residential apartments, and the local crisis-command centre (<em>Krisenstab</em>) backed by an on-site diesel emergency generator.</p>
+  <!-- Introduction -->
+  <Section chip="Chapter 01" label="Introduction" title="Introduction" id="chapter-1">
+    <h3>About the Municipality</h3>
+    <p>Oberägeri is situated in Canton Zug within the Ägerital valley at approximately 724 metres elevation. The municipality encompasses roughly 30 square kilometres, with forests representing 45.9% of the area. As of 2019, the population was 6,244 residents, having grown 14.5% over the last ten years. The community holds <em>Energiestadt</em> certification since 2009, with energy scores improving from 64% in 2013 to 70.3% in 2021.</p>
+
+    <div class="intro-image reveal-scale">
+      <img src="/Oberaegeri_Luftbild2.jpg" alt="Aerial view of Oberägeri" />
+      <span class="caption">Oberägeri, Canton Zug — Ägerital valley</span>
+    </div>
+
+    <h3>About the Project</h3>
+    <p>This research focuses on the Oberägeri Rathaus, examining systematic energy optimization within administrative operational frameworks. The study integrates technical efficiency measures with carbon reduction protocols to establish a replicable municipal sustainability model.</p>
+    <p>The Rathaus hosts the municipal administration, two residential apartments, and the local crisis-command centre (<em>Krisenstab</em>) backed by an on-site diesel emergency generator.</p>
     <p>This project asks a simple question: <strong>where can the building cut CO₂, at what cost, and how fast does the investment pay back?</strong> The answer combines a 2025 baseline audit (Chapter 5) with two rooftop-solar levers — photovoltaics and solar-thermal — sized and evaluated in an interactive calculator (Chapter 6).</p>
   </Section>
 
-  <!-- Chapter 2 -->
-  <Section
-    chip="Chapter 02"
-    label="Context"
-    title="The Municipality of Oberägeri"
-    id="chapter-2"
-  >
-    <p class="placeholder-note">
-      <em>Content for Chapter 2 will be inserted here from the existing site.</em>
-    </p>
-    <p>Oberägeri lies on the northern shore of Lake Ägeri in Canton Zug. The municipality has held the <em>Energiestadt</em> label since 2003, which signals an above-average commitment to municipal energy and climate action under the Swiss federal framework.</p>
+  <!-- Project Objectives -->
+  <Section chip="Chapter 02" label="Objectives" title="Project Objectives" id="chapter-2">
+    <ol class="objectives">
+      <li class="obj-item reveal">
+        <span class="obj-n">01</span>
+        <p>Establish a verified energy and CO₂ baseline for the Rathaus using audited data on electricity, district heat, hot water, and emergency generator consumption.</p>
+      </li>
+      <li class="obj-item reveal reveal-delay-1">
+        <span class="obj-n">02</span>
+        <p>Evaluate three reduction approaches: rooftop photovoltaic generation, photovoltaic heating management, and diesel-backup alternatives.</p>
+      </li>
+      <li class="obj-item reveal reveal-delay-2">
+        <span class="obj-n">03</span>
+        <p>Compare approaches on CO₂ savings, life-cycle costs, and financial viability within Swiss municipal constraints.</p>
+      </li>
+      <li class="obj-item reveal reveal-delay-3">
+        <span class="obj-n">04</span>
+        <p>Create a prioritised carbon-reduction roadmap for Oberägeri's municipal administration.</p>
+      </li>
+    </ol>
+
   </Section>
 
-  <!-- Chapter 3 -->
-  <Section
-    chip="Chapter 03"
-    label="Method"
-    title="Research Approach"
-    id="chapter-3"
-  >
-    <p class="placeholder-note">
-      <em>Content for Chapter 3 will be inserted here from the existing site.</em>
-    </p>
-    <p>The methodology combines: (1) a literature review of Swiss energy policy and public-building efficiency, (2) a quantitative baseline of the Rathaus's 2025 consumption using municipal data, KBOB emission factors and WWZ tariff data, and (3) an interactive what-if model for evaluating rooftop solar interventions.</p>
+  <!-- Methodology -->
+  <Section chip="Chapter 03" label="Method" title="Methodology" id="chapter-3">
+    <div class="method-grid">
+      <div class="method-card tilt-card reveal">
+        <div class="card-glow" aria-hidden="true"></div>
+        <h4>Literature Research</h4>
+        <p>Reviews Swiss sustainability governance, energy-efficiency standards, renewable generation economics, and photovoltaic system design to establish the theoretical framework for this study.</p>
+      </div>
+      <div class="method-card tilt-card reveal reveal-delay-1">
+        <div class="card-glow" aria-hidden="true"></div>
+        <h4>Data Collection</h4>
+        <p>Primary consumption data obtained directly from the municipal administration, including annual electricity consumption for 2024 (37,460 kWh) and 2025 (41,150 kWh), along with heating and hot-water demand parameters.</p>
+      </div>
+      <div class="method-card tilt-card reveal reveal-delay-2">
+        <div class="card-glow" aria-hidden="true"></div>
+        <h4>Scenario Analysis</h4>
+        <p>Calculates the baseline CO₂ footprint using KBOB emission factors, modelling rooftop PV and heating scenarios against the baseline over a 25-year horizon to assess long-term viability.</p>
+      </div>
+    </div>
+
   </Section>
 
   <!-- CTA -->
   <section class="cta">
-    <div class="container">
-      <div class="cta-inner reveal">
-        <div>
-          <span class="lbl">Try the live tool</span>
-          <h2 class="serif">Open the carbon-reduction calculator</h2>
-        </div>
-        <a href="/chapter-6" class="btn" data-astro-prefetch>Launch calculator →</a>
+    <div class="container cta-inner reveal">
+      <div>
+        <span class="lbl">Try the live tool</span>
+        <h2 class="serif">Open the carbon-reduction calculator</h2>
       </div>
+      <a href="/chapter-6" class="btn" data-astro-prefetch>Launch calculator →</a>
     </div>
   </section>
 
 </Base>
 
 <style>
+  /* ── Stats strip ── */
+  .stats-strip{
+    padding:clamp(32px, 5vw, 52px) 0;
+    border-bottom:1px solid rgba(230,224,210,0.5);
+    background:rgba(250,250,247,0.4);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+  }
+  .stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:clamp(16px, 3vw, 40px);
+  }
+  @media(max-width:640px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+  .stat{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:4px;
+    padding:0 clamp(12px,2vw,24px);
+    border-left:2px solid var(--line);
+  }
+  .stat:first-child{border-left:none;padding-left:0}
+  .stat-n{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(32px, 4vw, 52px);
+    font-weight:400;
+    color:var(--ink);
+    line-height:1;
+    letter-spacing:-0.02em;
+  }
+  .stat-unit{
+    font-size:14px;
+    color:var(--moss);
+    font-weight:500;
+    margin-left:2px;
+    align-self:flex-end;
+    padding-bottom:6px;
+  }
+  .stat-label{
+    font-size:11px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--mute);
+    font-weight:400;
+    margin-top:4px;
+  }
+
+  /* ── Overview ── */
+  .overview{
+    padding:clamp(48px, 7vw, 80px) 0;
+  }
+  .overview-inner{
+    display:grid;
+    grid-template-columns:160px 1fr;
+    gap:clamp(24px, 4vw, 56px);
+    align-items:start;
+  }
+  @media(max-width:680px){.overview-inner{grid-template-columns:1fr;gap:12px}}
+  .overview-label{
+    font-size:11px;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--moss);
+    font-weight:500;
+    padding-top:6px;
+  }
+  .overview-text{
+    font-size:clamp(17px, 2vw, 22px);
+    line-height:1.75;
+    color:var(--ink-soft);
+    margin:0;
+    font-weight:300;
+    max-width:68ch;
+  }
+  .overview-text em{font-style:italic;color:var(--ink)}
+
+  /* ── Chapter index ── */
   .chapter-index{
     padding:clamp(48px, 7vw, 80px) 0;
+    border-top:1px solid rgba(230,224,210,0.5);
   }
   .grid{
     display:grid;
@@ -104,28 +248,33 @@ import Section from '../components/Section.astro';
   }
   .card{
     position:relative;
-    padding:32px 28px 28px;
-    border:1px solid var(--line);
-    background:var(--paper);
-    transition: all 0.4s var(--ease-out);
-    border-radius:2px;
+    padding:36px 32px 32px;
+    background:rgba(250,250,247,0.55);
+    backdrop-filter:saturate(180%) blur(18px);
+    -webkit-backdrop-filter:saturate(180%) blur(18px);
+    border:1px solid rgba(230,224,210,0.6);
+    border-radius:4px;
     color:inherit;
     overflow:hidden;
+    transition:transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), border-color 0.25s;
+    transform-style:preserve-3d;
+    will-change:transform;
   }
-  .card::before{
-    content:'';
+  .card-glow{
     position:absolute;
     inset:0;
-    background:linear-gradient(135deg, var(--sand) 0%, transparent 60%);
+    background:radial-gradient(600px circle at var(--mouse-x,50%) var(--mouse-y,50%),
+      rgba(59,90,63,0.08), transparent 50%);
     opacity:0;
-    transition: opacity 0.4s var(--ease-out);
+    transition:opacity 0.4s;
+    pointer-events:none;
+    border-radius:inherit;
   }
+  .card:hover .card-glow{opacity:1}
   .card:hover{
-    transform: translateY(-4px);
-    border-color:var(--moss-2);
-    box-shadow:0 16px 40px rgba(26,34,38,0.08);
+    box-shadow:0 20px 50px rgba(26,34,38,0.1);
+    border-color:rgba(94,125,99,0.4);
   }
-  .card:hover::before{opacity:1}
   .card > *{position:relative;z-index:1}
   .n{
     display:block;
@@ -133,48 +282,143 @@ import Section from '../components/Section.astro';
     letter-spacing:.32em;
     color:var(--moss);
     font-weight:500;
-    margin-bottom:18px;
+    margin-bottom:20px;
   }
   .card h3{
-    font-size:24px;
+    font-size:26px;
     line-height:1.2;
-    margin:0 0 12px;
+    margin:0 0 14px;
     color:var(--ink);
   }
   .card p{
     font-size:14px;
-    line-height:1.7;
+    line-height:1.75;
     color:var(--ink-soft);
-    margin:0 0 28px;
+    margin:0 0 32px;
     font-weight:300;
   }
   .arrow{
-    font-size:20px;
+    font-size:22px;
     color:var(--moss);
-    transition: transform 0.35s var(--ease-out);
+    transition:transform 0.35s var(--ease-out);
     display:inline-block;
   }
-  .card:hover .arrow{ transform: translateX(6px); }
+  .card:hover .arrow{transform:translateX(8px)}
 
-  .placeholder-note{
-    background: var(--sand);
-    padding: 12px 18px;
-    border-left: 2px dashed var(--mute);
-    font-size: 13px !important;
-    color: var(--mute) !important;
+  /* ── Objectives ── */
+  .objectives{
+    list-style:none;margin:0;padding:0;
+  }
+  .obj-item{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    gap:24px;
+    align-items:start;
+    padding:28px 16px;
+    border-bottom:1px solid rgba(230,224,210,0.5);
+    border-radius:4px;
+    transition:background 0.3s var(--ease-out);
+    cursor:default;
+  }
+  .obj-item:last-child{border-bottom:none}
+  .obj-item:hover{background:rgba(59,90,63,0.04)}
+  .obj-n{
+    font-family:'Cormorant Garamond',serif;
+    font-size:40px;
+    font-weight:400;
+    color:rgba(230,224,210,0.8);
+    line-height:1;
+    padding-top:2px;
+    transition:color 0.3s;
+  }
+  .obj-item:hover .obj-n{color:var(--moss-2)}
+  .objectives p{
+    font-size:clamp(15px,1.6vw,17px) !important;
+    line-height:1.8 !important;
+    color:var(--ink-soft) !important;
+    margin:0 !important;
+    font-weight:300 !important;
+    max-width:64ch !important;
   }
 
+  /* ── Methodology ── */
+  .method-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:clamp(16px,2vw,24px);
+    margin-bottom:36px;
+  }
+  .method-card{
+    position:relative;
+    padding:32px 28px;
+    background:rgba(250,250,247,0.55);
+    backdrop-filter:saturate(180%) blur(18px);
+    -webkit-backdrop-filter:saturate(180%) blur(18px);
+    border:1px solid rgba(230,224,210,0.6);
+    border-radius:4px;
+    overflow:hidden;
+    transition:transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), border-color 0.25s;
+    transform-style:preserve-3d;
+    will-change:transform;
+  }
+  .method-card:hover{
+    box-shadow:0 16px 40px rgba(26,34,38,0.1);
+    border-color:rgba(94,125,99,0.4);
+  }
+  .method-card > *{position:relative;z-index:1}
+  .method-card h4{
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--chip);
+    font-weight:600;
+    margin:0 0 16px;
+  }
+  .method-card p{
+    font-size:14px !important;
+    line-height:1.75 !important;
+    color:var(--ink-soft) !important;
+    margin:0 !important;
+    font-weight:300 !important;
+  }
+
+  /* ── Intro image (landing page) ── */
+  .intro-image{
+    margin:28px 0 36px;
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .intro-image img{
+    width:100%;
+    height:320px;
+    object-fit:cover;
+    display:block;
+    transition:transform 0.6s var(--ease-out);
+  }
+  .intro-image:hover img{transform:scale(1.02)}
+  .caption{
+    display:block;
+    margin-top:10px;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--mute);
+    font-weight:400;
+  }
+
+  /* ── CTA ── */
   .cta{
-    background: var(--ink);
-    color: var(--paper);
-    padding: clamp(60px, 9vw, 100px) 0;
+    background:var(--ink);
+    padding:clamp(80px,12vw,140px) 0;
+    color:var(--paper);
   }
   .cta-inner{
     display:flex;
     justify-content:space-between;
     align-items:center;
     flex-wrap:wrap;
-    gap:32px;
+    gap:40px;
   }
   .cta .lbl{
     font-size:11px;
@@ -184,28 +428,90 @@ import Section from '../components/Section.astro';
     font-weight:500;
   }
   .cta h2{
-    font-size:clamp(28px, 4vw, 44px);
+    font-size:clamp(28px,4vw,48px);
     line-height:1.15;
     font-weight:400;
     margin:14px 0 0;
     letter-spacing:-0.015em;
     max-width:18ch;
+    color:#fff;
   }
   .btn{
     display:inline-block;
-    padding:16px 32px;
-    background: var(--accent);
-    color: var(--ink);
+    padding:18px 40px;
+    background:var(--accent);
+    color:var(--ink);
     font-size:13px;
     letter-spacing:.16em;
     text-transform:uppercase;
     font-weight:500;
-    transition: all 0.3s var(--ease-out);
+    transition:all 0.3s var(--ease-out);
     border-radius:2px;
+    white-space:nowrap;
   }
   .btn:hover{
-    background: var(--paper);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+    background:#fff;
+    transform:translateY(-3px);
+    box-shadow:0 16px 40px rgba(0,0,0,0.25);
   }
 </style>
+
+<script>
+  function initPage() {
+    // ── Animated counters ──
+    const counters = document.querySelectorAll<HTMLElement>('[data-target]');
+    const counterObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target as HTMLElement;
+        const target = parseInt(el.dataset.target ?? '0', 10);
+        const isDecimal = 'decimal' in el.dataset;
+        const duration = 1800;
+        let start: number | null = null;
+        const step = (ts: number) => {
+          if (!start) start = ts;
+          const p = Math.min((ts - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          const val = eased * target;
+          el.textContent = isDecimal
+            ? (val / 10).toFixed(1)
+            : Math.round(val).toLocaleString('de-CH');
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+        counterObs.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    counters.forEach((el) => counterObs.observe(el));
+
+    // ── Card tilt + spotlight glow ──
+    const tiltCards = document.querySelectorAll<HTMLElement>('.tilt-card');
+    tiltCards.forEach((card) => {
+      const glow = card.querySelector<HTMLElement>('.card-glow');
+
+      card.addEventListener('mousemove', (e: MouseEvent) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        const rx = ((y - cy) / cy) * -6;
+        const ry = ((x - cx) / cx) * 6;
+        card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+        if (glow) {
+          glow.style.setProperty('--mouse-x', x + 'px');
+          glow.style.setProperty('--mouse-y', y + 'px');
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.transition = 'transform 0.5s var(--ease-out), box-shadow 0.25s, border-color 0.25s';
+        setTimeout(() => { card.style.transition = ''; }, 500);
+      });
+    });
+  }
+
+  initPage();
+  document.addEventListener('astro:after-swap', initPage);
+</script>

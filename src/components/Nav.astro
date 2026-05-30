@@ -6,7 +6,22 @@ const isActive = (path: string) => pathname === path || pathname === path + '/';
 <header class="nav">
   <div class="container nav-inner">
     <a href="/" class="brand" data-astro-prefetch>
-      <span class="brand-mark">RO</span>
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="38" height="38" rx="7" fill="#3b5a3f"/>
+          <!-- building -->
+          <path d="M9 28L9 17.5L19 10L29 17.5L29 28Z" stroke="rgba(255,255,255,0.92)" stroke-width="1.7" stroke-linejoin="round"/>
+          <!-- door -->
+          <rect x="15.5" y="21" width="7" height="7" stroke="rgba(255,255,255,0.92)" stroke-width="1.5" rx="0.5"/>
+          <!-- sun body -->
+          <circle cx="27" cy="10.5" r="2.4" fill="#d9a679"/>
+          <!-- sun rays -->
+          <line x1="27" y1="7.2" x2="27" y2="5.8" stroke="#d9a679" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="29.7" y1="8" x2="30.8" y2="7.1" stroke="#d9a679" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="30.3" y1="10.5" x2="31.7" y2="10.5" stroke="#d9a679" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="24.3" y1="8" x2="23.2" y2="7.1" stroke="#d9a679" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </span>
       <span class="brand-text">Rathaus Oberägeri · <em>Carbon Reduction Project</em></span>
     </a>
 
@@ -48,16 +63,10 @@ const isActive = (path: string) => pathname === path || pathname === path + '/';
   }
   .brand:hover{opacity:0.7}
   .brand-mark{
-    display:inline-grid;
-    place-items:center;
-    width:32px;height:32px;
-    background:var(--moss);
-    color:var(--paper);
-    font-family:'Cormorant Garamond',serif;
-    font-size:14px;
-    letter-spacing:0;
-    border-radius:50%;
-    font-weight:500;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
   }
   .brand-text em{font-style:italic;color:var(--mute);font-size:0.9em}
   @media(max-width:680px){

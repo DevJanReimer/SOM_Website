@@ -11,6 +11,8 @@ import ProConCards from '../components/ProConCards.astro';
     eyebrow="Chapter 04"
     title="Literature<br/>Review"
     subtitle="Swiss energy policy · public-building efficiency · solar thermal · photovoltaics · emergency power"
+    image="/rathaus-exterior.jpg"
+    imageAlt="Rathaus Oberägeri exterior"
   />
 
   <!-- In-page nav -->
@@ -37,6 +39,11 @@ import ProConCards from '../components/ProConCards.astro';
     <p>For public buildings in Switzerland, the legal framework is set by SIA 380/1, which caps annual heat demand at 16 kWh/m² for new builds and 24 kWh/m² for renovations (IEA, n.d.). This cap is written into cantonal law through the <em>Mustervorschriften der Kantone im Energiebereich</em> (MuKEn), adopted in full or in parts by all 26 cantons, Zug included (EnDK, 2018). Additional labels like Minergie are voluntary as they are typically more rigorous than the legal caps. When implemented, a Minergie retrofit can cut heating energy by around 70 % compared to a poorly insulated 1970s building (Le Guen et al., 2018).</p>
     <p>Unfortunately, buildings built before 1980 still account for around 70 % of Swiss heating-energy demand (Streicher et al., 2018). Stock-flow modelling shows the federal 2050 carbon-neutrality target only works if envelope retrofits, renewable heating and rooftop PV are implemented simultaneously (Roca-Puigròs et al., 2020). Yet the only nation-wide econometric study of Swiss retrofits found that subsidised renovations actually deliver only 10–20 % energy savings on average — well below engineering predictions (Hondeborg et al., 2023). Any project-level scenario for the Rathaus has to account for that performance gap, with envelope U-values often two to three times above current MuKEn requirements (Streicher et al., 2018).</p>
   </Section>
+
+  <!-- Visual break between sections -->
+  <div class="section-banner reveal-fade">
+    <img src="/oberaegeri-town.jpg" alt="Oberägeri town centre" />
+  </div>
 
   <!-- 4.4 Solar Thermal -->
   <Section chip="Chapter 04 / 04" label="Section 4.4" title="Solar Thermal Energy" id="s-4-4">
@@ -163,4 +170,18 @@ import ProConCards from '../components/ProConCards.astro';
     transition: color 0.2s var(--ease-out);
   }
   .toc a:hover{color:var(--moss)}
+
+  .section-banner{
+    width:100%;
+    height:clamp(260px, 30vw, 420px);
+    overflow:hidden;
+  }
+  .section-banner img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center 55%;
+    transition:transform 0.6s var(--ease-out);
+  }
+  .section-banner:hover img{transform:scale(1.02)}
 </style>
