@@ -1,0 +1,112 @@
+---
+interface Props {
+  label?: string;
+  title?: string;
+  qty?: string;
+  chip?: string;
+  id?: string;
+}
+const { label, title, qty, chip, id } = Astro.props;
+---
+
+<section class="subsec" id={id}>
+  <div class="container">
+    <div class="grid">
+      <aside class="meta">
+        {chip && <span class="chip reveal">{chip}</span>}
+        {label && <div class="label reveal">{label}</div>}
+      </aside>
+      <div class="body">
+        {title && (
+          <h2 class="serif reveal reveal-delay-1">
+            {title} {qty && <span class="qty">{qty}</span>}
+          </h2>
+        )}
+        <div class="content reveal reveal-delay-2">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .subsec{
+    padding:clamp(56px, 8vw, 96px) 0;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .subsec:last-of-type{border-bottom:none}
+  .grid{
+    display:grid;
+    grid-template-columns:240px 1fr;
+    gap:clamp(32px, 5vw, 64px);
+    align-items:start;
+  }
+  @media(max-width:880px){
+    .grid{grid-template-columns:1fr;gap:18px}
+  }
+  .meta{position:sticky;top:96px}
+  @media(max-width:880px){.meta{position:static}}
+  .chip{
+    display:inline-block;
+    background:var(--chip);
+    color:var(--chip-text);
+    padding:8px 18px;
+    font-family:'Cormorant Garamond',serif;
+    font-size:14px;
+    letter-spacing:.04em;
+    font-weight:500;
+    line-height:1.2;
+    margin-bottom:14px;
+  }
+  .label{
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--moss);
+    font-weight:500;
+  }
+  h2{
+    font-size:clamp(28px, 4.4vw, 44px);
+    line-height:1.1;
+    font-weight:400;
+    margin:0 0 28px;
+    letter-spacing:-0.015em;
+    color:var(--ink);
+  }
+  h2 .qty{
+    color:var(--mute);
+    font-weight:300;
+    font-style:italic;
+    font-size:0.72em;
+  }
+  .content :global(p){
+    font-size:clamp(15px, 1.6vw, 17px);
+    line-height:1.8;
+    color:var(--ink-soft);
+    max-width:74ch;
+    margin:0 0 18px;
+    font-weight:300;
+  }
+  .content :global(p em){font-style:italic;color:var(--ink)}
+  .content :global(p strong){font-weight:500;color:var(--ink)}
+  .content :global(h3){
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(20px, 2.4vw, 26px);
+    line-height:1.25;
+    font-weight:500;
+    margin:36px 0 14px;
+    letter-spacing:-0.005em;
+    color:var(--ink);
+  }
+  .content :global(h4){
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--chip);
+    font-weight:600;
+    margin:24px 0 10px;
+  }
+</style>

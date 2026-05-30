@@ -1,0 +1,92 @@
+---
+const { pathname } = Astro.url;
+const isActive = (path: string) => pathname === path || pathname === path + '/';
+---
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="brand" data-astro-prefetch>
+      <span class="brand-mark">RO</span>
+      <span class="brand-text">Rathaus Oberägeri · <em>Carbon Reduction Project</em></span>
+    </a>
+
+    <nav class="links" aria-label="Primary">
+      <a href="/" class:list={["link", isActive('/') && 'active']} data-astro-prefetch>Home</a>
+      <a href="/chapter-4" class:list={["link", isActive('/chapter-4') && 'active']} data-astro-prefetch>4 · Literature</a>
+      <a href="/chapter-5" class:list={["link", isActive('/chapter-5') && 'active']} data-astro-prefetch>5 · Baseline</a>
+      <a href="/chapter-6" class:list={["link", isActive('/chapter-6') && 'active']} data-astro-prefetch>6 · Calculator</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(250,250,247,0.85);
+    backdrop-filter:saturate(180%) blur(12px);
+    -webkit-backdrop-filter:saturate(180%) blur(12px);
+    border-bottom:1px solid var(--line);
+    view-transition-name: nav-bar;
+  }
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:64px;
+    gap:24px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-size:14px;
+    font-family:'Cormorant Garamond',serif;
+    color:var(--ink);
+    transition:opacity 0.3s var(--ease-out);
+  }
+  .brand:hover{opacity:0.7}
+  .brand-mark{
+    display:inline-grid;
+    place-items:center;
+    width:32px;height:32px;
+    background:var(--moss);
+    color:var(--paper);
+    font-family:'Cormorant Garamond',serif;
+    font-size:14px;
+    letter-spacing:0;
+    border-radius:50%;
+    font-weight:500;
+  }
+  .brand-text em{font-style:italic;color:var(--mute);font-size:0.9em}
+  @media(max-width:680px){
+    .brand-text{display:none}
+  }
+  .links{display:flex;gap:clamp(12px, 2.5vw, 28px);align-items:center}
+  .link{
+    font-size:13px;
+    letter-spacing:0.04em;
+    color:var(--ink-soft);
+    position:relative;
+    padding:6px 0;
+    transition:color 0.25s var(--ease-out);
+  }
+  .link:hover{color:var(--moss)}
+  .link.active{color:var(--moss)}
+  .link::after{
+    content:'';
+    position:absolute;
+    left:0;right:0;bottom:0;
+    height:1px;
+    background:var(--moss);
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform 0.4s var(--ease-out);
+  }
+  .link:hover::after,
+  .link.active::after{transform:scaleX(1)}
+  @media(max-width:520px){
+    .link{font-size:12px}
+  }
+</style>

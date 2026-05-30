@@ -1,0 +1,77 @@
+---
+// Wrap children divs as pro/con cards
+---
+<div class="pc-grid">
+  <slot />
+</div>
+
+<style is:global>
+  .pc-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    max-width:84ch;
+    margin:24px 0 8px;
+  }
+  @media(max-width:880px){
+    .pc-grid{grid-template-columns:1fr}
+  }
+  .pc-card{
+    padding:24px 26px;
+    border:1px solid var(--line);
+    border-radius:2px;
+    background:#fbfaf7;
+    transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+  }
+  .pc-card:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(26, 34, 38, 0.06);
+  }
+  .pc-card.pro{border-left:3px solid #4a7a55}
+  .pc-card.con{border-left:3px solid var(--chip)}
+  .pc-card h4{
+    margin-top:0;
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--chip);
+    font-weight:600;
+    margin-bottom:14px;
+  }
+  .pc-card.pro h4{color:#4a7a55}
+  .pc-card p{
+    font-size:14.5px;
+    line-height:1.7;
+    margin:0 0 12px;
+    color:var(--ink-soft);
+    max-width:none;
+  }
+  .pc-card p:last-child{margin-bottom:0}
+
+  /* Dashed list */
+  ul.dashed{
+    list-style:none;
+    padding:0;
+    margin:14px 0 4px;
+    max-width:74ch;
+  }
+  ul.dashed li{
+    padding:12px 0 12px 22px;
+    border-bottom:1px solid var(--line);
+    font-size:15px;
+    color:var(--ink-soft);
+    line-height:1.7;
+    position:relative;
+    font-weight:300;
+  }
+  ul.dashed li:last-child{border-bottom:none}
+  ul.dashed li::before{
+    content:"—";
+    position:absolute;
+    left:0;
+    color:var(--chip);
+    font-weight:600;
+  }
+  ul.dashed li strong{color:var(--ink);font-weight:500}
+</style>

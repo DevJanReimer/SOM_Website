@@ -1,0 +1,165 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import KpiStrip from '../components/KpiStrip.astro';
+import Section from '../components/Section.astro';
+import DataTable from '../components/DataTable.astro';
+
+const kpis = [
+  { label: 'Electricity 2025', value: '41,150', unit: 'kWh', note: 'Administration + apartments' },
+  { label: 'Heat 2025', value: '189,000', unit: 'kWh', note: 'Wood-chip district heating' },
+  { label: 'CO₂ emissions', value: '7,934.7', unit: 'kg CO₂eq', note: 'Total operational, 2025' },
+  { label: 'Energy cost 2025', value: '≈ 39,645', unit: 'CHF', note: 'Electricity + heat (M 25–35)' },
+];
+---
+
+<Base title="Chapter 5 · Energy & Carbon Baseline">
+
+  <Hero
+    eyebrow="Chapter 05"
+    title="Energy Use, Costs<br/>and Carbon<br/>Footprint"
+    subtitle="Quantitative baseline · Rathaus Oberägeri · 2025"
+  />
+
+  <div class="container">
+    <p class="lead reveal">
+      This section examines the town hall's current energy consumption, costs and CO₂ emissions. The building's <strong>2025 electricity and heat consumption</strong> is analysed, and the associated costs and CO₂ emissions are calculated from data provided by the municipal administration. The values serve as the <em>baseline</em> for assessing the potential CO₂ reduction and economic benefit if rooftop photovoltaic and solar-thermal systems are installed.
+    </p>
+
+    <KpiStrip kpis={kpis} />
+  </div>
+
+  <!-- 5.1 -->
+  <Section chip="Chapter 05 / 01" label="Section 5.1" title="Electricity Usage of the Town Hall" id="s-5-1">
+    <p>The town hall's 2025 electricity consumption is broken down into <em>administrative</em> use and <em>residential</em> use from the apartments. Billing was still based on WWZ's high- and low-rate tariffs (WWZ, 2026), shown separately below. The administration accounts for the largest share.</p>
+
+    <DataTable caption="Table 5.1 · Electricity Usage 2025">
+      <thead>
+        <tr><th>Category</th><th class="num">High Tariff (kWh)</th><th class="num">Low Tariff (kWh)</th><th class="num">Total (kWh)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Administration</td><td class="num">27,243</td><td class="num">12,133</td><td class="num">39,376</td></tr>
+        <tr><td>Apartments</td><td class="num">1,093</td><td class="num">681</td><td class="num">1,774</td></tr>
+        <tr class="tot"><td>Total</td><td class="num">28,336</td><td class="num">12,814</td><td class="num">41,150</td></tr>
+      </tbody>
+    </DataTable>
+  </Section>
+
+  <!-- 5.2 -->
+  <Section chip="Chapter 05 / 02" label="Section 5.2" title="Heating Usage of the Town Hall" id="s-5-2">
+    <p>Heat is supplied via a <em>wood-chip district heating system</em>, with a total 2025 consumption of <strong>189,000 kWh</strong>.</p>
+
+    <DataTable caption="Table 5.2 · Heat Consumption 2025">
+      <thead>
+        <tr><th>Source</th><th class="num">Annual consumption</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Wood-chip district heating system</td><td class="num">189,000 kWh</td></tr>
+      </tbody>
+    </DataTable>
+  </Section>
+
+  <!-- 5.3 -->
+  <Section chip="Chapter 05 / 03" label="Section 5.3" title="CO₂ Emissions, Electricity and Heating Costs 2025" id="s-5-3">
+    <p>Because no separate heating-consumption data is available for the administrative area and the apartments, the following calculations treat both electricity and heating consumption as the <em>building's total consumption</em>, ensuring a consistent basis for CO₂ and cost calculations.</p>
+
+    <h3>CO₂ Emissions 2025</h3>
+    <p>The CO₂ calculation uses annual electricity and heat consumption and the corresponding emission factors: electricity from WWZ (WWZ, 2024), heat from KBOB (KBOB, 2024), and the diesel-generator factor from the Swiss Greenhouse Gas Inventory (BAFU, 2024). The diesel generator is included as an emergency-power solution — it was not used in 2025 and caused no additional emissions. Total annual CO₂ emissions: <strong>7,934.7 kg CO₂eq</strong>, with the wood-chip district heating system as the largest share.</p>
+
+    <DataTable caption="Table 5.3 · CO₂ Emissions of the Town Hall 2025">
+      <thead>
+        <tr><th>Source</th><th class="num">Consumption</th><th>Unit</th><th class="num">Emission factor</th><th class="num">CO₂ (kg CO₂eq)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Electricity</td><td class="num">41,150</td><td>kWh</td><td class="num">0.078 kg/kWh</td><td class="num">3,209.70</td></tr>
+        <tr><td>Wood-chip district heating</td><td class="num">189,000</td><td>kWh</td><td class="num">0.025 kg/kWh</td><td class="num">4,725.00</td></tr>
+        <tr><td>Diesel generator</td><td class="num">0</td><td>L</td><td class="num">2.61 kg/L</td><td class="num">0.00</td></tr>
+        <tr class="tot"><td>Total</td><td class="num"></td><td></td><td class="num"></td><td class="num">7,934.70</td></tr>
+      </tbody>
+    </DataTable>
+
+    <h3>Electricity and Heating Cost 2025</h3>
+    <p>Electricity costs are calculated from 2025 consumption and WWZ's current high- and low-rate tariffs (incl. VAT), plus the monthly base fee. <strong>Total annual electricity cost: CHF 12,546.17</strong> (WWZ, 2025).</p>
+
+    <DataTable caption="Table 5.4 · Electricity Cost 2025">
+      <thead>
+        <tr><th>Category</th><th class="num">Consumption</th><th class="num">Price incl. VAT (CHF)</th><th class="num">Annual cost (CHF)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>High Tariff</td><td class="num">28,336 kWh</td><td class="num">0.3115</td><td class="num">8,826.66</td></tr>
+        <tr><td>Low Tariff</td><td class="num">12,814 kWh</td><td class="num">0.2845</td><td class="num">3,645.58</td></tr>
+        <tr><td>Basic monthly charge</td><td class="num">12 mo</td><td class="num">6.16</td><td class="num">73.92</td></tr>
+        <tr class="tot highlight"><td>Total</td><td class="num">41,150 kWh</td><td class="num"></td><td class="num">12,546.17</td></tr>
+      </tbody>
+    </DataTable>
+
+    <p>Heating costs are calculated for three wood-chip grades — <em>M 40–55</em>, <em>M 25–35</em>, <em>M 15–20</em> — referring to moisture content in percent. With 189,000 kWh annual heat demand, costs range from <strong>CHF 12,852 to CHF 16,065</strong>. Prices were extrapolated from 2018/2019 data to 2025 using a wood-chip price index (Holzenergie Schweiz, 2026), VAT included.</p>
+
+    <DataTable caption="Table 5.5 · Heating Cost 2025 by Wood-chip Grade">
+      <thead>
+        <tr><th>Wood-chip grade</th><th class="num">Price (CHF/kWh)</th><th class="num">Total annual cost (CHF)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>M 40–55</td><td class="num">0.068</td><td class="num">12,852</td></tr>
+        <tr><td>M 25–35</td><td class="num">0.077</td><td class="num">14,553</td></tr>
+        <tr><td>M 15–20</td><td class="num">0.085</td><td class="num">16,065</td></tr>
+      </tbody>
+    </DataTable>
+
+    <p>These figures cover only the <em>energy</em> cost of the wood chips. Operating and maintenance costs of the heating network are not included, since no information is available on operating costs or on the allocation of usage volumes among the connected buildings.</p>
+
+    <p>For total energy costs, the assumption is wood chips with <strong>M 25–35</strong> moisture content. According to Heitzmann (n.d.), 20–30 % moisture chips are typical for systems up to ~300 kW, while M 40–50 chips are used in larger industrial plants. Since the municipal network is not industrial-scale, M 25–35 is plausible — giving energy costs of <strong>CHF 27,099</strong>.</p>
+
+    <div class="total-card reveal">
+      <span class="lbl">Total energy cost 2025 (M 25–35)</span>
+      <span class="v">39,645<span class="unit">CHF</span></span>
+    </div>
+  </Section>
+
+</Base>
+
+<style is:global>
+  .lead{
+    padding:32px 0 16px;
+    font-size:clamp(16px, 1.8vw, 19px);
+    line-height:1.75;
+    color:var(--ink-soft);
+    max-width:74ch;
+    font-weight:300;
+  }
+  .lead em{font-style:italic;color:var(--ink)}
+  .lead strong{font-weight:500;color:var(--ink)}
+
+  .total-card{
+    margin:32px 0 8px;
+    padding:22px 28px;
+    background:var(--sand);
+    border-left:3px solid var(--moss);
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:16px;
+    max-width:74ch;
+  }
+  .total-card .lbl{
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--moss);
+    font-weight:500;
+  }
+  .total-card .v{
+    font-size:28px;
+    font-weight:300;
+    color:var(--ink);
+    font-variant-numeric:tabular-nums;
+    letter-spacing:-0.01em;
+  }
+  .total-card .v .unit{
+    font-size:13px;
+    color:var(--mute);
+    margin-left:8px;
+    letter-spacing:.04em;
+  }
+</style>

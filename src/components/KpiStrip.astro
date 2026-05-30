@@ -1,0 +1,69 @@
+---
+interface Kpi {
+  label: string;
+  value: string;
+  unit?: string;
+  note?: string;
+}
+interface Props {
+  kpis: Kpi[];
+}
+const { kpis } = Astro.props;
+---
+
+<div class="kpis reveal">
+  {kpis.map((k) => (
+    <div class="kpi">
+      <div class="label">{k.label}</div>
+      <div class="val">{k.value}{k.unit && <span class="unit">{k.unit}</span>}</div>
+      {k.note && <div class="note">{k.note}</div>}
+    </div>
+  ))}
+</div>
+
+<style>
+  .kpis{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin: 24px 0 48px;
+  }
+  .kpi{
+    padding:clamp(20px, 2.6vw, 32px) clamp(20px, 2.6vw, 28px);
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    transition: background 0.35s var(--ease-out);
+  }
+  .kpi:last-child{border-right:none}
+  .kpi:hover{ background: var(--sand); }
+  .label{
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--mute);
+    margin-bottom:14px;
+    font-weight:500;
+  }
+  .val{
+    font-size:clamp(24px, 2.8vw, 32px);
+    font-weight:300;
+    letter-spacing:-0.01em;
+    font-variant-numeric:tabular-nums;
+    line-height:1.1;
+    color:var(--ink);
+  }
+  .val .unit{
+    font-size:0.45em;
+    color:var(--mute);
+    font-weight:400;
+    letter-spacing:.04em;
+    margin-left:6px;
+  }
+  .note{
+    font-size:12px;
+    color:var(--mute);
+    margin-top:8px;
+    letter-spacing:.02em;
+  }
+</style>

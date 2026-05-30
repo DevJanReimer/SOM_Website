@@ -1,0 +1,166 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+import ProConCards from '../components/ProConCards.astro';
+---
+
+<Base title="Chapter 4 · Literature Review">
+
+  <Hero
+    eyebrow="Chapter 04"
+    title="Literature<br/>Review"
+    subtitle="Swiss energy policy · public-building efficiency · solar thermal · photovoltaics · emergency power"
+  />
+
+  <!-- In-page nav -->
+  <nav class="toc reveal">
+    <div class="container">
+      <ul>
+        <li><a href="#s-4-1">4.1 Sustainability</a></li>
+        <li><a href="#s-4-2">4.2 Public Buildings</a></li>
+        <li><a href="#s-4-4">4.4 Solar Thermal</a></li>
+        <li><a href="#s-4-5">4.5 Photovoltaics</a></li>
+        <li><a href="#s-4-6">4.6 Emergency Power</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 4.1 -->
+  <Section chip="Chapter 04 / 01" label="Section 4.1" title="Sustainability in Municipal Administration" id="s-4-1">
+    <p>In Switzerland, sustainability is a democratic effort driven by the 26 cantons and around 2,000 municipalities, each of which holds their own binding tools (Kammerer et al., 2023). The federal Energy Strategy 2050, locked in by referendum in 2017, sets the direction: phasing out nuclear, scaling up renewables, and capping per-capita primary energy (Notter, 2015; IEA, 2023). But most of the actual CO₂ cuts happen locally through building rules, procurement, and the way a municipality runs its own buildings.</p>
+    <p>The key tool is the <em>Energiestadt</em> label — the Swiss arm of the European Energy Award — which has certified more than 460 municipalities since 1988, Oberägeri included (Trägerverein Energiestadt, 2020). The label audits six policy areas every four years and Gold requires that 75 % of measures are in place. Evaluations by the Swiss Federal Office of Energy show, even with causal-isolation difficulties, that certified municipalities make more energy- and climate-conscious decisions than non-certified ones (Iten et al., 2004). Recent literature notes that municipal sustainability work in Switzerland has so far been mostly about energy efficiency, while adaptation and integrated planning still rely on a few pioneer actors rather than institutional capacity (Desthieux &amp; Joerin, 2022).</p>
+  </Section>
+
+  <!-- 4.2 -->
+  <Section chip="Chapter 04 / 02" label="Section 4.2" title="Energy Efficiency in Public Buildings" id="s-4-2">
+    <p>For public buildings in Switzerland, the legal framework is set by SIA 380/1, which caps annual heat demand at 16 kWh/m² for new builds and 24 kWh/m² for renovations (IEA, n.d.). This cap is written into cantonal law through the <em>Mustervorschriften der Kantone im Energiebereich</em> (MuKEn), adopted in full or in parts by all 26 cantons, Zug included (EnDK, 2018). Additional labels like Minergie are voluntary as they are typically more rigorous than the legal caps. When implemented, a Minergie retrofit can cut heating energy by around 70 % compared to a poorly insulated 1970s building (Le Guen et al., 2018).</p>
+    <p>Unfortunately, buildings built before 1980 still account for around 70 % of Swiss heating-energy demand (Streicher et al., 2018). Stock-flow modelling shows the federal 2050 carbon-neutrality target only works if envelope retrofits, renewable heating and rooftop PV are implemented simultaneously (Roca-Puigròs et al., 2020). Yet the only nation-wide econometric study of Swiss retrofits found that subsidised renovations actually deliver only 10–20 % energy savings on average — well below engineering predictions (Hondeborg et al., 2023). Any project-level scenario for the Rathaus has to account for that performance gap, with envelope U-values often two to three times above current MuKEn requirements (Streicher et al., 2018).</p>
+  </Section>
+
+  <!-- 4.4 Solar Thermal -->
+  <Section chip="Chapter 04 / 04" label="Section 4.4" title="Solar Thermal Energy" id="s-4-4">
+    <p><strong>Solar-thermal systems convert sunlight directly into heat</strong> used for hot water production or to supplement space heating. A typical system consists of collectors on the roof and a heat-storage tank (Han et al., 2025). According to Swissolar (2024), a solar-thermal system covers at least 30 % of annual heat demand.</p>
+
+    <h3>Collector categories</h3>
+    <p>There are two main categories of solar-thermal collectors: <strong>concentrating</strong> and <strong>non-concentrating</strong>. Concentrating collectors (parabolic troughs, compound parabolic concentrators) reach very high temperatures and are mostly used in power plants. Non-concentrating collectors (flat-plate, evacuated-tube) provide 30–100 °C, which is sufficient for hot water and space heating in buildings (Omeiza et al., 2024). For this project only non-concentrating types are relevant.</p>
+
+    <ul class="dashed">
+      <li><strong>Flat-plate collector</strong> — solar radiation strikes a black-coated absorber surface, which transfers heat to a storage tank via a heat-transfer fluid. A glass cover lets radiation pass through but prevents convective and radiative losses (Omeiza et al., 2024).</li>
+      <li><strong>Evacuated tube collector</strong> — same principle, but the absorber is enclosed in two concentric glass tubes with a vacuum between them. The vacuum acts as effective insulation, so this collector type operates more efficiently than flat-plate even under cloudy skies and low outdoor temperatures (Omeiza et al., 2024).</li>
+    </ul>
+
+    <h3>Advantages and disadvantages</h3>
+    <ProConCards>
+      <div class="pc-card pro">
+        <h4>Advantages</h4>
+        <p>Albertí et al. (2014) show that over their lifetime, solar-thermal systems reduce GHG emissions by ≈ <strong>65 %</strong>, ozone depletion by <strong>69 %</strong>, and photochemical ozone formation by <strong>41 %</strong> compared to gas heating.</p>
+        <p>Increasing the share of solar thermal in domestic hot-water production from 7.8 % to 30 % in Spain would yield <strong>1.24–1.64 Mt CO₂/yr</strong> in savings. In China the potential is even greater (≈ 0.63 % of national emissions) due to the coal-heavy mix.</p>
+        <p>Solar-thermal collectors achieve an energy-conversion efficiency of <strong>up to 70 %</strong> (BBSR, 2024), versus ≈ 17 % for PV. A further benefit: in winter, operating heat melts accumulated snow on the collectors automatically (Omeiza et al., 2024).</p>
+      </div>
+      <div class="pc-card con">
+        <h4>Disadvantages</h4>
+        <p><strong>Long payback.</strong> Han et al. (2025) find an average payback of <strong>50.4 years</strong>, driven by high upfront cost and the lower economic value of thermal energy. Context matters — Krawczyk et al. (2019) calculate <strong>17–19 years</strong> for public buildings with high hot-water demand.</p>
+        <p><strong>Other environmental categories.</strong> Production releases pollutants contributing to acidification (6 % worse) and eutrophication (61 % worse) than conventional gas systems. The cause: copper pipes, collectors and water tanks (Albertí et al., 2019).</p>
+        <p><strong>Corrosion risk.</strong> Salty atmospheres and high-temperature operation break down protective coatings and promote galvanic corrosion. Aged heat-transfer fluids can release aggressive compounds (Omeiza et al., 2024).</p>
+        <p><strong>Climate dependence.</strong> Krawczyk et al. (2020) show a collector in Spain delivers three times the energy of an identical one in Poland. A backup heat source is therefore necessary in winter.</p>
+      </div>
+    </ProConCards>
+  </Section>
+
+  <!-- 4.5 Photovoltaics -->
+  <Section chip="Chapter 04 / 05" label="Section 4.5" title="Photovoltaics" id="s-4-5">
+    <p>Photovoltaic panels (PV), or solar panels, are becoming a viable and cheap solution for transitioning to renewable energy production. PV is frequently seen on roofs, on building exteriors, or on fields creating "solar farms". PV is a sustainable way of producing energy by absorbing the photons naturally produced by the sun's rays. Most current models have rated outputs of 400–450 W and module efficiencies of 19–22 %. In optimal conditions on the Swiss plateau, a 1 kWp panel can deliver about 1,000 kWh per year.</p>
+
+    <p>Five categories of panel are available on the market:</p>
+    <ul class="dashed">
+      <li><strong>Crystalline silicon cells</strong> — mono- or polycrystalline. Monocrystalline use single-crystal silicon (highly efficient, more expensive); polycrystalline are made from multiple silicon cells (less efficient, cheaper).</li>
+      <li><strong>Single-junction gallium arsenide cells</strong> — among the highest efficiencies on the market, very robust, mostly used for aerospace and military.</li>
+      <li><strong>Multijunction cells</strong> — several semiconductor materials capture a wider range of photons; more expensive to produce, very efficient.</li>
+      <li><strong>Thin films</strong> — a thin semiconductor laid on a substrate. Three key types: amorphous silicon, cadmium telluride, and copper-indium-gallium-selenide.</li>
+      <li><strong>Emerging PV</strong> — organic materials, quantum-dot cells; experimental and not yet comparable to the other four categories.</li>
+    </ul>
+
+    <h3>Advantages and disadvantages</h3>
+    <ProConCards>
+      <div class="pc-card pro">
+        <h4>Advantages</h4>
+        <p><strong>Energy efficiency.</strong> Current models reach 400–450 W and 19–22 % efficiency. In the Swiss midlands a well-placed 1 kWp system yields ~1,000 kWh/year (Swiss Solar Verband, n.d.).</p>
+        <p><strong>Installation flexibility.</strong> Panels can be integrated into existing structures with minimal disruption. Multiple PV technologies allow cost &amp; performance optimisation.</p>
+        <p><strong>Recycling.</strong> Switzerland has a dedicated recycling network (Sens eRecycling). Panels have a long lifetime (~25 years).</p>
+        <p><strong>Environmental impact.</strong> During sun collection the energy produced is carbon-neutral and renewable. Can be installed on roofs, façades, or land.</p>
+      </div>
+      <div class="pc-card con">
+        <h4>Disadvantages</h4>
+        <p><strong>Energy efficiency.</strong> Performance is highly sensitive to placement, orientation, and cleanliness. Snow, shading and debris reduce output.</p>
+        <p><strong>Recycling limits.</strong> Recycling systems in Germany are lacking (El Khawad et al., 2022). Panels are not designed for reuse, repair or refurbishment. Recycling is energy-intensive, loses material value, and does not recover all components.</p>
+        <p><strong>Embodied carbon.</strong> Production and recycling are not carbon-neutral — they require rare or energy-intensive materials (e.g. glass).</p>
+        <p><strong>Variability.</strong> Energy production depends on sunlight availability, shading, and weather conditions.</p>
+      </div>
+    </ProConCards>
+  </Section>
+
+  <!-- 4.6 Emergency Power -->
+  <Section chip="Chapter 04 / 06" label="Section 4.6" title="Emergency Power Systems" id="s-4-6">
+    <p>The municipality must be able to operate 24 hours a day in crisis situations, which requires an on-site generator to ensure uninterrupted power. Oberägeri currently relies on a diesel generator for emergencies, but this system is neither carbon-reducing nor carbon-neutral. Alternatives evaluated here are biofuel generators, biogas generators, and battery-powered (PV + battery) systems.</p>
+
+    <h3>Biofuel and biogas generators</h3>
+    <p>Biofuels are produced from <em>feedstock</em> — biomass sources such as wood, ethanol and biodiesel (Clarence Lehman, 2026). Because the carbon released during combustion is part of a short biological cycle, biofuels can reduce GHG emissions, although additional emissions occur during production and land-use processes.</p>
+    <p>Biogas generators run on biogas produced via anaerobic digestion and offer substantially lower life-cycle GHG emissions and reduced NOₓ and smoke compared with diesel (van den Oever et al., 2021; Nayak &amp; Sahoo, 2020). One study found a solar-biogas hybrid configuration to be the most feasible, with a net present cost of <strong>$386,971</strong>, cost of energy of <strong>$0.476/kWh</strong>, and CO₂ emissions of <strong>10,346 kg/yr</strong> (Li et al., 2022). However, high annual maintenance costs (~$87,000), gas-cleaning, corrosion, and variable biogas availability make biogas systems unsuitable for Oberägeri.</p>
+
+    <h3>Battery-powered (PV + battery) generators</h3>
+    <p>Battery-powered generators rely on PV panels to produce electricity that is stored for emergency use. A properly designed PV + battery system can achieve reliability comparable to diesel (Jurasz et al., 2020; Ali et al., 2023). Long-term performance depends on solar variability, panel degradation and battery-capacity decline — requiring oversizing to maintain <strong>95 % reliability after 20 years</strong> (Jurasz et al., 2020).</p>
+
+    <h3>Diesel generators — the incumbent baseline</h3>
+    <p>Diesel generators are inexpensive to purchase but have high operating costs, a higher cost of energy, and approximately <strong>70 % higher CO₂ emissions</strong> than PV + battery alternatives (Ali et al., 2023; Felice et al., 2023). Reliability depends heavily on maintenance: well-maintained units have a <strong>20 % probability of failure within two weeks</strong>; poorly maintained units a <strong>50 % probability within the first 48 hours</strong> (Marqusee &amp; Jenket, 2020). Diesel fuel must be replaced every 6–12 months to avoid bacterial contamination (Hwang et al., 2023).</p>
+
+    <h3>Diesel vs. PV + battery — comparison</h3>
+    <ProConCards>
+      <div class="pc-card pro">
+        <h4>Advantages of PV + battery</h4>
+        <p><strong>Near-instant response.</strong> Switchover occurs within milliseconds (Synergy, 2024) — compared with diesel's typical &gt; 10 s delay (Costa et al., 2023).</p>
+        <p><strong>Higher self-sufficiency.</strong> <strong>96.83 %</strong> for PV + battery vs <strong>39.15 %</strong> for diesel (Felice et al., 2023).</p>
+        <p><strong>Lower emissions.</strong> Roughly <strong>70 % lower CO₂</strong>, no fuel-transport footprint, no on-site combustion.</p>
+        <p><strong>Customisable design.</strong> PV array and battery sizing can be matched to the building's load and resilience targets.</p>
+      </div>
+      <div class="pc-card con">
+        <h4>Limitations of diesel generators</h4>
+        <p><strong>High emissions.</strong> On-site combustion releases CO₂, NOₓ and particulates; locked into a fossil-fuel supply chain.</p>
+        <p><strong>Delayed response.</strong> Start-up and synchronisation take &gt; 10 s — long enough to interrupt sensitive IT and communications equipment.</p>
+        <p><strong>Fuel-degradation risks.</strong> Stored diesel must be replaced every 6–12 months to prevent contamination-induced failure.</p>
+        <p><strong>Maintenance-sensitive reliability.</strong> Well-maintained units: 20 % failure probability within two weeks; poorly maintained: 50 % within 48 hours.</p>
+      </div>
+    </ProConCards>
+  </Section>
+
+</Base>
+
+<style>
+  .toc{
+    position:sticky;
+    top:64px;
+    z-index:50;
+    background:rgba(250,250,247,0.92);
+    backdrop-filter:saturate(180%) blur(12px);
+    -webkit-backdrop-filter:saturate(180%) blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .toc ul{
+    display:flex;
+    gap:clamp(16px, 3vw, 32px);
+    list-style:none;
+    margin:0;
+    padding:14px 0;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .toc li{flex-shrink:0}
+  .toc a{
+    font-size:12px;
+    letter-spacing:.06em;
+    color:var(--ink-soft);
+    white-space:nowrap;
+    transition: color 0.2s var(--ease-out);
+  }
+  .toc a:hover{color:var(--moss)}
+</style>

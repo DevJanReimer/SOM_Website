@@ -1,0 +1,91 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="foot">
+  <div class="container foot-inner">
+    <div class="col">
+      <span class="lbl">Project</span>
+      <p>Carbon-reduction analysis of the Rathaus in Oberägeri, Canton Zug. Academic project, Sustainable Operations Management, University of Zurich.</p>
+    </div>
+    <div class="col">
+      <span class="lbl">Navigate</span>
+      <ul>
+        <li><a href="/" data-astro-prefetch>Home</a></li>
+        <li><a href="/chapter-4" data-astro-prefetch>4 · Literature Review</a></li>
+        <li><a href="/chapter-5" data-astro-prefetch>5 · Baseline</a></li>
+        <li><a href="/chapter-6" data-astro-prefetch>6 · Calculator</a></li>
+      </ul>
+    </div>
+    <div class="col">
+      <span class="lbl">Tools</span>
+      <ul>
+        <li><a href="https://som-calculator.vercel.app" target="_blank" rel="noopener">Calculator app ↗</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container bottom">
+    <span>© {year} · Rathaus Oberägeri Research Project</span>
+    <span class="muted">Built with care · Astro · Vercel</span>
+  </div>
+</footer>
+
+<style>
+  .foot{
+    background:var(--ink);
+    color:var(--paper);
+    padding:64px 0 28px;
+    margin-top:0;
+  }
+  .foot-inner{
+    display:grid;
+    grid-template-columns:1.5fr 1fr 1fr;
+    gap:48px;
+    padding-bottom:48px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  @media(max-width:680px){
+    .foot-inner{grid-template-columns:1fr;gap:32px}
+  }
+  .col .lbl{
+    display:block;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:14px;
+    font-weight:500;
+  }
+  .col p{
+    font-size:14px;
+    line-height:1.7;
+    color:rgba(255,255,255,0.7);
+    margin:0;
+    max-width:34ch;
+  }
+  .col ul{
+    list-style:none;
+    padding:0;
+    margin:0;
+  }
+  .col li{
+    margin-bottom:8px;
+  }
+  .col a{
+    font-size:14px;
+    color:rgba(255,255,255,0.7);
+    transition:color 0.25s var(--ease-out);
+  }
+  .col a:hover{color:var(--accent)}
+  .bottom{
+    display:flex;
+    justify-content:space-between;
+    font-size:12px;
+    color:rgba(255,255,255,0.4);
+    padding-top:24px;
+  }
+  .bottom .muted{font-style:italic}
+  @media(max-width:680px){
+    .bottom{flex-direction:column;gap:8px}
+  }
+</style>

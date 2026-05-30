@@ -1,0 +1,211 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+---
+
+<Base title="Rathaus Oberägeri" description="Carbon-reduction analysis of the Rathaus building in Oberägeri, Canton Zug.">
+
+  <Hero
+    eyebrow="Sustainable Operations Management · 2026"
+    title="Carbon-reduction<br/>analysis of the<br/><em>Rathaus Oberägeri</em>"
+    subtitle="A four-chapter study of the building's energy use, costs and CO₂ footprint — and the rooftop solar levers that could shrink them."
+  />
+
+  <!-- Quick chapter index -->
+  <section class="chapter-index">
+    <div class="container">
+      <div class="grid">
+        <a href="/chapter-4" class="card reveal reveal-delay-1" data-astro-prefetch>
+          <span class="n">04</span>
+          <h3 class="serif">Literature Review</h3>
+          <p>Swiss energy policy, public-building efficiency, solar thermal, photovoltaics, emergency power.</p>
+          <span class="arrow">→</span>
+        </a>
+        <a href="/chapter-5" class="card reveal reveal-delay-2" data-astro-prefetch>
+          <span class="n">05</span>
+          <h3 class="serif">Energy &amp; Carbon Baseline</h3>
+          <p>The town hall's 2025 electricity, heat, costs and CO₂ — measured, calculated, broken down.</p>
+          <span class="arrow">→</span>
+        </a>
+        <a href="/chapter-6" class="card reveal reveal-delay-3" data-astro-prefetch>
+          <span class="n">06</span>
+          <h3 class="serif">Carbon-Reduction Calculator</h3>
+          <p>Interactive what-if model — adjust PV and solar-thermal sliders to see CO₂, costs, payback, NPV.</p>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chapter 1 -->
+  <Section
+    chip="Chapter 01"
+    label="Introduction"
+    title="Introduction"
+    id="chapter-1"
+  >
+    <p class="placeholder-note">
+      <em>Content for Chapter 1 will be inserted here from the existing site.</em>
+    </p>
+    <p>The Rathaus in Oberägeri is the administrative heart of a municipality of roughly 6,500 inhabitants in Canton Zug. It hosts the municipal administration, two residential apartments, and the local crisis-command centre (<em>Krisenstab</em>) backed by an on-site diesel emergency generator.</p>
+    <p>This project asks a simple question: <strong>where can the building cut CO₂, at what cost, and how fast does the investment pay back?</strong> The answer combines a 2025 baseline audit (Chapter 5) with two rooftop-solar levers — photovoltaics and solar-thermal — sized and evaluated in an interactive calculator (Chapter 6).</p>
+  </Section>
+
+  <!-- Chapter 2 -->
+  <Section
+    chip="Chapter 02"
+    label="Context"
+    title="The Municipality of Oberägeri"
+    id="chapter-2"
+  >
+    <p class="placeholder-note">
+      <em>Content for Chapter 2 will be inserted here from the existing site.</em>
+    </p>
+    <p>Oberägeri lies on the northern shore of Lake Ägeri in Canton Zug. The municipality has held the <em>Energiestadt</em> label since 2003, which signals an above-average commitment to municipal energy and climate action under the Swiss federal framework.</p>
+  </Section>
+
+  <!-- Chapter 3 -->
+  <Section
+    chip="Chapter 03"
+    label="Method"
+    title="Research Approach"
+    id="chapter-3"
+  >
+    <p class="placeholder-note">
+      <em>Content for Chapter 3 will be inserted here from the existing site.</em>
+    </p>
+    <p>The methodology combines: (1) a literature review of Swiss energy policy and public-building efficiency, (2) a quantitative baseline of the Rathaus's 2025 consumption using municipal data, KBOB emission factors and WWZ tariff data, and (3) an interactive what-if model for evaluating rooftop solar interventions.</p>
+  </Section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-inner reveal">
+        <div>
+          <span class="lbl">Try the live tool</span>
+          <h2 class="serif">Open the carbon-reduction calculator</h2>
+        </div>
+        <a href="/chapter-6" class="btn" data-astro-prefetch>Launch calculator →</a>
+      </div>
+    </div>
+  </section>
+
+</Base>
+
+<style>
+  .chapter-index{
+    padding:clamp(48px, 7vw, 80px) 0;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:clamp(16px, 2vw, 24px);
+  }
+  .card{
+    position:relative;
+    padding:32px 28px 28px;
+    border:1px solid var(--line);
+    background:var(--paper);
+    transition: all 0.4s var(--ease-out);
+    border-radius:2px;
+    color:inherit;
+    overflow:hidden;
+  }
+  .card::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(135deg, var(--sand) 0%, transparent 60%);
+    opacity:0;
+    transition: opacity 0.4s var(--ease-out);
+  }
+  .card:hover{
+    transform: translateY(-4px);
+    border-color:var(--moss-2);
+    box-shadow:0 16px 40px rgba(26,34,38,0.08);
+  }
+  .card:hover::before{opacity:1}
+  .card > *{position:relative;z-index:1}
+  .n{
+    display:block;
+    font-size:11px;
+    letter-spacing:.32em;
+    color:var(--moss);
+    font-weight:500;
+    margin-bottom:18px;
+  }
+  .card h3{
+    font-size:24px;
+    line-height:1.2;
+    margin:0 0 12px;
+    color:var(--ink);
+  }
+  .card p{
+    font-size:14px;
+    line-height:1.7;
+    color:var(--ink-soft);
+    margin:0 0 28px;
+    font-weight:300;
+  }
+  .arrow{
+    font-size:20px;
+    color:var(--moss);
+    transition: transform 0.35s var(--ease-out);
+    display:inline-block;
+  }
+  .card:hover .arrow{ transform: translateX(6px); }
+
+  .placeholder-note{
+    background: var(--sand);
+    padding: 12px 18px;
+    border-left: 2px dashed var(--mute);
+    font-size: 13px !important;
+    color: var(--mute) !important;
+  }
+
+  .cta{
+    background: var(--ink);
+    color: var(--paper);
+    padding: clamp(60px, 9vw, 100px) 0;
+  }
+  .cta-inner{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:32px;
+  }
+  .cta .lbl{
+    font-size:11px;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:500;
+  }
+  .cta h2{
+    font-size:clamp(28px, 4vw, 44px);
+    line-height:1.15;
+    font-weight:400;
+    margin:14px 0 0;
+    letter-spacing:-0.015em;
+    max-width:18ch;
+  }
+  .btn{
+    display:inline-block;
+    padding:16px 32px;
+    background: var(--accent);
+    color: var(--ink);
+    font-size:13px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    font-weight:500;
+    transition: all 0.3s var(--ease-out);
+    border-radius:2px;
+  }
+  .btn:hover{
+    background: var(--paper);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+  }
+</style>

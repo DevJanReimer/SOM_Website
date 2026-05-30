@@ -1,0 +1,43 @@
+---
+interface Props {
+  label?: string;
+}
+const { label } = Astro.props;
+---
+
+<div class="formula reveal">
+  {label && <span class="lbl">{label}</span>}
+  <slot />
+</div>
+
+<style is:global>
+  .formula{
+    margin:20px 0;
+    padding:20px 26px;
+    background:var(--sand);
+    border-left:3px solid var(--moss);
+    max-width:74ch;
+    font-size:15px;
+    color:var(--ink);
+    letter-spacing:.01em;
+    line-height:1.8;
+    overflow-x:auto;
+  }
+  .formula .lbl{
+    display:block;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--moss);
+    font-weight:500;
+    margin-bottom:10px;
+    font-family:'Inter',sans-serif;
+  }
+  .formula code{
+    font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;
+    font-size:14px;
+    color:var(--ink);
+    background:none;
+    white-space:nowrap;
+  }
+</style>

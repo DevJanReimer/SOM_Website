@@ -1,0 +1,70 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  subtitle?: string;
+}
+const { eyebrow, title, subtitle } = Astro.props;
+---
+
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow reveal">{eyebrow}</div>
+    <h1 class="serif reveal reveal-delay-1" set:html={title}></h1>
+    {subtitle && <div class="sub reveal reveal-delay-2">{subtitle}</div>}
+  </div>
+  <div class="hero-glow" aria-hidden="true"></div>
+</section>
+
+<style>
+  .hero{
+    position:relative;
+    padding:clamp(72px, 12vw, 140px) 0 clamp(48px, 8vw, 80px);
+    overflow:hidden;
+  }
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    color:var(--moss);
+    font-weight:500;
+    margin-bottom:24px;
+  }
+  h1{
+    font-size:clamp(40px, 7vw, 88px);
+    line-height:1.02;
+    font-weight:400;
+    margin:0;
+    letter-spacing:-0.025em;
+    color:var(--ink);
+    max-width:18ch;
+  }
+  .sub{
+    margin-top:28px;
+    font-size:13px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--mute);
+    font-weight:400;
+    max-width:60ch;
+  }
+  .hero-glow{
+    position:absolute;
+    top:-200px;
+    right:-200px;
+    width:600px;
+    height:600px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(94, 125, 99, 0.15) 0%, transparent 70%);
+    pointer-events:none;
+    z-index:-1;
+    animation: drift 18s var(--ease-in-out) infinite alternate;
+  }
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-40px, 30px) scale(1.1); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-glow{animation:none}
+  }
+</style>
