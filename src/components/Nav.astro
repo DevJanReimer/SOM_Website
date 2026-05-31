@@ -7,22 +7,24 @@ const isActive = (path: string) => pathname === path || pathname === path + '/';
   <div class="container nav-inner">
     <a href="/" class="brand" data-astro-prefetch>
       <span class="brand-mark" aria-hidden="true">
-        <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="38" height="38" rx="7" fill="#3b5a3f"/>
-          <!-- building -->
-          <path d="M9 28L9 17.5L19 10L29 17.5L29 28Z" stroke="rgba(255,255,255,0.92)" stroke-width="1.7" stroke-linejoin="round"/>
-          <!-- door -->
-          <rect x="15.5" y="21" width="7" height="7" stroke="rgba(255,255,255,0.92)" stroke-width="1.5" rx="0.5"/>
-          <!-- sun body -->
-          <circle cx="27" cy="10.5" r="2.4" fill="#d9a679"/>
-          <!-- sun rays -->
-          <line x1="27" y1="7.2" x2="27" y2="5.8" stroke="#d9a679" stroke-width="1.4" stroke-linecap="round"/>
-          <line x1="29.7" y1="8" x2="30.8" y2="7.1" stroke="#d9a679" stroke-width="1.4" stroke-linecap="round"/>
-          <line x1="30.3" y1="10.5" x2="31.7" y2="10.5" stroke="#d9a679" stroke-width="1.4" stroke-linecap="round"/>
-          <line x1="24.3" y1="8" x2="23.2" y2="7.1" stroke="#d9a679" stroke-width="1.4" stroke-linecap="round"/>
+        <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <clipPath id="nav-bowl">
+              <circle cx="50" cy="50" r="26"/>
+            </clipPath>
+          </defs>
+          <!-- C/crescent shape: outer circle minus inner circle (fill-rule evenodd) -->
+          <path fill-rule="evenodd" fill="#1a3d2b" d="
+            M 2 42 A 40 40 0 1 0 82 42 A 40 40 0 1 0 2 42 Z
+            M 24 50 A 26 26 0 1 0 76 50 A 26 26 0 1 0 24 50 Z
+          "/>
+          <!-- Mountain peaks inside the white bowl -->
+          <path d="M24 74 L40 48 L50 60 L62 36 L80 74Z" fill="#1a3d2b" clip-path="url(#nav-bowl)"/>
+          <!-- Leaf curl in the green area at top -->
+          <path d="M50 24 C58 18 68 18 70 26" stroke="#0e2618" stroke-width="5" fill="none" stroke-linecap="round"/>
         </svg>
       </span>
-      <span class="brand-text">Rathaus Oberägeri · <em>Carbon Reduction Project</em></span>
+      <span class="brand-text">Carbon Reduction <em>Oberägeri</em></span>
     </a>
 
     <nav class="links" aria-label="Primary">
@@ -56,7 +58,7 @@ const isActive = (path: string) => pathname === path || pathname === path + '/';
     display:flex;
     align-items:center;
     gap:14px;
-    font-size:14px;
+    font-size:16px;
     font-family:'Cormorant Garamond',serif;
     color:var(--ink);
     transition:opacity 0.3s var(--ease-out);
@@ -68,7 +70,8 @@ const isActive = (path: string) => pathname === path || pathname === path + '/';
     justify-content:center;
     flex-shrink:0;
   }
-  .brand-text em{font-style:italic;color:var(--mute);font-size:0.9em}
+  .brand-text{font-weight:400;letter-spacing:0.01em}
+  .brand-text em{font-style:normal;color:var(--moss);font-size:1em;font-weight:400}
   @media(max-width:680px){
     .brand-text{display:none}
   }
