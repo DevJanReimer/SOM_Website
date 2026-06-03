@@ -17,15 +17,18 @@ const kpis = [
 
   <Hero
     eyebrow="Chapter 06"
-    title="How the<br/>Calculator<br/>Works"
-    subtitle="Interactive what-if model · Rathaus 2025 audited baseline"
+    title="Carbon<br/>Reduction<br/>Calculator"
+    subtitle="Built for municipalities exploring green energy investments — before committing to them."
     image="/oberaegeri-zg.jpg"
     imageAlt="Oberägeri, Canton Zug"
   />
 
   <div class="container">
     <p class="lead reveal">
-      The Rathaus <strong>Carbon Reduction Calculator</strong> turns the 2025 audited baseline into an interactive what-if model. Enter the building's current consumption and prices, choose how much roof area to allocate to <em>photovoltaics</em> and <em>solar-thermal</em>, and the tool reports the resulting CO₂ savings, costs, payback period and net present value — plus a roof optimiser that sweeps every possible PV/ST split to find the cheapest way to avoid a tonne of CO₂.
+      Municipalities considering green energy investments face a common challenge: <strong>will the investment actually pay off, and how much CO₂ can it realistically cut?</strong> This calculator was built to answer exactly that — giving municipal decision-makers a way to probe rooftop photovoltaic and solar-thermal scenarios interactively, long before any panels are installed. Adjust the available roof area, tweak energy prices, and the tool immediately shows the projected CO₂ savings, annual cost reduction, payback period and net present value for your specific building and budget.
+    </p>
+    <p class="lead-sub reveal">
+      Under the hood it turns the Rathaus 2025 audited baseline into a live what-if model. The sections below explain each calculation step — from how raw roof area becomes useful energy, to how the roof optimiser finds the split between PV and solar-thermal that avoids a tonne of CO₂ at the lowest possible cost.
     </p>
 
     <KpiStrip kpis={kpis} />
@@ -129,6 +132,15 @@ const kpis = [
   }
   .lead em{font-style:italic;color:var(--ink)}
   .lead strong{font-weight:500;color:var(--ink)}
+  .lead-sub{
+    padding:0 0 16px;
+    font-size:clamp(15px, 1.6vw, 17px);
+    line-height:1.8;
+    color:var(--ink-soft);
+    max-width:74ch;
+    font-weight:300;
+    margin-top:-8px;
+  }
 
   .metrics{
     display:grid;
