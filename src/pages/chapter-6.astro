@@ -31,6 +31,11 @@ const kpis = [
       Under the hood it turns the Rathaus 2025 audited baseline into a live what-if model. The sections below explain each calculation step — from how raw roof area becomes useful energy, to how the roof optimiser finds the split between PV and solar-thermal that avoids a tonne of CO₂ at the lowest possible cost.
     </p>
 
+    <div class="use-case-box reveal">
+      <span class="use-case-label">Practical use case</span>
+      <p>Already received contractor quotes during the budgeting phase? Enter the offered investment costs directly into the calculator to see whether the proposed PV/solar-thermal split makes financial sense — the tool computes the NPV for each scenario and highlights whether a different allocation of roof area would deliver a better return or greater CO₂ reduction. Use it to challenge an offer, compare alternatives, or build the business case for your municipal council.</p>
+    </div>
+
     <KpiStrip kpis={kpis} />
   </div>
 
@@ -140,6 +145,31 @@ const kpis = [
     max-width:74ch;
     font-weight:300;
     margin-top:-8px;
+  }
+  .use-case-box{
+    margin:8px 0 40px;
+    padding:24px 28px;
+    max-width:74ch;
+    border:1px solid rgba(230,224,210,0.8);
+    border-left:3px solid var(--moss);
+    border-radius:2px;
+    background:rgba(59,90,63,0.04);
+  }
+  .use-case-label{
+    display:block;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--moss);
+    font-weight:600;
+    margin-bottom:10px;
+  }
+  .use-case-box p{
+    margin:0;
+    font-size:clamp(14.5px, 1.5vw, 16px);
+    line-height:1.75;
+    color:var(--ink-soft);
+    font-weight:300;
   }
 
   .metrics{
