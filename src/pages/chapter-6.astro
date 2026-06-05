@@ -28,8 +28,11 @@ const kpis = [
       Municipalities considering green energy investments face a common challenge: will the investment actually pay off, and how much CO₂ can realistically be reduced? This calculator was built to answer exactly that. It gives municipal decision-makers a tool to interactively experiment with rooftop photovoltaic (PV) and solar-thermal (ST) scenarios, before any decisions are made or installations are underway. The tool is interactive because each user can adjust the available roof area and energy prices, which the tool uses to calculate projected CO₂ savings, annual cost reduction, the payback period and the net present value for their specific building and budget.
     </p>
     <p class="lead-sub reveal">
-      Our calculator can mathematically transform data from any Swiss town hall into an interactive what-if model. The sections below explain each step of the calculation with the tool available at this link: <a href="https://som-calculator.vercel.app" target="_blank" rel="noopener">som-calculator.vercel.app</a>.
+      Our calculator can mathematically transform data from any Swiss town hall into an interactive what-if model. The sections below explain each step of the calculation.
     </p>
+    <div class="lead-cta reveal">
+      <a class="cta-btn" href="https://som-calculator.vercel.app" target="_blank" rel="noopener">Open calculator ↗</a>
+    </div>
 
     <KpiStrip kpis={kpis} />
   </div>
@@ -158,12 +161,25 @@ const kpis = [
     font-weight:300;
     margin-top:-8px;
   }
-  .lead-sub a{
-    color:var(--moss);
-    text-decoration:underline;
-    text-underline-offset:3px;
+  .lead-cta{
+    margin:4px 0 32px;
   }
-  .lead-sub a:hover{color:var(--ink)}
+  .cta-btn{
+    display:inline-block;
+    padding:13px 28px;
+    background:var(--moss);
+    color:#fff;
+    font-size:13px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    font-weight:500;
+    border-radius:2px;
+    transition: background 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+  }
+  .cta-btn:hover{
+    background:var(--ink);
+    transform:translateY(-2px);
+  }
   .use-case-box{
     margin:8px 0 40px;
     padding:24px 28px;
