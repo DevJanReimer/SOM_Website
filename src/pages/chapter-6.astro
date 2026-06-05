@@ -25,25 +25,37 @@ const kpis = [
 
   <div class="container">
     <p class="lead reveal">
-      Municipalities considering green energy investments face a common challenge: <strong>will the investment actually pay off, and how much CO₂ can it realistically cut?</strong> This calculator was built to answer exactly that — giving municipal decision-makers a way to probe rooftop photovoltaic and solar-thermal scenarios interactively, long before any panels are installed. Adjust the available roof area, tweak energy prices, and the tool immediately shows the projected CO₂ savings, annual cost reduction, payback period and net present value for your specific building and budget.
+      Municipalities considering green energy investments face a common challenge: will the investment actually pay off, and how much CO₂ can realistically be reduced? This calculator was built to answer exactly that. It gives municipal decision-makers a tool to interactively experiment with rooftop photovoltaic (PV) and solar-thermal (ST) scenarios, before any decisions are made or installations are underway. The tool is interactive because each user can adjust the available roof area and energy prices, which the tool uses to calculate projected CO₂ savings, annual cost reduction, the payback period and the net present value for their specific building and budget.
     </p>
     <p class="lead-sub reveal">
-      Under the hood it turns the Rathaus 2025 audited baseline into a live what-if model. The sections below explain each calculation step — from how raw roof area becomes useful energy, to how the roof optimiser finds the split between PV and solar-thermal that avoids a tonne of CO₂ at the lowest possible cost.
+      Our calculator can mathematically transform data from any Swiss town hall into an interactive what-if model. The sections below explain each step of the calculation with the tool available at this link: <a href="https://som-calculator.vercel.app" target="_blank" rel="noopener">som-calculator.vercel.app</a>.
     </p>
-
-    <div class="use-case-box reveal">
-      <span class="use-case-label">Practical use case</span>
-      <p>Already received contractor quotes during the budgeting phase? Enter the offered investment costs directly into the calculator to see whether the proposed PV/solar-thermal split makes financial sense — the tool computes the NPV for each scenario and highlights whether a different allocation of roof area would deliver a better return or greater CO₂ reduction. Use it to challenge an offer, compare alternatives, or build the business case for your municipal council.</p>
-    </div>
 
     <KpiStrip kpis={kpis} />
   </div>
 
-  <Section chip="06 / A" label="A · Inputs" title="What you put in" id="s-6-a">
-    <p>You tell the calculator how much <strong>electricity</strong> (kWh/year) and <strong>heat</strong> (kWh/year) the building currently uses, how much <strong>roof area</strong> is available, and what the building <strong>pays today</strong> (electricity price, heat price). You also pick the current energy sources — for the Rathaus this is <em>WWZ electricity</em> and <em>wood-chip district heating</em>.</p>
+  <Section chip="06 / A" label="A · Data Sources" title="Data Sources &amp; Methodology" id="s-6-a">
+    <p>The calculator utilises assumptions based on baseline consumption for a single municipality. For Oberägeri, the standard figures for electricity and heat demand are pre-loaded, and they come from audited consumption data and operational details provided via email correspondence with Alexander Klauz, administrative director of the Oberägeri municipality (Klauz, 2026). The data reflects the town hall's 2025 energy records, including the WWZ WasserSonneStrom tariff mix (80 % hydropower, 20 % PV) and the wood-chip district heating supply.</p>
+    <p>The emission factors were drawn predominantly from KBOB (<em>Ökobilanzdaten im Baubereich</em> (2009/1:2022, version 8.02)), which is the Swiss federal reference dataset for life-cycle assessment in the building sector (KBOB, 2022). If a local supplier publishes its own verified figures, such as the WWZ WasserSonneStrom mix, these take precedence over the national averages. Every factor used in the model can be inspected and, if needed, overridden.</p>
   </Section>
 
-  <Section chip="06 / B" label="B · Baseline" title="The baseline" qty="— before any solar" id="s-6-b">
+  <Section chip="06 / B" label="B · Inputs" title="What You Enter" id="s-6-b">
+    <p>The tool is built around a simple principle: the user only has to enter the data available to them. For example, electricity and heat consumption from a prior year, the utilised heating method, the utilised electricity mix, and the available roof area for a PV and ST upgrade.</p>
+    <p>Optionally, the user can refine the financially relevant data points. For example, the user can adjust the model to reflect their actual electricity price and set an investment budget. When a budget is defined, the calculator uses it to calculate an optimised PV/ST split based on the financial constraints. Additionally, a weighting factor informs the model of the relative importance of CO₂ savings versus cost savings. Finally, the NPV calculation can be adjusted to include an inflation factor and the user can specify the rate of system degradation over time within a chosen depreciation period.</p>
+  </Section>
+
+  <Section chip="06 / C" label="C · Use case" title="Practical Use Case" id="s-6-c">
+    <div class="use-case-box">
+      <span class="use-case-label">Practical use case</span>
+      <p>For municipalities that have already received a contractor quote during the budgeting phase, the quoted investment costs can be included in the calculator. The rates must be provided in square metres but when included they help calculate the financial viability of the quoted PV/ST split. The tool computes the NPV for each scenario and highlights whether a different allocation of roof area would deliver a better return or greater CO₂ reduction. The results and calculator can be used to challenge an offer, compare alternatives, or build the business case for your municipal council.</p>
+    </div>
+  </Section>
+
+  <Section chip="06 / D" label="D · Expert settings" title="Defaults &amp; Expert Settings" id="s-6-d">
+    <p>Using the calculator in its most user-friendly form requires no further data adjustments other than those listed above, as each default assumption has been set based on generalisable averages. For users that want more influence over the model there is an expert panel that allows them to adjust electricity and heat emission factors, installation cost rates, maintenance costs, specific energy yields, and embodied emissions of the solar panels. When not adjusted, the values are based predominantly on the KBOB dataset or published Swiss LCA sources (KBOB, 2022). The baseline estimates for the annual maintenance costs of PV and solar thermal rest on the operating cost figures published by EnergieSchweiz/BFE (2017) and the U.S. Department of Energy (n.d.). Edit them only if you have site-specific figures — for example from a contractor's quote or a supplier's environmental product declaration.</p>
+  </Section>
+
+  <Section chip="06 / E" label="E · Baseline" title="The baseline" qty="— before any solar" id="s-6-e">
     <p>The calculator first figures out what the building costs and emits right now, before any solar is added. It multiplies consumption by the <strong>CO₂ factor</strong> for each energy source (from KBOB / WWZ data) to get annual CO₂ in kg, and multiplies consumption by the <strong>energy prices</strong> to get annual cost in CHF.</p>
     <Formula label="Baseline formulas">
       <code>annual CO₂  =  consumption × CO₂ factor</code><br/>
@@ -51,7 +63,7 @@ const kpis = [
     </Formula>
   </Section>
 
-  <Section chip="06 / C" label="C · Photovoltaics" title="Adding PV" id="s-6-c">
+  <Section chip="06 / F" label="F · Photovoltaics" title="Adding PV" id="s-6-f">
     <p>PV panels on the roof generate electricity. The calculator estimates raw output as area times specific yield:</p>
     <Formula label="PV output">
       <code>PV output  =  PV area × yield (kWh/m²/year)</code>
@@ -59,7 +71,7 @@ const kpis = [
     <p>Of that output, only the <strong>self-consumption share</strong> (default 40 %) actually displaces grid electricity — the rest is exported and earns a <em>feed-in credit</em>. So the building buys less electricity from the grid, saving both money and CO₂.</p>
   </Section>
 
-  <Section chip="06 / D" label="D · Solar thermal" title="Adding solar thermal" id="s-6-d">
+  <Section chip="06 / G" label="G · Solar thermal" title="Adding solar thermal" id="s-6-g">
     <p>Solar-thermal panels generate heat. The calculator applies the <strong>"ST yield usable"</strong> factor (40 %) to the raw output:</p>
     <Formula label="Usable ST heat">
       <code>usable ST heat  =  ST area × yield × 40 %</code>
@@ -67,11 +79,11 @@ const kpis = [
     <p>This represents the <em>seasonal reality</em> — panels produce most heat in summer, but the building needs most heat in winter, so only a fraction of what's produced can actually be used. This useful heat directly reduces how much district heating the building needs.</p>
   </Section>
 
-  <Section chip="06 / E" label="E · Roof constraint" title="The constraint" qty="— one roof, two technologies" id="s-6-e">
+  <Section chip="06 / H" label="H · Roof constraint" title="The constraint" qty="— one roof, two technologies" id="s-6-h">
     <p>PV and ST share the same roof. Their <strong>combined area can never exceed</strong> the total available roof area — the sliders clamp each other automatically.</p>
   </Section>
 
-  <Section chip="06 / F" label="F · Costs &amp; savings" title="Costs and savings" id="s-6-f">
+  <Section chip="06 / I" label="I · Costs &amp; savings" title="Costs and savings" id="s-6-i">
     <p>Savings are the difference between what the building would have paid (baseline) and what it actually pays after the project:</p>
     <Formula label="Savings">
       <code>savings  =  baseline cost  −  (residual grid electricity + residual heat  −  feed-in revenue)</code>
@@ -94,7 +106,7 @@ const kpis = [
     </div>
   </Section>
 
-  <Section chip="06 / G" label="G · Roof optimiser" title="The roof optimiser" id="s-6-g">
+  <Section chip="06 / J" label="J · Roof optimiser" title="The roof optimiser" id="s-6-j">
     <p>Instead of one fixed scenario, the optimiser <strong>sweeps every possible PV/ST split</strong> across the full roof — from 0 % PV up to 100 % PV — and calculates coverage at each point:</p>
     <ul class="dashed">
       <li><strong>Electricity coverage —</strong> how much of the building's electricity demand PV covers at this split.</li>
@@ -103,7 +115,7 @@ const kpis = [
     <p>The <strong>equilibrium</strong> is the split where both lines cross — where PV and ST contribute equally as a share of their respective demands. The <em>orange line</em> shows your actual current selection for comparison.</p>
   </Section>
 
-  <Section chip="06 / H" label="H · Optimum" title="The x* badge" qty="— cheapest tonne of CO₂" id="s-6-h">
+  <Section chip="06 / K" label="K · Optimum" title="The x* badge" qty="— cheapest tonne of CO₂" id="s-6-k">
     <p>The <strong>x*</strong> badge marks the split with the <strong>lowest abatement cost</strong> — the cheapest way to avoid a tonne of CO₂. For the Rathaus this is usually <em>PV-heavy</em>, because electricity has a higher CO₂ factor per kWh than wood-chip heat, and PV generates more savings through reduced grid purchases plus feed-in revenue.</p>
   </Section>
 
@@ -146,6 +158,12 @@ const kpis = [
     font-weight:300;
     margin-top:-8px;
   }
+  .lead-sub a{
+    color:var(--moss);
+    text-decoration:underline;
+    text-underline-offset:3px;
+  }
+  .lead-sub a:hover{color:var(--ink)}
   .use-case-box{
     margin:8px 0 40px;
     padding:24px 28px;
