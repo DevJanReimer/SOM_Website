@@ -9,7 +9,7 @@ const kpis = [
   { label: 'Electricity 2025', value: '41,150', unit: 'kWh', note: 'Administration + apartments' },
   { label: 'Heat 2025', value: '189,000', unit: 'kWh', note: 'Wood-chip district heating' },
   { label: 'CO₂ emissions', value: '7,934.7', unit: 'kg CO₂eq', note: 'Total operational, 2025' },
-  { label: 'Energy cost 2025', value: '≈ 39,645', unit: 'CHF', note: 'Electricity + heat (M 25–35)' },
+  { label: 'Energy cost 2026', value: '≈ 23,050', unit: 'CHF', note: 'Electricity + heat (M 25–35)' },
 ];
 ---
 
@@ -25,7 +25,7 @@ const kpis = [
 
   <div class="container">
     <p class="lead reveal">
-      This section examines the town hall's current energy consumption, costs and CO₂ emissions. The building's <strong>2025 electricity and heat consumption</strong> is analysed, and the associated costs and CO₂ emissions are calculated from data provided by the municipal administration. The values serve as the <em>baseline</em> for assessing the potential CO₂ reduction and economic benefit if rooftop photovoltaic and solar-thermal systems are installed.
+      This section examines the town hall's energy consumption, as well as the resulting costs and CO₂ emissions. The analysis is based on electricity and heat consumption data from 2025, which was provided by the municipal administration (Klauz, 2026). Since the economic and emissions analysis covers a 25-year period, it is assumed that the town hall's energy consumption will remain consistent with the levels measured in 2025. The 2025 consumption data is therefore used as the <em>baseline</em> for 2026 and subsequent calculations. To determine energy costs and CO₂ emissions, the energy prices applicable for the year 2026 are used. On this basis, future energy costs and CO₂ emissions are calculated in the baseline scenario and compared with the scenarios involving the use of photovoltaic (PV) and solar thermal (ST) systems.
     </p>
 
     <KpiStrip kpis={kpis} />
@@ -33,7 +33,7 @@ const kpis = [
 
   <!-- 5.1 -->
   <Section chip="Chapter 05 / 01" label="Section 5.1" title="Electricity Usage of the Town Hall" id="s-5-1">
-    <p>The town hall's 2025 electricity consumption is broken down into <em>administrative</em> use and <em>residential</em> use from the apartments. Billing was still based on WWZ's high- and low-rate tariffs (WWZ, 2026), shown separately below. The administration accounts for the largest share.</p>
+    <p>The table shows the town hall's electricity consumption for the year 2025. Total consumption is broken down into the town hall's administrative and residential (apartment) consumption, as both are located in the same building. In 2025, billing was still based on WWZ's high and low rates, which is why electricity consumption is shown separately. As can be seen, the administrative sector accounts for the largest share of electricity consumption (approximately 96%). Starting in 2026, WWZ's high and low rate system was abolished (WWZ AG, 2026). For the subsequent calculations, therefore, no distinction is made between high and low rates. The consumption data from 2025 serves as an assumption for future electricity consumption, while the following cost calculations are based on the electricity prices applicable for 2026.</p>
 
     <DataTable caption="Table 5.1 · Electricity Usage 2025">
       <thead>
@@ -49,7 +49,7 @@ const kpis = [
 
   <!-- 5.2 -->
   <Section chip="Chapter 05 / 02" label="Section 5.2" title="Heating Usage of the Town Hall" id="s-5-2">
-    <p>Heat is supplied via a <em>wood-chip district heating system</em>, with a total 2025 consumption of <strong>189,000 kWh</strong>.</p>
+    <p>The table shows the town hall's heat consumption in 2025. Heat is supplied via a <em>wood-chip district heating system</em>. In that year, total heat consumption amounted to <strong>189,000 kWh</strong>.</p>
 
     <DataTable caption="Table 5.2 · Heat Consumption 2025">
       <thead>
@@ -67,10 +67,10 @@ const kpis = [
 
   <!-- 5.3 -->
   <Section chip="Chapter 05 / 03" label="Section 5.3" title="CO₂ Emissions, Electricity and Heating Costs 2025" id="s-5-3">
-    <p>Because no separate heating-consumption data is available for the administrative area and the apartments, the following calculations treat both electricity and heating consumption as the <em>building's total consumption</em>, ensuring a consistent basis for CO₂ and cost calculations.</p>
+    <p>Since there is no separate consumption data for heat usage in the administrative area and the apartments, the following calculations treat both electricity and heat consumption exclusively as the building's total consumption. This is to ensure a consistent basis for calculating CO₂ emissions and energy costs.</p>
 
     <h3>CO₂ Emissions 2025</h3>
-    <p>The CO₂ calculation uses annual electricity and heat consumption and the corresponding emission factors: electricity from WWZ (WWZ, 2024), heat from KBOB (KBOB, 2024), and the diesel-generator factor from the Swiss Greenhouse Gas Inventory (BAFU, 2024). The diesel generator is included as an emergency-power solution — it was not used in 2025 and caused no additional emissions. Total annual CO₂ emissions: <strong>7,934.7 kg CO₂eq</strong>, with the wood-chip district heating system as the largest share.</p>
+    <p>The table shows the calculated CO₂ emissions for the town hall in 2026. The calculation is based on annual electricity and heat consumption, as well as the corresponding emission factors. The emission factor for electricity consumption is based on data from WWZ (WWZ AG, 2025), while the emission factor for heat consumption was taken from KBOB (KBOB, 2024). In addition, the existing diesel generator was also taken into account as an emergency power solution. Since it was not used in 2025, this did not result in any additional CO₂ emissions. Overall, this results in annual CO₂ emissions of <strong>7,934.7 kg CO₂eq</strong>, with the wood-chip district heating system accounting for the largest share.</p>
 
     <DataTable caption="Table 5.3 · CO₂ Emissions of the Town Hall 2025">
       <thead>
@@ -84,8 +84,8 @@ const kpis = [
       </tbody>
     </DataTable>
 
-    <h3>Electricity and Heating Cost 2025</h3>
-    <p>Electricity costs are calculated from 2025 consumption and WWZ's current high- and low-rate tariffs (incl. VAT), plus the monthly base fee. <strong>Total annual electricity cost: CHF 12,546.17</strong> (WWZ, 2025).</p>
+    <h3>Electricity and Heating Cost 2026</h3>
+    <p>The table shows the estimated electricity costs for the town hall in 2026. The calculation is based on annual electricity consumption and the current WWZ electricity rate, including VAT. In addition, the monthly base fee was included in the calculation. This results in <strong>total annual electricity costs of CHF 8,686.28</strong>. The electricity rates used are based on the rate information provided by WWZ (WWZ, 2026).</p>
 
     <DataTable caption="Table 5.4 · Electricity Cost 2025">
       <thead>
@@ -99,7 +99,7 @@ const kpis = [
       </tbody>
     </DataTable>
 
-    <p>Heating costs are calculated for three wood-chip grades — <em>M 40–55</em>, <em>M 25–35</em>, <em>M 15–20</em> — referring to moisture content in percent. With 189,000 kWh annual heat demand, costs range from <strong>CHF 12,852 to CHF 16,065</strong>. Prices were extrapolated from 2018/2019 data to 2025 using a wood-chip price index (Holzenergie Schweiz, 2026), VAT included.</p>
+    <p>The table shows the calculated heating costs for the town hall based on different wood chip grades. The designations <em>M 40–55</em>, <em>M 25–35</em>, and <em>M 15–20</em> refer to the moisture content of the wood chips used and should be read as a percentage. The calculation is based on an annual heat consumption of 189,000 kWh and the respective energy prices per kWh. Depending on the moisture content of the wood chips, annual heating costs range from <strong>CHF 12,663 to CHF 16,065</strong>. Since price data for wood chips was only available for the years 2018/2019 (Holzenergie Emmental, 2017), the energy prices used were extrapolated to the average price level of the year 2026 using a wood chip price index (Holzenergie Schweiz, 2026). In addition, value-added tax was included in the calculation.</p>
 
     <DataTable caption="Table 5.5 · Heating Cost 2025 by Wood-chip Grade">
       <thead>
@@ -112,13 +112,13 @@ const kpis = [
       </tbody>
     </DataTable>
 
-    <p>These figures cover only the <em>energy</em> cost of the wood chips. Operating and maintenance costs of the heating network are not included, since no information is available on operating costs or on the allocation of usage volumes among the connected buildings.</p>
+    <p>The calculated heating costs include only the energy costs of wood chips. Operating and maintenance costs of the heating network were not taken into account, as no information is available on operating costs or on the allocation between administrative and residential parts of the town hall.</p>
 
-    <p>For total energy costs, the assumption is wood chips with <strong>M 25–35</strong> moisture content. According to Heitzmann (n.d.), 20–30 % moisture chips are typical for systems up to ~300 kW, while M 40–50 chips are used in larger industrial plants. Since the municipal network is not industrial-scale, M 25–35 is plausible — giving energy costs of <strong>CHF 27,099</strong>.</p>
+    <p>To calculate the total energy consumption costs for 2026, it is assumed that the district heating network uses wood chips with a moisture content of <strong>M 25–35</strong>. According to Heitzmann (2026), wood chips with a moisture content of 20–30 % are typically used in heating systems up to approximately 300 kW. Wood chips with a moisture content of M 40–50 are mainly used in larger industrial combustion systems. Since the municipality's district heating system is not a large-scale industrial plant, the assumption of wood chips with a moisture content of M 25–35 appears plausible. Based on this assumption, the total energy costs would amount to <strong>CHF 23,050</strong>.</p>
 
     <div class="total-card reveal">
-      <span class="lbl">Total energy cost 2025 (M 25–35)</span>
-      <span class="v">39,645<span class="unit">CHF</span></span>
+      <span class="lbl">Total energy cost 2026 (M 25–35)</span>
+      <span class="v">23,050<span class="unit">CHF</span></span>
     </div>
   </Section>
 
