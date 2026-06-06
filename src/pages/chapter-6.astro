@@ -56,68 +56,151 @@ const kpis = [
     <p>Using the calculator in its most user-friendly form requires no further data adjustments other than those listed above, as each default assumption has been set based on generalisable averages. For users that want more influence over the model there is an expert panel that allows them to adjust electricity and heat emission factors, installation cost rates, maintenance costs, specific energy yields, and embodied emissions of the solar panels. When not adjusted, the values are based predominantly on the KBOB dataset or published Swiss LCA sources (KBOB, 2022). The baseline estimates for the annual maintenance costs of PV and solar thermal rest on the operating cost figures published by EnergieSchweiz/BFE (2017) and the U.S. Department of Energy (n.d.). Edit them only if you have site-specific figures — for example from a contractor's quote or a supplier's environmental product declaration.</p>
   </Section>
 
-  <Section chip="06 / E" label="E · Baseline" title="The baseline" qty="— before any solar" id="s-6-e">
-    <p>The calculator first figures out what the building costs and emits right now, before any solar is added. It multiplies consumption by the <strong>CO₂ factor</strong> for each energy source (from KBOB / WWZ data) to get annual CO₂ in kg, and multiplies consumption by the <strong>energy prices</strong> to get annual cost in CHF.</p>
-    <Formula label="Baseline formulas">
-      <code>annual CO₂  =  consumption × CO₂ factor</code><br/>
-      <code>annual cost =  consumption × price</code>
+  <Section chip="06 / E" label="E · The Model" title="The Model" id="s-6-e">
+    <p>The optimisation model developed for the town hall is designed as a <strong>multi-criteria optimisation problem</strong>. The goal of the solver is to determine the optimal system configuration and the ideal ratio between photovoltaic and solar thermal panels on the roof. The algorithm optimises a mathematical objective function composed of two competing primary objectives over a <strong>25-year time horizon</strong>: maximising the net present value (NPV) and minimising the building's total greenhouse gas emissions.</p>
+    <p>To allow mathematical control of these objectives, the model includes a <strong>variable weighting factor λ</strong> (between 0 and 1) that determines whether the solver calculates a purely cost-optimised solution, a purely emissions-minimised solution, or a balanced compromise. The combined objective function minimised by the solver is:</p>
+    <Formula label="Objective function">
+      <code>minimise F = λ · (−NPV / C_baseline) + (1 − λ) · (E_scenario / E_baseline)</code>
     </Formula>
-  </Section>
-
-  <Section chip="06 / F" label="F · Photovoltaics" title="Adding PV" id="s-6-f">
-    <p>PV panels on the roof generate electricity. The calculator estimates raw output as area times specific yield:</p>
-    <Formula label="PV output">
-      <code>PV output  =  PV area × yield (kWh/m²/year)</code>
-    </Formula>
-    <p>Of that output, only the <strong>self-consumption share</strong> (default 40 %) actually displaces grid electricity — the rest is exported and earns a <em>feed-in credit</em>. So the building buys less electricity from the grid, saving both money and CO₂.</p>
-  </Section>
-
-  <Section chip="06 / G" label="G · Solar thermal" title="Adding solar thermal" id="s-6-g">
-    <p>Solar-thermal panels generate heat. The calculator applies the <strong>"ST yield usable"</strong> factor (40 %) to the raw output:</p>
-    <Formula label="Usable ST heat">
-      <code>usable ST heat  =  ST area × yield × 40 %</code>
-    </Formula>
-    <p>This represents the <em>seasonal reality</em> — panels produce most heat in summer, but the building needs most heat in winter, so only a fraction of what's produced can actually be used. This useful heat directly reduces how much district heating the building needs.</p>
-  </Section>
-
-  <Section chip="06 / H" label="H · Roof constraint" title="The constraint" qty="— one roof, two technologies" id="s-6-h">
-    <p>PV and ST share the same roof. Their <strong>combined area can never exceed</strong> the total available roof area — the sliders clamp each other automatically.</p>
-  </Section>
-
-  <Section chip="06 / I" label="I · Costs &amp; savings" title="Costs and savings" id="s-6-i">
-    <p>Savings are the difference between what the building would have paid (baseline) and what it actually pays after the project:</p>
-    <Formula label="Savings">
-      <code>savings  =  baseline cost  −  (residual grid electricity + residual heat  −  feed-in revenue)</code>
-    </Formula>
-    <p>Investment cost is entered manually or estimated automatically (CHF per m² × area). The calculator then computes three project-economics metrics:</p>
-
-    <div class="metrics reveal">
-      <div class="metric">
-        <div class="name">Payback period</div>
-        <div class="desc">Years until cumulative savings equal the investment.</div>
-      </div>
-      <div class="metric">
-        <div class="name">NPV</div>
-        <div class="desc">Net present value over the project lifetime, discounted at your chosen rate.</div>
-      </div>
-      <div class="metric">
-        <div class="name">Abatement cost</div>
-        <div class="desc">CHF per tonne of CO₂ avoided. <em>Negative = the project pays for itself.</em></div>
-      </div>
+    <div class="var-list">
+      <div class="var-row"><span class="var">F</span><span class="var-desc">Total value of the objective function minimised by the solver</span></div>
+      <div class="var-row"><span class="var">λ</span><span class="var-desc">Weighting factor, freely chosen (0 = emissions only, 1 = cost only)</span></div>
+      <div class="var-row"><span class="var">NPV</span><span class="var-desc">Financial value added by the project over T years vs. the baseline</span></div>
+      <div class="var-row"><span class="var">C_baseline</span><span class="var-desc">Total energy costs under current conditions (baseline) over T years</span></div>
+      <div class="var-row"><span class="var">E_scenario</span><span class="var-desc">Total CO₂eq emissions of the scenario over T years</span></div>
+      <div class="var-row"><span class="var">E_baseline</span><span class="var-desc">Total CO₂eq emissions under current conditions (baseline) over T years</span></div>
     </div>
   </Section>
 
-  <Section chip="06 / J" label="J · Roof optimiser" title="The roof optimiser" id="s-6-j">
-    <p>Instead of one fixed scenario, the optimiser <strong>sweeps every possible PV/ST split</strong> across the full roof — from 0 % PV up to 100 % PV — and calculates coverage at each point:</p>
-    <ul class="dashed">
-      <li><strong>Electricity coverage —</strong> how much of the building's electricity demand PV covers at this split.</li>
-      <li><strong>Heat coverage —</strong> how much of the building's heat demand ST covers at this split.</li>
-    </ul>
-    <p>The <strong>equilibrium</strong> is the split where both lines cross — where PV and ST contribute equally as a share of their respective demands. The <em>orange line</em> shows your actual current selection for comparison.</p>
+  <Section chip="06 / F" label="F · Variables" title="Decision Variables and Constraints" id="s-6-f">
+    <p>The key decision variables in the model are the installed areas of the two solar technologies:</p>
+    <div class="var-list">
+      <div class="var-row"><span class="var">A_PV</span><span class="var-desc">Area of the photovoltaic system (m²)</span></div>
+      <div class="var-row"><span class="var">A_ST</span><span class="var-desc">Area of the solar thermal system (m²)</span></div>
+    </div>
+    <p>The solver determines how much of the available roof area to allocate to each technology. Three constraints apply at all times:</p>
+    <Formula label="Roof area constraint">
+      <code>A_PV + A_ST ≤ A_max</code>
+    </Formula>
+    <Formula label="Non-negativity">
+      <code>A_PV ≥ 0 ,  A_ST ≥ 0</code>
+    </Formula>
+    <Formula label="ST sizing limit (prevents oversizing vs. heat demand)">
+      <code>A_ST × q_ST ≤ E_heat</code>
+    </Formula>
+    <p>Here <em>A_max</em> is the maximum roof area available for installation, <em>q_ST</em> is the specific annual solar thermal yield per m², and <em>E_heat</em> is the current annual heat demand of the town hall. If the budget constraint is activated, the following also applies:</p>
+    <Formula label="Budget constraint">
+      <code>A_PV × c_PV + A_ST × c_ST + B_cost ≤ Budget</code>
+    </Formula>
+    <div class="var-list">
+      <div class="var-row"><span class="var">c_PV</span><span class="var-desc">Investment cost in CHF per m² of photovoltaic system</span></div>
+      <div class="var-row"><span class="var">c_ST</span><span class="var-desc">Investment cost in CHF per m² of solar thermal system</span></div>
+      <div class="var-row"><span class="var">B_cost</span><span class="var-desc">Battery cost in CHF (only counted if battery option is enabled)</span></div>
+    </div>
   </Section>
 
-  <Section chip="06 / K" label="K · Optimum" title="The x* badge" qty="— cheapest tonne of CO₂" id="s-6-k">
-    <p>The <strong>x*</strong> badge marks the split with the <strong>lowest abatement cost</strong> — the cheapest way to avoid a tonne of CO₂. For the Rathaus this is usually <em>PV-heavy</em>, because electricity has a higher CO₂ factor per kWh than wood-chip heat, and PV generates more savings through reduced grid purchases plus feed-in revenue.</p>
+  <Section chip="06 / G" label="G · Baseline" title="Baseline Functions" id="s-6-g">
+    <p>The baseline functions describe the reference state of the town hall without any additional photovoltaic or solar thermal systems. They serve as the comparison basis for the economic and environmental assessment of optimised scenarios, and account for the building's current electricity and heat demand, the respective energy prices, and the associated emission factors.</p>
+    <p>The annual baseline cost in year <em>t</em> is calculated from electricity consumption, heat consumption, and fixed annual electricity charges:</p>
+    <Formula label="Annual baseline cost">
+      <code>C_base(t) = E_elec × p_elec(t) + E_heat × p_heat(t) + C_fixed(t)</code>
+    </Formula>
+    <div class="var-list">
+      <div class="var-row"><span class="var">E_elec</span><span class="var-desc">Current annual electricity consumption (kWh)</span></div>
+      <div class="var-row"><span class="var">p_elec(t)</span><span class="var-desc">Electricity price in CHF/kWh in year t</span></div>
+      <div class="var-row"><span class="var">E_heat</span><span class="var-desc">Current annual heat consumption (kWh)</span></div>
+      <div class="var-row"><span class="var">p_heat(t)</span><span class="var-desc">Heat price in CHF/kWh in year t</span></div>
+      <div class="var-row"><span class="var">C_fixed(t)</span><span class="var-desc">Fixed electricity charges in CHF in year t</span></div>
+    </div>
+    <p>The present value of baseline costs over the full project duration is:</p>
+    <Formula label="Present value of baseline costs">
+      <code>PV_C_base = Σ [ C_base(t) / (1 + r)^t ]  for t = 1…T</code>
+    </Formula>
+    <p>Annual baseline emissions are calculated as:</p>
+    <Formula label="Annual baseline emissions">
+      <code>ε_base = E_elec × f_elec + E_heat × f_heat</code>
+    </Formula>
+    <div class="var-list">
+      <div class="var-row"><span class="var">f_elec</span><span class="var-desc">Electricity emission factor (kg CO₂eq/kWh)</span></div>
+      <div class="var-row"><span class="var">f_heat</span><span class="var-desc">Heat emission factor (kg CO₂eq/kWh)</span></div>
+    </div>
+    <p>Cumulative baseline emissions over the full evaluation period:</p>
+    <Formula label="Cumulative baseline emissions">
+      <code>E_baseline = Σ ε_base(t)  for t = 1…T</code>
+    </Formula>
+  </Section>
+
+  <Section chip="06 / H" label="H · Scenario" title="Scenario Functions" id="s-6-h">
+    <p>The scenario functions describe the situation after the new systems have been installed. They calculate the remaining electricity and heat demand after self-generation via PV and solar thermal systems, and additionally account for feed-in revenues, maintenance costs, system emissions, and — where applicable — battery effects.</p>
+    <p>Annual PV output and self-consumption in year <em>t</em>:</p>
+    <Formula label="PV generation and self-consumption">
+      <code>G_PV(t)  = A_PV × q_PV × d_PV^(t−1)</code><br/>
+      <code>SC_PV(t) = G_PV(t) × φ(t)</code><br/>
+      <code>X_PV(t)  = G_PV(t) − SC_PV(t)          (exported to grid)</code><br/>
+      <code>E_grid(t) = max(0, E_elec − SC_PV(t))  (residual grid demand)</code>
+    </Formula>
+    <div class="var-list">
+      <div class="var-row"><span class="var">q_PV</span><span class="var-desc">Specific annual PV yield kWh/(m²·year)</span></div>
+      <div class="var-row"><span class="var">d_PV</span><span class="var-desc">Annual PV yield degradation factor</span></div>
+      <div class="var-row"><span class="var">φ(t)</span><span class="var-desc">Effective self-consumption share in year t (see Utilisation Rates)</span></div>
+    </div>
+    <p>Annual solar thermal output and usable heat in year <em>t</em>:</p>
+    <Formula label="Solar thermal generation">
+      <code>G_ST(t)   = A_ST × q_ST × d_ST^(t−1)</code><br/>
+      <code>H_ST(t)   = G_ST(t) × η(t)              (usable heat)</code><br/>
+      <code>E_heat_res(t) = max(0, E_heat − H_ST(t)) (residual heat demand)</code>
+    </Formula>
+    <div class="var-list">
+      <div class="var-row"><span class="var">q_ST</span><span class="var-desc">Specific annual solar thermal yield kWh/(m²·year)</span></div>
+      <div class="var-row"><span class="var">d_ST</span><span class="var-desc">Annual ST yield degradation factor</span></div>
+      <div class="var-row"><span class="var">η(t)</span><span class="var-desc">Solar thermal utilisation factor in year t (see Utilisation Rates)</span></div>
+    </div>
+    <p>Annual scenario emissions:</p>
+    <Formula label="Annual scenario emissions">
+      <code>ε_scenario(t) = E_grid(t) × f_elec + E_heat_res(t) × f_heat
+                    + A_PV × f_PV_emb + A_ST × f_ST_emb</code>
+    </Formula>
+    <div class="var-list">
+      <div class="var-row"><span class="var">f_PV_emb</span><span class="var-desc">Embodied emission factor of PV panels (kg CO₂eq/m²/year)</span></div>
+      <div class="var-row"><span class="var">f_ST_emb</span><span class="var-desc">Embodied emission factor of ST panels (kg CO₂eq/m²/year)</span></div>
+    </div>
+    <p>Cumulative scenario emissions and NPV over T years:</p>
+    <Formula label="NPV and cumulative emissions">
+      <code>E_scenario = Σ ε_scenario(t)  for t = 1…T</code><br/>
+      <code>NPV = PV_C_base − Σ [ C_scenario(t) / (1+r)^t ] − I_total</code>
+    </Formula>
+  </Section>
+
+  <Section chip="06 / I" label="I · Inflation" title="Inflation Assumption" id="s-6-i">
+    <p>An annual inflation factor can be enabled in the model. If activated, annual costs — electricity prices, heating prices, fixed electricity charges, and maintenance costs — increase each year by the specified percentage. The <strong>feed-in tariff remains constant</strong>, as it is assumed to be contractually fixed with the grid operator. Initial investments are also not adjusted for inflation, as they are incurred at the start of the project.</p>
+  </Section>
+
+  <Section chip="06 / J" label="J · Utilisation" title="Utilisation Rates and Self-Consumption" id="s-6-j">
+    <p>For photovoltaic systems, it is taken into account that not all generated electricity can be used directly in the town hall. The <strong>self-consumption rate φ</strong> describes what proportion of PV output in year t is used on-site. As PV area increases, this proportion tends to decrease because production more often exceeds current electricity demand. If a battery is activated, the self-consumption share can increase as part of the excess PV electricity can be stored and used later.</p>
+    <p>For solar thermal energy, it is similarly taken into account that not all generated heat can be fully utilised. The <strong>utilisation factor η</strong> describes the proportion of solar thermal production that can actually meet heat demand. For small solar thermal areas, a high utilisation rate is assumed; for larger areas, the usable portion may decrease because at times more heat is produced than can be directly used or stored.</p>
+    <p>These dynamic utilisation rates are essential for the validity of the optimisation model. Without them, the solver would assume an unrealistic linear scalability of yields — mathematically over-engineering the roof with solar components since every additional square metre would produce a proportional benefit. The degressively decreasing factors model the real-world phenomenon of temporary surplus production, forcing the model to balance the marginal costs of additional area against its diminishing marginal benefit. This supports a practical, demand-oriented system sizing.</p>
+  </Section>
+
+  <Section chip="06 / K" label="K · Formal" title="Formal Representation of Utilisation Rates" id="s-6-k">
+    <p>For photovoltaics, the self-consumption rate is modelled as an area-dependent function. <em>φ_ref</em> is the reference self-consumption rate assumed when the PV system covers the full available roof area. When the battery option is activated, the dummy variable β jumps from 0 to 1:</p>
+    <Formula label="PV self-consumption rate">
+      <code>φ(t) = φ_ref × (A_PV / A_max) + γ × B_cap(t) × β</code>
+    </Formula>
+    <p>The remaining usable battery capacity in year t, based on its annual degradation factor <em>d_B</em>:</p>
+    <Formula label="Battery capacity over time">
+      <code>B_cap(t) = (B_cost / c_B) × d_B^(t−1)</code>
+    </Formula>
+    <div class="var-list">
+      <div class="var-row"><span class="var">c_B</span><span class="var-desc">Battery cost per kWh of storage capacity (CHF/kWh)</span></div>
+      <div class="var-row"><span class="var">γ</span><span class="var-desc">Calibration factor for battery effect on self-consumption (0 – 1)</span></div>
+      <div class="var-row"><span class="var">β</span><span class="var-desc">Battery activation dummy (0 = off, 1 = on)</span></div>
+    </div>
+    <p>For solar thermal systems, the utilisation factor is modelled as an area-dependent function. <em>u_min</em> is the minimum utilisation rate when the full roof area is used for solar thermal. First, the effective solar thermal area for year t is calculated accounting for degradation:</p>
+    <Formula label="Effective ST area and utilisation factor">
+      <code>y_eff(t) = A_ST × d_ST^(t−1)</code><br/>
+      <code>η(y_eff) = 1 − (1 − u_min) × (y_eff / A_max)</code>
+    </Formula>
+    <p>For a very small solar thermal area, a full utilisation rate of 100 % is assumed. As the effective area grows, the utilisation factor decreases gradually until it reaches <em>u_min</em>. This accounts for the fact that larger solar thermal systems more frequently generate excess heat that cannot be fully utilised in the town hall.</p>
   </Section>
 
   <!-- Embedded calculator -->
@@ -149,6 +232,33 @@ const kpis = [
     font-weight:300;
   }
   .lead em{font-style:italic;color:var(--ink)}
+
+  .var-list{
+    margin:16px 0 20px;
+    max-width:74ch;
+    border-top:1px solid var(--line);
+  }
+  .var-row{
+    display:grid;
+    grid-template-columns:110px 1fr;
+    gap:12px;
+    padding:10px 0;
+    border-bottom:1px solid var(--line);
+    align-items:baseline;
+  }
+  .var{
+    font-family:'JetBrains Mono','Fira Mono',monospace;
+    font-size:13px;
+    color:var(--moss);
+    font-weight:500;
+    letter-spacing:0.02em;
+  }
+  .var-desc{
+    font-size:14.5px;
+    color:var(--ink-soft);
+    line-height:1.65;
+    font-weight:300;
+  }
   .lead strong{font-weight:500;color:var(--ink)}
   .lead-sub{
     padding:0 0 16px;
