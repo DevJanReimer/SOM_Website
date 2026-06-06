@@ -11,6 +11,54 @@ const kpis = [
   { label: 'Weighting factor λ', value: '0→1', unit: '', note: 'Cost-only to emissions-only' },
   { label: 'Key outputs', value: '3', unit: 'metrics', note: 'NPV · payback · CO₂ abatement' },
 ];
+
+const f = {
+  objective: String.raw`$$\min Z = w \cdot \left(1 - \frac{\text{NPV}}{K_{\text{Baseline,Total}}}\right) + (1-w) \cdot \frac{E_{\text{Scenario,Total}}}{E_{\text{Baseline,Total}}}$$`,
+
+  roofConstraint: String.raw`$$x + y \leq A_{\text{Limit}}$$`,
+
+  nonNegativity: String.raw`$$x \geq 0, \quad y \geq 0$$`,
+
+  stSizing: String.raw`$$y \cdot q_{\text{ST}} \leq Q_{\text{current}}$$`,
+
+  budget: String.raw`$$\text{Inv}_{\text{PV}} \cdot x + \text{Inv}_{\text{ST}} \cdot y + K_{\text{Batt}} \leq \text{Budget}$$`,
+
+  baselineCost: String.raw`$$K_{\text{Baseline},t} = S_{\text{current}} \cdot P_{\text{electricity},t} + Q_{\text{current}} \cdot P_{\text{heat},t} + F_{\text{electricity},t}$$`,
+
+  baselineCostTotal: String.raw`$$K_{\text{Baseline,Total}} = \sum_{t=1}^{N} \frac{K_{\text{Baseline},t}}{(1+i)^t}$$`,
+
+  baselineEmissions: String.raw`$$E_{\text{Baseline},t} = S_{\text{current}} \cdot EF_{\text{electricity}} + Q_{\text{current}} \cdot EF_{\text{heat}}$$`,
+
+  baselineEmissionsTotal: String.raw`$$E_{\text{Baseline,Total}} = \sum_{t=1}^{N} E_{\text{Baseline},t}$$`,
+
+  scenarioCost: String.raw`$$K_{\text{Scenario},t} = F_{\text{electricity},t} + S_{\text{res},t} \cdot P_{\text{electricity},t} + H_{\text{res},t} \cdot P_{\text{heat},t} + M_{\text{PV},t} \cdot x + M_{\text{ST},t} \cdot y - PV_{\text{export},t} \cdot P_{\text{feed-in},t}$$`,
+
+  pvGen: String.raw`$$PV_t = x \cdot q_{\text{PV}} \cdot f_{\text{PV}}(t), \qquad f_{\text{PV}}(t) = \max\!\left(0,\; 1-(t-1)\cdot d_{\text{PV}}\right)$$
+$$PV_{\text{self},t} = \min\!\left(PV_t \cdot sc(x,t),\; S_{\text{current}}\right)$$
+$$PV_{\text{export},t} = \max\!\left(0,\; PV_t - PV_{\text{self},t}\right)$$
+$$S_{\text{res},t} = \max\!\left(0,\; S_{\text{current}} - PV_{\text{self},t}\right)$$`,
+
+  stGen: String.raw`$$ST_t = y \cdot q_{\text{ST}} \cdot f_{\text{ST}}(t), \qquad f_{\text{ST}}(t) = \max\!\left(0,\; 1-(t-1)\cdot d_{\text{ST}}\right)$$
+$$ST_{\text{use},t} = ST_t \cdot u_{\text{ST}}(y,t)$$
+$$H_{\text{res},t} = \max\!\left(0,\; Q_{\text{current}} - ST_{\text{use},t}\right)$$`,
+
+  scenarioCostTotal: String.raw`$$K_{\text{Scenario,Total}} = I_0 + \sum_{t=1}^{N} \frac{K_{\text{Scenario},t}}{(1+i)^t}$$
+$$I_0 = \text{Inv}_{\text{PV}} \cdot x + \text{Inv}_{\text{ST}} \cdot y + K_{\text{Batt}}$$`,
+
+  scenarioEmissions: String.raw`$$E_{\text{Scenario},t} = S_{\text{res},t} \cdot EF_{\text{electricity}} + H_{\text{res},t} \cdot EF_{\text{heat}} + PV_t \cdot EF_{\text{PV}} + ST_t \cdot EF_{\text{ST}}$$`,
+
+  scenarioEmissionsTotal: String.raw`$$E_{\text{Scenario,Total}} = \sum_{t=1}^{N} E_{\text{Scenario},t}$$`,
+
+  pvSc: String.raw`$$sc(x,t) = \max\!\left(0,\; \min\!\left(1,\; 1 - (1-sc_{\text{Slider}})\cdot\frac{x}{A_{\text{Roof}}} + \text{Active}_{\text{Batt}}\cdot\min\!\left(0.5,\; \frac{\gamma \cdot q_{\text{PV}} \cdot B_{\text{estimate}} \cdot f_{\text{Batt}}(t)}{x}\right)\right)\right)$$`,
+
+  battDeg: String.raw`$$f_{\text{Batt}}(t) = \max\!\left(0,\; 1-(t-1)\cdot d_{\text{Batt}}\right)$$`,
+
+  battCap: String.raw`$$B_{\text{estimate}}(K_{\text{Batt}}) = \begin{cases} \dfrac{K_{\text{Batt}}}{847} & K_{\text{Batt}} < 16{,}940 \\[8pt] 20 + \dfrac{K_{\text{Batt}} - 16{,}940}{163.25} & 16{,}940 \leq K_{\text{Batt}} < 30{,}000 \\[8pt] 100 + \dfrac{K_{\text{Batt}} - 30{,}000}{266.67} & K_{\text{Batt}} \geq 30{,}000 \end{cases}$$`,
+
+  stEffArea: String.raw`$$y_{\text{eff}}(t) = y \cdot f_{\text{ST}}(t)$$`,
+
+  stUtil: String.raw`$$u_{\text{ST}}(y,t) = \max\!\left(u_{\min},\; \min\!\left(1,\; 1-(1-u_{\min})\cdot\frac{y_{\text{eff}}(t)-1}{A_{\text{Roof}}-1}\right)\right)$$`,
+};
 ---
 
 <Base title="Chapter 6 · Carbon Reduction Calculator">
@@ -60,7 +108,7 @@ const kpis = [
     <p>The optimisation model developed for the town hall is designed as a <strong>multi-criteria optimisation problem</strong>. The goal of the solver is to determine the optimal system configuration and the ideal ratio between photovoltaic and solar thermal panels on the roof. The algorithm optimises a mathematical objective function composed of two competing primary objectives over a <strong>25-year time horizon</strong>: maximising the net present value (NPV) and minimising the building's total greenhouse gas emissions.</p>
     <p>To allow mathematical control of these objectives, the model includes a <strong>variable weighting factor w</strong> (0 ≤ w ≤ 1) that determines whether the solver calculates a purely cost-optimised solution, a purely emissions-minimised solution, or a balanced compromise. The combined objective function Z minimised by the solver is:</p>
     <Formula label="Objective function">
-      <code>min Z = w · (1 − NPV / K_Baseline,Total) + (1 − w) · (E_Scenario,Total / E_Baseline,Total)</code>
+      <div set:html={f.objective} />
     </Formula>
     <div class="var-list">
       <div class="var-row"><span class="var">Z</span><span class="var-desc">Total value of the objective function minimised by the solver</span></div>
@@ -80,17 +128,17 @@ const kpis = [
     </div>
     <p>The solver determines how much of the available roof area to allocate to each technology. Three constraints always apply:</p>
     <Formula label="Roof area constraint">
-      <code>x + y ≤ A_Limit</code>
+      <div set:html={f.roofConstraint} />
     </Formula>
     <Formula label="Non-negativity">
-      <code>x ≥ 0 ,  y ≥ 0</code>
+      <div set:html={f.nonNegativity} />
     </Formula>
     <Formula label="ST sizing limit prevents oversizing relative to heat demand">
-      <code>y · q_ST ≤ Q_current</code>
+      <div set:html={f.stSizing} />
     </Formula>
     <p>Here <em>A_Limit</em> is the maximum roof area available, <em>q_ST</em> is the specific annual solar thermal yield per m², and <em>Q_current</em> is the current annual heat demand. All energy flows are additionally bounded between 0 and 1 so that no negative residual demands can arise. If the budget constraint is activated, the following also applies:</p>
     <Formula label="Budget constraint">
-      <code>Inv_PV · x + Inv_ST · y + K_Batt ≤ Budget</code>
+      <div set:html={f.budget} />
     </Formula>
     <div class="var-list">
       <div class="var-row"><span class="var">Inv_PV</span><span class="var-desc">Investment cost in CHF per m² of photovoltaic system</span></div>
@@ -104,7 +152,7 @@ const kpis = [
     <p>The baseline functions describe the reference state of the town hall without any additional PV or solar thermal systems. They serve as the comparison basis for the economic and environmental assessment of optimised scenarios, accounting for current electricity and heat demand, the respective energy prices, and associated emission factors.</p>
     <p>The annual baseline cost in year <em>t</em> is:</p>
     <Formula label="Annual baseline cost">
-      <code>K_Baseline,t = S_current · P_electricity,t + Q_current · P_heat,t + F_electricity,t</code>
+      <div set:html={f.baselineCost} />
     </Formula>
     <div class="var-list">
       <div class="var-row"><span class="var">S_current</span><span class="var-desc">Current annual electricity consumption (kWh)</span></div>
@@ -115,14 +163,14 @@ const kpis = [
     </div>
     <p>The present value of total baseline costs over the full project duration:</p>
     <Formula label="Total present value of baseline costs">
-      <code>K_Baseline,Total = Σ [ K_Baseline,t / (1 + i)^t ]  for t = 1…N</code>
+      <div set:html={f.baselineCostTotal} />
     </Formula>
     <div class="var-list">
       <div class="var-row"><span class="var">i</span><span class="var-desc">Discount factor</span></div>
     </div>
     <p>Annual baseline emissions:</p>
     <Formula label="Annual baseline emissions">
-      <code>E_Baseline,t = S_current · EF_electricity + Q_current · EF_heat</code>
+      <div set:html={f.baselineEmissions} />
     </Formula>
     <div class="var-list">
       <div class="var-row"><span class="var">EF_electricity</span><span class="var-desc">Electricity emission factor (kg CO₂/kWh)</span></div>
@@ -130,7 +178,7 @@ const kpis = [
     </div>
     <p>Cumulative baseline emissions over the full evaluation period:</p>
     <Formula label="Cumulative baseline emissions">
-      <code>E_Baseline,Total = Σ E_Baseline,t  for t = 1…N</code>
+      <div set:html={f.baselineEmissionsTotal} />
     </Formula>
   </Section>
 
@@ -138,15 +186,11 @@ const kpis = [
     <p>The scenario functions describe the situation after the new systems have been installed. They calculate the remaining electricity and heat demand after self-generation via PV and solar thermal systems, and additionally account for feed-in revenues, maintenance costs, system emissions, and where applicable battery effects. This allows the model to determine the extent to which costs and emissions change compared to the baseline.</p>
     <p>Annual scenario cost in year <em>t</em>:</p>
     <Formula label="Annual scenario cost">
-      <code>K_Scenario,t = F_electricity,t + S_res,t · P_electricity,t + H_res,t · P_heat,t
-              + M_PV,t · x + M_ST,t · y − PV_export,t · P_feed-in,t</code>
+      <div set:html={f.scenarioCost} />
     </Formula>
     <p>PV generation, self-consumption, and residual grid demand:</p>
     <Formula label="PV generation">
-      <code>PV_t      = x · q_PV · f_PV(t)           where f_PV(t) = max(0, 1 − (t−1) · d_PV)</code><br/>
-      <code>PV_self,t = min(PV_t · sc(x,t), S_current)  (on-site self-consumption)</code><br/>
-      <code>PV_export,t = max(0, PV_t − PV_self,t)      (exported to grid)</code><br/>
-      <code>S_res,t   = max(0, S_current − PV_self,t)   (residual grid demand)</code>
+      <div set:html={f.pvGen} />
     </Formula>
     <div class="var-list">
       <div class="var-row"><span class="var">q_PV</span><span class="var-desc">Specific annual PV yield, kWh/(m²·year)</span></div>
@@ -158,9 +202,7 @@ const kpis = [
     </div>
     <p>Solar thermal generation, usable heat, and residual heat demand:</p>
     <Formula label="Solar thermal generation">
-      <code>ST_t      = y · q_ST · f_ST(t)             where f_ST(t) = max(0, 1 − (t−1) · d_ST)</code><br/>
-      <code>ST_use,t  = ST_t · u_ST(y,t)               (usable solar thermal heat)</code><br/>
-      <code>H_res,t   = max(0, Q_current − ST_use,t)   (residual heat demand)</code>
+      <div set:html={f.stGen} />
     </Formula>
     <div class="var-list">
       <div class="var-row"><span class="var">q_ST</span><span class="var-desc">Specific annual ST yield, kWh/(m²·year)</span></div>
@@ -169,13 +211,11 @@ const kpis = [
     </div>
     <p>Total scenario cost (present value) including initial investment I₀:</p>
     <Formula label="Total scenario cost (present value)">
-      <code>K_Scenario,Total = I₀ + Σ [ K_Scenario,t / (1 + i)^t ]  for t = 1…N</code><br/>
-      <code>I₀ = Inv_PV · x + Inv_ST · y + K_Batt</code>
+      <div set:html={f.scenarioCostTotal} />
     </Formula>
     <p>Annual scenario emissions:</p>
     <Formula label="Annual scenario emissions">
-      <code>E_Scenario,t = S_res,t · EF_electricity + H_res,t · EF_heat
-                  + PV_t · EF_PV + ST_t · EF_ST</code>
+      <div set:html={f.scenarioEmissions} />
     </Formula>
     <div class="var-list">
       <div class="var-row"><span class="var">EF_PV</span><span class="var-desc">Lifecycle emission factor of PV generation (kg CO₂/kWh)</span></div>
@@ -183,7 +223,7 @@ const kpis = [
     </div>
     <p>Cumulative scenario emissions:</p>
     <Formula label="Cumulative scenario emissions">
-      <code>E_Scenario,Total = Σ E_Scenario,t  for t = 1…N</code>
+      <div set:html={f.scenarioEmissionsTotal} />
     </Formula>
   </Section>
 
@@ -200,12 +240,11 @@ const kpis = [
   <Section chip="06 / J" label="J · Formal" title="Formal Representation of Utilisation Rates" id="s-6-j">
     <p>For photovoltaics, the self-consumption rate sc(x,t) is modelled as an area-dependent function. <em>sc_Slider</em> is the reference self-consumption rate assumed when the PV system covers the entire available roof area A_Roof. When the battery option is activated, the dummy variable <em>ActiveBatt</em> jumps from 0 to 1:</p>
     <Formula label="PV self-consumption rate">
-      <code>sc(x,t) = max(0, min(1,  1 − (1 − sc_Slider) · x/A_Roof
-              + ActiveBatt · min(0.5, γ · q_PV · B_estimate · f_Batt(t) / x)  ))</code>
+      <div set:html={f.pvSc} />
     </Formula>
     <p>The remaining usable battery capacity in year t is described by the degradation factor:</p>
     <Formula label="Battery degradation factor">
-      <code>f_Batt(t) = max(0, 1 − (t−1) · d_Batt)</code>
+      <div set:html={f.battDeg} />
     </Formula>
     <div class="var-list">
       <div class="var-row"><span class="var">d_Batt</span><span class="var-desc">Battery annual degradation rate (% capacity lost per year)</span></div>
@@ -214,20 +253,17 @@ const kpis = [
     </div>
     <p>The estimated battery capacity B_estimate is derived from the battery cost entered, using a piecewise cost-to-capacity function:</p>
     <Formula label="Battery capacity estimate (piecewise)">
-      <code>B_estimate(K_Batt) =
-  K_Batt / 847                          if K_Batt &lt; 16,940 CHF
-  20 + (K_Batt − 16,940) / 163.25      if 16,940 ≤ K_Batt &lt; 30,000 CHF
-  100 + (K_Batt − 30,000) / 266.67     if K_Batt ≥ 30,000 CHF</code>
+      <div set:html={f.battCap} />
     </Formula>
     <p>The variable B_estimate describes the storage capacity derived from battery costs. A larger storage capacity allows for the storage of additional PV surplus, thereby increasing the proportion of self-consumption from the photovoltaic system.</p>
     <p>γ is a calibration factor for the battery effect. It determines the extent to which an existing battery increases PV self-consumption in the model. A low value means that the battery has only a small additional effect on self-consumption. A high value means that the battery contributes more significantly to storing excess PV electricity for later use. γ can take values between 0 and 1.</p>
     <p>For solar thermal systems, the utilisation factor u_ST(y,t) is modelled as an area-dependent function. <em>u_min</em> is the minimum utilisation rate when the full roof area A_Roof is used for solar thermal. First, the effective ST area in year t (accounting for degradation) is calculated:</p>
     <Formula label="Effective ST area">
-      <code>y_eff(t) = y · f_ST(t)</code>
+      <div set:html={f.stEffArea} />
     </Formula>
     <p>The solar thermal utilisation factor then follows:</p>
     <Formula label="ST utilisation factor">
-      <code>u_ST(y,t) = max(u_min, min(1,  1 − (1 − u_min) · (y_eff(t) − 1) / (A_Roof − 1)  ))</code>
+      <div set:html={f.stUtil} />
     </Formula>
     <div class="var-list">
       <div class="var-row"><span class="var">u_min</span><span class="var-desc">Minimum utilisation rate when full roof area is used for ST</span></div>

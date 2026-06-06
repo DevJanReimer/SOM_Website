@@ -28,6 +28,7 @@ const { title, description = "Carbon reduction analysis for the Rathaus in OberÃ
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet"
   />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
 
   <ViewTransitions />
 </head>
@@ -60,9 +61,24 @@ const { title, description = "Carbon reduction analysis for the Rathaus in OberÃ
       els.forEach((el) => obs.observe(el));
     }
 
+    function renderKatex() {
+      if (window.renderMathInElement) {
+        window.renderMathInElement(document.body, {
+          delimiters: [{ left: '$$', right: '$$', display: true }],
+          throwOnError: false,
+        });
+      }
+    }
+
     initReveal();
     document.addEventListener('astro:after-swap', initReveal);
     document.addEventListener('astro:page-load', initReveal);
+    document.addEventListener('astro:after-swap', renderKatex);
+    document.addEventListener('astro:page-load', renderKatex);
   </script>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true}],throwOnError:false})"></script>
 </body>
 </html>
