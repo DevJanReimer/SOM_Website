@@ -56,7 +56,7 @@ const kpis = [
     <p>Using the calculator in its most user-friendly form requires no further data adjustments other than those listed above, as each default assumption has been set based on generalisable averages. For users that want more influence over the model there is an expert panel that allows them to adjust electricity and heat emission factors, installation cost rates, maintenance costs, specific energy yields, and embodied emissions of the solar panels. When not adjusted, the values are based predominantly on the KBOB dataset or published Swiss LCA sources (KBOB, 2022). The baseline estimates for the annual maintenance costs of PV and solar thermal rest on the operating cost figures published by EnergieSchweiz/BFE (2017) and the U.S. Department of Energy (n.d.). Edit them only if you have site-specific figures — for example from a contractor's quote or a supplier's environmental product declaration.</p>
   </Section>
 
-  <Section chip="06 / E" label="E · The Model" title="The Model" id="s-6-e">
+  <Section chip="06 / D" label="D · The Model" title="The Model" id="s-6-e">
     <p>The optimisation model developed for the town hall is designed as a <strong>multi-criteria optimisation problem</strong>. The goal of the solver is to determine the optimal system configuration and the ideal ratio between photovoltaic and solar thermal panels on the roof. The algorithm optimises a mathematical objective function composed of two competing primary objectives over a <strong>25-year time horizon</strong>: maximising the net present value (NPV) and minimising the building's total greenhouse gas emissions.</p>
     <p>To allow mathematical control of these objectives, the model includes a <strong>variable weighting factor λ</strong> (between 0 and 1) that determines whether the solver calculates a purely cost-optimised solution, a purely emissions-minimised solution, or a balanced compromise. The combined objective function minimised by the solver is:</p>
     <Formula label="Objective function">
@@ -72,7 +72,7 @@ const kpis = [
     </div>
   </Section>
 
-  <Section chip="06 / F" label="F · Variables" title="Decision Variables and Constraints" id="s-6-f">
+  <Section chip="06 / E" label="E · Variables" title="Decision Variables and Constraints" id="s-6-f">
     <p>The key decision variables in the model are the installed areas of the two solar technologies:</p>
     <div class="var-list">
       <div class="var-row"><span class="var">A_PV</span><span class="var-desc">Area of the photovoltaic system (m²)</span></div>
@@ -99,7 +99,7 @@ const kpis = [
     </div>
   </Section>
 
-  <Section chip="06 / G" label="G · Baseline" title="Baseline Functions" id="s-6-g">
+  <Section chip="06 / F" label="F · Baseline" title="Baseline Functions" id="s-6-g">
     <p>The baseline functions describe the reference state of the town hall without any additional photovoltaic or solar thermal systems. They serve as the comparison basis for the economic and environmental assessment of optimised scenarios, and account for the building's current electricity and heat demand, the respective energy prices, and the associated emission factors.</p>
     <p>The annual baseline cost in year <em>t</em> is calculated from electricity consumption, heat consumption, and fixed annual electricity charges:</p>
     <Formula label="Annual baseline cost">
@@ -130,7 +130,7 @@ const kpis = [
     </Formula>
   </Section>
 
-  <Section chip="06 / H" label="H · Scenario" title="Scenario Functions" id="s-6-h">
+  <Section chip="06 / G" label="G · Scenario" title="Scenario Functions" id="s-6-h">
     <p>The scenario functions describe the situation after the new systems have been installed. They calculate the remaining electricity and heat demand after self-generation via PV and solar thermal systems, and additionally account for feed-in revenues, maintenance costs, system emissions, and — where applicable — battery effects.</p>
     <p>Annual PV output and self-consumption in year <em>t</em>:</p>
     <Formula label="PV generation and self-consumption">
@@ -171,17 +171,17 @@ const kpis = [
     </Formula>
   </Section>
 
-  <Section chip="06 / I" label="I · Inflation" title="Inflation Assumption" id="s-6-i">
+  <Section chip="06 / H" label="H · Inflation" title="Inflation Assumption" id="s-6-i">
     <p>An annual inflation factor can be enabled in the model. If activated, annual costs — electricity prices, heating prices, fixed electricity charges, and maintenance costs — increase each year by the specified percentage. The <strong>feed-in tariff remains constant</strong>, as it is assumed to be contractually fixed with the grid operator. Initial investments are also not adjusted for inflation, as they are incurred at the start of the project.</p>
   </Section>
 
-  <Section chip="06 / J" label="J · Utilisation" title="Utilisation Rates and Self-Consumption" id="s-6-j">
+  <Section chip="06 / I" label="I · Utilisation" title="Utilisation Rates and Self-Consumption" id="s-6-j">
     <p>For photovoltaic systems, it is taken into account that not all generated electricity can be used directly in the town hall. The <strong>self-consumption rate φ</strong> describes what proportion of PV output in year t is used on-site. As PV area increases, this proportion tends to decrease because production more often exceeds current electricity demand. If a battery is activated, the self-consumption share can increase as part of the excess PV electricity can be stored and used later.</p>
     <p>For solar thermal energy, it is similarly taken into account that not all generated heat can be fully utilised. The <strong>utilisation factor η</strong> describes the proportion of solar thermal production that can actually meet heat demand. For small solar thermal areas, a high utilisation rate is assumed; for larger areas, the usable portion may decrease because at times more heat is produced than can be directly used or stored.</p>
     <p>These dynamic utilisation rates are essential for the validity of the optimisation model. Without them, the solver would assume an unrealistic linear scalability of yields — mathematically over-engineering the roof with solar components since every additional square metre would produce a proportional benefit. The degressively decreasing factors model the real-world phenomenon of temporary surplus production, forcing the model to balance the marginal costs of additional area against its diminishing marginal benefit. This supports a practical, demand-oriented system sizing.</p>
   </Section>
 
-  <Section chip="06 / K" label="K · Formal" title="Formal Representation of Utilisation Rates" id="s-6-k">
+  <Section chip="06 / J" label="J · Formal" title="Formal Representation of Utilisation Rates" id="s-6-k">
     <p>For photovoltaics, the self-consumption rate is modelled as an area-dependent function. <em>φ_ref</em> is the reference self-consumption rate assumed when the PV system covers the full available roof area. When the battery option is activated, the dummy variable β jumps from 0 to 1:</p>
     <Formula label="PV self-consumption rate">
       <code>φ(t) = φ_ref × (A_PV / A_max) + γ × B_cap(t) × β</code>
