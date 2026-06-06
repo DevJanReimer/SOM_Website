@@ -64,7 +64,7 @@ const { title, description = "Carbon reduction analysis for the Rathaus in Ober√
     const KATEX_OPTS = {
       delimiters: [
         { left: '$$', right: '$$', display: true },
-        { left: '\\(', right: '\\)', display: false },
+        { left: '$', right: '$', display: false },
       ],
       throwOnError: false,
     };
@@ -84,6 +84,6 @@ const { title, description = "Carbon reduction analysis for the Rathaus in Ober√
 
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
-    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})"></script>
 </body>
 </html>

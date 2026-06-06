@@ -61,16 +61,42 @@ import ProConCards from '../components/ProConCards.astro';
     <ProConCards>
       <div class="pc-card pro">
         <h4>Advantages</h4>
-        <p>Albertí et al. (2019) show that, over the lifetime of the systems, a solar thermal system reduces greenhouse-gas emissions by ≈ <strong>65 %</strong>, ozone depletion by <strong>69 %</strong>, and photochemical ozone formation by <strong>41 %</strong> compared with a gas-only heating system.</p>
-        <p>Increasing the share of solar thermal energy in domestic hot-water production from the current 7.8 % to 30 % in Spain, for example, would yield annual savings of 1.24–1.64 Mt CO₂ (≈ 0.4–0.5 % of Spain's emissions). In China the potential is even greater (≈ 0.63 %) due to the coal-heavy electricity mix.</p>
-        <p>Solar thermal collectors achieve a very high energy-conversion efficiency of <strong>up to 70 %</strong> (BBSR, 2024), whereas the figure is only ≈ 17 % for PV systems. A further benefit: in winter, the operating heat melts accumulated snow on the collectors automatically — which is not the case for PV (Omeiza et al., 2024).</p>
+        <p class="pc-sub">Emissions reduction</p>
+        <ul class="pc-bullets">
+          <li>Reduces GHG emissions by ≈ <strong>65 %</strong>, ozone depletion by <strong>69 %</strong>, and photochemical ozone formation by <strong>41 %</strong> compared with a gas-only heating system (Albertí et al., 2019).</li>
+        </ul>
+        <p class="pc-sub">CO₂ savings potential</p>
+        <ul class="pc-bullets">
+          <li>Raising solar thermal share in Spain from 7.8 % to 30 % would save 1.24–1.64 Mt CO₂ annually (≈ 0.4–0.5 % of emissions).</li>
+          <li>Potential is even higher in China (≈ 0.63 %) due to the coal-heavy electricity mix.</li>
+        </ul>
+        <p class="pc-sub">Energy conversion efficiency</p>
+        <ul class="pc-bullets">
+          <li>Achieves up to <strong>70 %</strong> energy-conversion efficiency (BBSR, 2024), versus ≈ 17 % for PV.</li>
+          <li>Operating heat melts accumulated snow on collectors automatically — an advantage PV lacks (Omeiza et al., 2024).</li>
+        </ul>
       </div>
       <div class="pc-card con">
         <h4>Disadvantages</h4>
-        <p><strong>Long payback.</strong> According to Han et al. (2025), solar thermal has the longest payback period of the technologies surveyed, averaging 50.4 years — driven by high upfront investment costs and the lower economic value of thermal energy compared with gas. Values are highly context-dependent, however: Krawczyk et al. (2020) calculate payback periods of 17–19 years for public buildings with higher hot-water demand.</p>
-        <p><strong>Other environmental categories.</strong> Production of solar thermal systems releases pollutants that contribute to acidification of air and rain and eutrophication of water bodies and soil, performing 6 % and 61 % worse respectively than conventional gas heating systems in these specific categories. The cause lies in the metals used in production — copper pipes, collectors and water tanks are the most problematic components (Albertí et al., 2019).</p>
-        <p><strong>Corrosion risk.</strong> Solar thermal systems are susceptible to corrosion, particularly in coastal regions with a salty atmosphere and during high-temperature operation. Salty environments break down protective coatings and promote galvanic corrosion. Aged heat-transfer fluids (water, glycol or nanofluids) can also release aggressive compounds. Absorber surfaces, heat pipes and thermal storage tanks are particularly affected, leading to reduced efficiency, higher maintenance costs and a shorter service life (Omeiza et al., 2024).</p>
-        <p><strong>Climate dependence.</strong> Performance is highly location-dependent — Krawczyk et al. (2020) show that a solar collector in Spain delivers three times as much energy as an identical collector in Poland. An additional energy source is therefore necessary, as the system often cannot provide sufficient heat in winter.</p>
+        <p class="pc-sub">Long payback</p>
+        <ul class="pc-bullets">
+          <li>Averages 50.4 years due to high upfront costs and lower economic value of thermal energy vs. gas (Han et al., 2025).</li>
+          <li>Context-dependent: Krawczyk et al. (2020) calculate 17–19 years for public buildings with higher hot-water demand.</li>
+        </ul>
+        <p class="pc-sub">Other environmental categories</p>
+        <ul class="pc-bullets">
+          <li>Production releases pollutants contributing to acidification (6 % worse) and eutrophication (61 % worse) vs. gas heating.</li>
+          <li>Copper pipes, collectors and water tanks are the most problematic components (Albertí et al., 2019).</li>
+        </ul>
+        <p class="pc-sub">Corrosion risk</p>
+        <ul class="pc-bullets">
+          <li>Susceptible to corrosion in coastal or high-temperature environments; affects absorber surfaces, heat pipes and storage tanks.</li>
+          <li>Aged heat-transfer fluids can release aggressive compounds, reducing efficiency and service life (Omeiza et al., 2024).</li>
+        </ul>
+        <p class="pc-sub">Climate dependence</p>
+        <ul class="pc-bullets">
+          <li>A collector in Spain delivers three times as much energy as one in Poland; supplementary heating is often needed in winter (Krawczyk et al., 2020).</li>
+        </ul>
       </div>
     </ProConCards>
   </Section>
@@ -171,17 +197,41 @@ import ProConCards from '../components/ProConCards.astro';
     <ProConCards>
       <div class="pc-card pro">
         <h4>Advantages of PV + battery</h4>
-        <p><strong>Near-instant response.</strong> Switchover occurs within milliseconds (Sigenergy, 2025), compared with diesel's typical &gt;10 s delay (Costa et al., 2023).</p>
-        <p><strong>Dramatically higher self-sufficiency.</strong> 96.83 % for PV + battery versus 39.15 % for diesel (Felice et al., 2023).</p>
-        <p><strong>Lower emissions.</strong> Roughly 70 % lower CO₂ emissions than diesel (Ali et al., 2023; Felice et al., 2023), with no fuel-transport footprint and no on-site combustion.</p>
-        <p><strong>Customisable system design.</strong> PV array and battery sizing can be matched to the building's specific load and resilience targets (Costa et al., 2023).</p>
+        <p class="pc-sub">Near-instant response</p>
+        <ul class="pc-bullets">
+          <li>Switchover within milliseconds (Sigenergy, 2025), versus diesel's typical &gt;10 s delay (Costa et al., 2023).</li>
+        </ul>
+        <p class="pc-sub">Higher self-sufficiency</p>
+        <ul class="pc-bullets">
+          <li>96.83 % self-sufficiency for PV + battery versus 39.15 % for diesel (Felice et al., 2023).</li>
+        </ul>
+        <p class="pc-sub">Lower emissions</p>
+        <ul class="pc-bullets">
+          <li>Roughly <strong>70 %</strong> lower CO₂ emissions than diesel (Ali et al., 2023; Felice et al., 2023), with no on-site combustion or fuel-transport footprint.</li>
+        </ul>
+        <p class="pc-sub">Customisable system design</p>
+        <ul class="pc-bullets">
+          <li>PV array and battery sizing can be matched to the building's specific load and resilience targets (Costa et al., 2023).</li>
+        </ul>
       </div>
       <div class="pc-card con">
         <h4>Limitations of diesel generators</h4>
-        <p><strong>High emissions.</strong> On-site combustion releases CO₂, NOₓ and particulates, and is locked into a fossil-fuel supply chain (Ali et al., 2023).</p>
-        <p><strong>Delayed response.</strong> Start-up and synchronisation typically take more than ten seconds (Costa et al., 2023) — long enough to interrupt sensitive IT and communications equipment.</p>
-        <p><strong>Fuel-degradation risks.</strong> Stored diesel must be replaced every 6–12 months to prevent bacterial contamination that can cause generator failure (Hwang et al., 2023).</p>
-        <p><strong>Maintenance-sensitive reliability.</strong> Well-maintained units still show a 20 % failure probability within the first two weeks; poorly maintained units a 50 % failure probability within the first 48 hours (Marqusee &amp; Jenket, 2020).</p>
+        <p class="pc-sub">High emissions</p>
+        <ul class="pc-bullets">
+          <li>On-site combustion releases CO₂, NOₓ and particulates, locked into a fossil-fuel supply chain (Ali et al., 2023).</li>
+        </ul>
+        <p class="pc-sub">Delayed response</p>
+        <ul class="pc-bullets">
+          <li>Start-up and synchronisation typically take &gt;10 seconds (Costa et al., 2023) — long enough to interrupt sensitive IT and communications equipment.</li>
+        </ul>
+        <p class="pc-sub">Fuel-degradation risks</p>
+        <ul class="pc-bullets">
+          <li>Stored diesel must be replaced every 6–12 months to prevent bacterial contamination that can cause generator failure (Hwang et al., 2023).</li>
+        </ul>
+        <p class="pc-sub">Maintenance-sensitive reliability</p>
+        <ul class="pc-bullets">
+          <li>Well-maintained units: 20 % failure probability within two weeks; poorly maintained: 50 % probability within 48 hours (Marqusee &amp; Jenket, 2020).</li>
+        </ul>
       </div>
     </ProConCards>
   </Section>
