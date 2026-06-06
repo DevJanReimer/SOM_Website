@@ -12,52 +12,75 @@ const kpis = [
   { label: 'Key outputs', value: '3', unit: 'metrics', note: 'NPV · payback · CO₂ abatement' },
 ];
 
+// Display math formulas ($$...$$)
 const f = {
   objective: String.raw`$$\min Z = w \cdot \left(1 - \frac{\text{NPV}}{K_{\text{Baseline,Total}}}\right) + (1-w) \cdot \frac{E_{\text{Scenario,Total}}}{E_{\text{Baseline,Total}}}$$`,
-
   roofConstraint: String.raw`$$x + y \leq A_{\text{Limit}}$$`,
-
   nonNegativity: String.raw`$$x \geq 0, \quad y \geq 0$$`,
-
   stSizing: String.raw`$$y \cdot q_{\text{ST}} \leq Q_{\text{current}}$$`,
-
   budget: String.raw`$$\text{Inv}_{\text{PV}} \cdot x + \text{Inv}_{\text{ST}} \cdot y + K_{\text{Batt}} \leq \text{Budget}$$`,
-
   baselineCost: String.raw`$$K_{\text{Baseline},t} = S_{\text{current}} \cdot P_{\text{electricity},t} + Q_{\text{current}} \cdot P_{\text{heat},t} + F_{\text{electricity},t}$$`,
-
   baselineCostTotal: String.raw`$$K_{\text{Baseline,Total}} = \sum_{t=1}^{N} \frac{K_{\text{Baseline},t}}{(1+i)^t}$$`,
-
   baselineEmissions: String.raw`$$E_{\text{Baseline},t} = S_{\text{current}} \cdot EF_{\text{electricity}} + Q_{\text{current}} \cdot EF_{\text{heat}}$$`,
-
   baselineEmissionsTotal: String.raw`$$E_{\text{Baseline,Total}} = \sum_{t=1}^{N} E_{\text{Baseline},t}$$`,
-
   scenarioCost: String.raw`$$K_{\text{Scenario},t} = F_{\text{electricity},t} + S_{\text{res},t} \cdot P_{\text{electricity},t} + H_{\text{res},t} \cdot P_{\text{heat},t} + M_{\text{PV},t} \cdot x + M_{\text{ST},t} \cdot y - PV_{\text{export},t} \cdot P_{\text{feed-in},t}$$`,
-
   pvGen: String.raw`$$PV_t = x \cdot q_{\text{PV}} \cdot f_{\text{PV}}(t), \qquad f_{\text{PV}}(t) = \max\!\left(0,\; 1-(t-1)\cdot d_{\text{PV}}\right)$$
 $$PV_{\text{self},t} = \min\!\left(PV_t \cdot sc(x,t),\; S_{\text{current}}\right)$$
 $$PV_{\text{export},t} = \max\!\left(0,\; PV_t - PV_{\text{self},t}\right)$$
 $$S_{\text{res},t} = \max\!\left(0,\; S_{\text{current}} - PV_{\text{self},t}\right)$$`,
-
   stGen: String.raw`$$ST_t = y \cdot q_{\text{ST}} \cdot f_{\text{ST}}(t), \qquad f_{\text{ST}}(t) = \max\!\left(0,\; 1-(t-1)\cdot d_{\text{ST}}\right)$$
 $$ST_{\text{use},t} = ST_t \cdot u_{\text{ST}}(y,t)$$
 $$H_{\text{res},t} = \max\!\left(0,\; Q_{\text{current}} - ST_{\text{use},t}\right)$$`,
-
   scenarioCostTotal: String.raw`$$K_{\text{Scenario,Total}} = I_0 + \sum_{t=1}^{N} \frac{K_{\text{Scenario},t}}{(1+i)^t}$$
 $$I_0 = \text{Inv}_{\text{PV}} \cdot x + \text{Inv}_{\text{ST}} \cdot y + K_{\text{Batt}}$$`,
-
   scenarioEmissions: String.raw`$$E_{\text{Scenario},t} = S_{\text{res},t} \cdot EF_{\text{electricity}} + H_{\text{res},t} \cdot EF_{\text{heat}} + PV_t \cdot EF_{\text{PV}} + ST_t \cdot EF_{\text{ST}}$$`,
-
   scenarioEmissionsTotal: String.raw`$$E_{\text{Scenario,Total}} = \sum_{t=1}^{N} E_{\text{Scenario},t}$$`,
-
   pvSc: String.raw`$$sc(x,t) = \max\!\left(0,\; \min\!\left(1,\; 1 - (1-sc_{\text{Slider}})\cdot\frac{x}{A_{\text{Roof}}} + \text{Active}_{\text{Batt}}\cdot\min\!\left(0.5,\; \frac{\gamma \cdot q_{\text{PV}} \cdot B_{\text{estimate}} \cdot f_{\text{Batt}}(t)}{x}\right)\right)\right)$$`,
-
   battDeg: String.raw`$$f_{\text{Batt}}(t) = \max\!\left(0,\; 1-(t-1)\cdot d_{\text{Batt}}\right)$$`,
-
   battCap: String.raw`$$B_{\text{estimate}}(K_{\text{Batt}}) = \begin{cases} \dfrac{K_{\text{Batt}}}{847} & K_{\text{Batt}} < 16{,}940 \\[8pt] 20 + \dfrac{K_{\text{Batt}} - 16{,}940}{163.25} & 16{,}940 \leq K_{\text{Batt}} < 30{,}000 \\[8pt] 100 + \dfrac{K_{\text{Batt}} - 30{,}000}{266.67} & K_{\text{Batt}} \geq 30{,}000 \end{cases}$$`,
-
   stEffArea: String.raw`$$y_{\text{eff}}(t) = y \cdot f_{\text{ST}}(t)$$`,
-
   stUtil: String.raw`$$u_{\text{ST}}(y,t) = \max\!\left(u_{\min},\; \min\!\left(1,\; 1-(1-u_{\min})\cdot\frac{y_{\text{eff}}(t)-1}{A_{\text{Roof}}-1}\right)\right)$$`,
+};
+
+// Inline math labels for the variable explanation rows (\(...\))
+const v = {
+  Z:              String.raw`\(Z\)`,
+  w:              String.raw`\(w\)`,
+  NPV:            String.raw`\(\text{NPV}\)`,
+  KBaseTotal:     String.raw`\(K_{\text{Baseline,Total}}\)`,
+  EScenTotal:     String.raw`\(E_{\text{Scenario,Total}}\)`,
+  EBaseTotal:     String.raw`\(E_{\text{Baseline,Total}}\)`,
+  x:              String.raw`\(x\)`,
+  y:              String.raw`\(y\)`,
+  InvPV:          String.raw`\(\text{Inv}_{\text{PV}}\)`,
+  InvST:          String.raw`\(\text{Inv}_{\text{ST}}\)`,
+  KBatt:          String.raw`\(K_{\text{Batt}}\)`,
+  Scurrent:       String.raw`\(S_{\text{current}}\)`,
+  Pelec:          String.raw`\(P_{\text{electricity},t}\)`,
+  Qcurrent:       String.raw`\(Q_{\text{current}}\)`,
+  Pheat:          String.raw`\(P_{\text{heat},t}\)`,
+  Felec:          String.raw`\(F_{\text{electricity},t}\)`,
+  i:              String.raw`\(i\)`,
+  EFelec:         String.raw`\(EF_{\text{electricity}}\)`,
+  EFheat:         String.raw`\(EF_{\text{heat}}\)`,
+  qPV:            String.raw`\(q_{\text{PV}}\)`,
+  dPV:            String.raw`\(d_{\text{PV}}\)`,
+  sc:             String.raw`\(sc(x,t)\)`,
+  Pfeedin:        String.raw`\(P_{\text{feed-in},t}\)`,
+  MPV:            String.raw`\(M_{\text{PV},t}\)`,
+  MST:            String.raw`\(M_{\text{ST},t}\)`,
+  qST:            String.raw`\(q_{\text{ST}}\)`,
+  dST:            String.raw`\(d_{\text{ST}}\)`,
+  uST:            String.raw`\(u_{\text{ST}}(y,t)\)`,
+  EFPV:           String.raw`\(EF_{\text{PV}}\)`,
+  EFST:           String.raw`\(EF_{\text{ST}}\)`,
+  dBatt:          String.raw`\(d_{\text{Batt}}\)`,
+  gamma:          String.raw`\(\gamma\)`,
+  ActiveBatt:     String.raw`\(\text{Active}_{\text{Batt}}\)`,
+  Bestimate:      String.raw`\(B_{\text{estimate}}\)`,
+  umin:           String.raw`\(u_{\min}\)`,
+  ARoof:          String.raw`\(A_{\text{Roof}}\)`,
+  yeff:           String.raw`\(y_{\text{eff}}(t)\)`,
 };
 ---
 
@@ -111,20 +134,20 @@ $$I_0 = \text{Inv}_{\text{PV}} \cdot x + \text{Inv}_{\text{ST}} \cdot y + K_{\te
       <div set:html={f.objective} />
     </Formula>
     <div class="var-list">
-      <div class="var-row"><span class="var">Z</span><span class="var-desc">Total value of the objective function minimised by the solver</span></div>
-      <div class="var-row"><span class="var">w</span><span class="var-desc">Weighting factor, freely chosen (0 = emissions only, 1 = cost only)</span></div>
-      <div class="var-row"><span class="var">NPV</span><span class="var-desc">= K_Baseline,Total − K_Scenario,Total · Financial value added over N years vs. the baseline</span></div>
-      <div class="var-row"><span class="var">K_Baseline,Total</span><span class="var-desc">Total energy costs under current conditions (baseline) over N years</span></div>
-      <div class="var-row"><span class="var">E_Scenario,Total</span><span class="var-desc">Total CO₂eq emissions of the scenario over N years</span></div>
-      <div class="var-row"><span class="var">E_Baseline,Total</span><span class="var-desc">Total CO₂eq emissions under current conditions (baseline) over N years</span></div>
+      <div class="var-row"><span class="var" set:html={v.Z} /><span class="var-desc">Total value of the objective function minimised by the solver</span></div>
+      <div class="var-row"><span class="var" set:html={v.w} /><span class="var-desc">Weighting factor, freely chosen (0 = emissions only, 1 = cost only)</span></div>
+      <div class="var-row"><span class="var" set:html={v.NPV} /><span class="var-desc">= K<sub>Baseline,Total</sub> − K<sub>Scenario,Total</sub> · Financial value added over N years vs. the baseline</span></div>
+      <div class="var-row"><span class="var" set:html={v.KBaseTotal} /><span class="var-desc">Total energy costs under current conditions (baseline) over N years</span></div>
+      <div class="var-row"><span class="var" set:html={v.EScenTotal} /><span class="var-desc">Total CO₂eq emissions of the scenario over N years</span></div>
+      <div class="var-row"><span class="var" set:html={v.EBaseTotal} /><span class="var-desc">Total CO₂eq emissions under current conditions (baseline) over N years</span></div>
     </div>
   </Section>
 
   <Section chip="06 / E" label="E · Variables" title="Decision Variables and Constraints" id="s-6-e">
     <p>The key decision variables in the model are the installed areas of the two solar technologies:</p>
     <div class="var-list">
-      <div class="var-row"><span class="var">x</span><span class="var-desc">Area of the photovoltaic system (m²)</span></div>
-      <div class="var-row"><span class="var">y</span><span class="var-desc">Area of the solar thermal system (m²)</span></div>
+      <div class="var-row"><span class="var" set:html={v.x} /><span class="var-desc">Area of the photovoltaic system (m²)</span></div>
+      <div class="var-row"><span class="var" set:html={v.y} /><span class="var-desc">Area of the solar thermal system (m²)</span></div>
     </div>
     <p>The solver determines how much of the available roof area to allocate to each technology. Three constraints always apply:</p>
     <Formula label="Roof area constraint">
@@ -141,9 +164,9 @@ $$I_0 = \text{Inv}_{\text{PV}} \cdot x + \text{Inv}_{\text{ST}} \cdot y + K_{\te
       <div set:html={f.budget} />
     </Formula>
     <div class="var-list">
-      <div class="var-row"><span class="var">Inv_PV</span><span class="var-desc">Investment cost in CHF per m² of photovoltaic system</span></div>
-      <div class="var-row"><span class="var">Inv_ST</span><span class="var-desc">Investment cost in CHF per m² of solar thermal system</span></div>
-      <div class="var-row"><span class="var">K_Batt</span><span class="var-desc">Battery cost in CHF (only counted if battery option is enabled)</span></div>
+      <div class="var-row"><span class="var" set:html={v.InvPV} /><span class="var-desc">Investment cost in CHF per m² of photovoltaic system</span></div>
+      <div class="var-row"><span class="var" set:html={v.InvST} /><span class="var-desc">Investment cost in CHF per m² of solar thermal system</span></div>
+      <div class="var-row"><span class="var" set:html={v.KBatt} /><span class="var-desc">Battery cost in CHF (only counted if battery option is enabled)</span></div>
     </div>
     <p>In this case, the sum of the PV investment, solar thermal investment, and optional battery costs must not exceed the specified budget. Battery costs are only taken into account if the battery option is enabled.</p>
   </Section>
@@ -155,26 +178,26 @@ $$I_0 = \text{Inv}_{\text{PV}} \cdot x + \text{Inv}_{\text{ST}} \cdot y + K_{\te
       <div set:html={f.baselineCost} />
     </Formula>
     <div class="var-list">
-      <div class="var-row"><span class="var">S_current</span><span class="var-desc">Current annual electricity consumption (kWh)</span></div>
-      <div class="var-row"><span class="var">P_electricity,t</span><span class="var-desc">Electricity price in CHF/kWh in year t</span></div>
-      <div class="var-row"><span class="var">Q_current</span><span class="var-desc">Current annual heat consumption (kWh)</span></div>
-      <div class="var-row"><span class="var">P_heat,t</span><span class="var-desc">Heat price in CHF/kWh in year t</span></div>
-      <div class="var-row"><span class="var">F_electricity,t</span><span class="var-desc">Fixed electricity charges in CHF in year t</span></div>
+      <div class="var-row"><span class="var" set:html={v.Scurrent} /><span class="var-desc">Current annual electricity consumption (kWh)</span></div>
+      <div class="var-row"><span class="var" set:html={v.Pelec} /><span class="var-desc">Electricity price in CHF/kWh in year t</span></div>
+      <div class="var-row"><span class="var" set:html={v.Qcurrent} /><span class="var-desc">Current annual heat consumption (kWh)</span></div>
+      <div class="var-row"><span class="var" set:html={v.Pheat} /><span class="var-desc">Heat price in CHF/kWh in year t</span></div>
+      <div class="var-row"><span class="var" set:html={v.Felec} /><span class="var-desc">Fixed electricity charges in CHF in year t</span></div>
     </div>
     <p>The present value of total baseline costs over the full project duration:</p>
     <Formula label="Total present value of baseline costs">
       <div set:html={f.baselineCostTotal} />
     </Formula>
     <div class="var-list">
-      <div class="var-row"><span class="var">i</span><span class="var-desc">Discount factor</span></div>
+      <div class="var-row"><span class="var" set:html={v.i} /><span class="var-desc">Discount factor</span></div>
     </div>
     <p>Annual baseline emissions:</p>
     <Formula label="Annual baseline emissions">
       <div set:html={f.baselineEmissions} />
     </Formula>
     <div class="var-list">
-      <div class="var-row"><span class="var">EF_electricity</span><span class="var-desc">Electricity emission factor (kg CO₂/kWh)</span></div>
-      <div class="var-row"><span class="var">EF_heat</span><span class="var-desc">Heat emission factor (kg CO₂/kWh)</span></div>
+      <div class="var-row"><span class="var" set:html={v.EFelec} /><span class="var-desc">Electricity emission factor (kg CO₂/kWh)</span></div>
+      <div class="var-row"><span class="var" set:html={v.EFheat} /><span class="var-desc">Heat emission factor (kg CO₂/kWh)</span></div>
     </div>
     <p>Cumulative baseline emissions over the full evaluation period:</p>
     <Formula label="Cumulative baseline emissions">
@@ -193,21 +216,21 @@ $$I_0 = \text{Inv}_{\text{PV}} \cdot x + \text{Inv}_{\text{ST}} \cdot y + K_{\te
       <div set:html={f.pvGen} />
     </Formula>
     <div class="var-list">
-      <div class="var-row"><span class="var">q_PV</span><span class="var-desc">Specific annual PV yield, kWh/(m²·year)</span></div>
-      <div class="var-row"><span class="var">d_PV</span><span class="var-desc">Annual PV degradation rate</span></div>
-      <div class="var-row"><span class="var">sc(x,t)</span><span class="var-desc">Effective self-consumption share in year t (see section J)</span></div>
-      <div class="var-row"><span class="var">P_feed-in,t</span><span class="var-desc">Feed-in tariff for exported PV electricity in CHF/kWh in year t</span></div>
-      <div class="var-row"><span class="var">M_PV,t</span><span class="var-desc">PV maintenance cost in CHF/m² per year</span></div>
-      <div class="var-row"><span class="var">M_ST,t</span><span class="var-desc">ST maintenance cost in CHF/m² per year</span></div>
+      <div class="var-row"><span class="var" set:html={v.qPV} /><span class="var-desc">Specific annual PV yield, kWh/(m²·year)</span></div>
+      <div class="var-row"><span class="var" set:html={v.dPV} /><span class="var-desc">Annual PV degradation rate</span></div>
+      <div class="var-row"><span class="var" set:html={v.sc} /><span class="var-desc">Effective self-consumption share in year t (see section J)</span></div>
+      <div class="var-row"><span class="var" set:html={v.Pfeedin} /><span class="var-desc">Feed-in tariff for exported PV electricity in CHF/kWh in year t</span></div>
+      <div class="var-row"><span class="var" set:html={v.MPV} /><span class="var-desc">PV maintenance cost in CHF/m² per year</span></div>
+      <div class="var-row"><span class="var" set:html={v.MST} /><span class="var-desc">ST maintenance cost in CHF/m² per year</span></div>
     </div>
     <p>Solar thermal generation, usable heat, and residual heat demand:</p>
     <Formula label="Solar thermal generation">
       <div set:html={f.stGen} />
     </Formula>
     <div class="var-list">
-      <div class="var-row"><span class="var">q_ST</span><span class="var-desc">Specific annual ST yield, kWh/(m²·year)</span></div>
-      <div class="var-row"><span class="var">d_ST</span><span class="var-desc">Annual ST degradation rate</span></div>
-      <div class="var-row"><span class="var">u_ST(y,t)</span><span class="var-desc">ST utilisation factor in year t (see section J)</span></div>
+      <div class="var-row"><span class="var" set:html={v.qST} /><span class="var-desc">Specific annual ST yield, kWh/(m²·year)</span></div>
+      <div class="var-row"><span class="var" set:html={v.dST} /><span class="var-desc">Annual ST degradation rate</span></div>
+      <div class="var-row"><span class="var" set:html={v.uST} /><span class="var-desc">ST utilisation factor in year t (see section J)</span></div>
     </div>
     <p>Total scenario cost (present value) including initial investment I₀:</p>
     <Formula label="Total scenario cost (present value)">
@@ -218,8 +241,8 @@ $$I_0 = \text{Inv}_{\text{PV}} \cdot x + \text{Inv}_{\text{ST}} \cdot y + K_{\te
       <div set:html={f.scenarioEmissions} />
     </Formula>
     <div class="var-list">
-      <div class="var-row"><span class="var">EF_PV</span><span class="var-desc">Lifecycle emission factor of PV generation (kg CO₂/kWh)</span></div>
-      <div class="var-row"><span class="var">EF_ST</span><span class="var-desc">Lifecycle emission factor of ST generation (kg CO₂/kWh)</span></div>
+      <div class="var-row"><span class="var" set:html={v.EFPV} /><span class="var-desc">Lifecycle emission factor of PV generation (kg CO₂/kWh)</span></div>
+      <div class="var-row"><span class="var" set:html={v.EFST} /><span class="var-desc">Lifecycle emission factor of ST generation (kg CO₂/kWh)</span></div>
     </div>
     <p>Cumulative scenario emissions:</p>
     <Formula label="Cumulative scenario emissions">
@@ -247,9 +270,9 @@ $$I_0 = \text{Inv}_{\text{PV}} \cdot x + \text{Inv}_{\text{ST}} \cdot y + K_{\te
       <div set:html={f.battDeg} />
     </Formula>
     <div class="var-list">
-      <div class="var-row"><span class="var">d_Batt</span><span class="var-desc">Battery annual degradation rate (% capacity lost per year)</span></div>
-      <div class="var-row"><span class="var">γ</span><span class="var-desc">Calibration factor for battery effect on self-consumption (0 – 1)</span></div>
-      <div class="var-row"><span class="var">ActiveBatt</span><span class="var-desc">Battery activation dummy (0 = off, 1 = on)</span></div>
+      <div class="var-row"><span class="var" set:html={v.dBatt} /><span class="var-desc">Battery annual degradation rate (% capacity lost per year)</span></div>
+      <div class="var-row"><span class="var" set:html={v.gamma} /><span class="var-desc">Calibration factor for battery effect on self-consumption (0 – 1)</span></div>
+      <div class="var-row"><span class="var" set:html={v.ActiveBatt} /><span class="var-desc">Battery activation dummy (0 = off, 1 = on)</span></div>
     </div>
     <p>The estimated battery capacity B_estimate is derived from the battery cost entered, using a piecewise cost-to-capacity function:</p>
     <Formula label="Battery capacity estimate (piecewise)">
@@ -266,8 +289,8 @@ $$I_0 = \text{Inv}_{\text{PV}} \cdot x + \text{Inv}_{\text{ST}} \cdot y + K_{\te
       <div set:html={f.stUtil} />
     </Formula>
     <div class="var-list">
-      <div class="var-row"><span class="var">u_min</span><span class="var-desc">Minimum utilisation rate when full roof area is used for ST</span></div>
-      <div class="var-row"><span class="var">A_Roof</span><span class="var-desc">Total available roof area (m²)</span></div>
+      <div class="var-row"><span class="var" set:html={v.umin} /><span class="var-desc">Minimum utilisation rate when full roof area is used for ST</span></div>
+      <div class="var-row"><span class="var" set:html={v.ARoof} /><span class="var-desc">Total available roof area (m²)</span></div>
     </div>
     <p>For a solar thermal area of 1 m², a full utilisation rate of 100 % is assumed. As the effective area grows, the factor decreases gradually until it reaches <em>u_min</em>, reflecting the fact that larger systems more frequently generate excess heat that cannot be fully utilised.</p>
   </Section>
@@ -309,18 +332,21 @@ $$I_0 = \text{Inv}_{\text{PV}} \cdot x + \text{Inv}_{\text{ST}} \cdot y + K_{\te
   }
   .var-row{
     display:grid;
-    grid-template-columns:110px 1fr;
+    grid-template-columns:160px 1fr;
     gap:12px;
     padding:10px 0;
     border-bottom:1px solid var(--line);
-    align-items:baseline;
+    align-items:center;
   }
   .var{
-    font-family:'JetBrains Mono','Fira Mono',monospace;
-    font-size:13px;
+    font-size:14px;
     color:var(--moss);
-    font-weight:500;
-    letter-spacing:0.02em;
+    display:flex;
+    align-items:center;
+  }
+  .var .katex{
+    color:var(--moss);
+    font-size:1em;
   }
   .var-desc{
     font-size:14.5px;
@@ -381,35 +407,6 @@ $$I_0 = \text{Inv}_{\text{PV}} \cdot x + \text{Inv}_{\text{ST}} \cdot y + K_{\te
     line-height:1.75;
     color:var(--ink-soft);
     font-weight:300;
-  }
-
-  .metrics{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-    margin:28px 0 6px;
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-    max-width: 90ch;
-  }
-  .metric{
-    padding:24px 22px;
-    border-right:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-    transition: background 0.3s var(--ease-out);
-  }
-  .metric:hover{background:var(--sand)}
-  .metric .name{
-    font-size:11px;
-    letter-spacing:.18em;
-    text-transform:uppercase;
-    color:var(--moss);
-    font-weight:600;
-    margin-bottom:10px;
-  }
-  .metric .desc{
-    font-size:14px;
-    color:var(--ink-soft);
-    line-height:1.65;
   }
 
   .embed{
