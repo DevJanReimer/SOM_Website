@@ -97,6 +97,7 @@ const kpis = [
       <div class="var-row"><span class="var">Inv_ST</span><span class="var-desc">Investment cost in CHF per m² of solar thermal system</span></div>
       <div class="var-row"><span class="var">K_Batt</span><span class="var-desc">Battery cost in CHF (only counted if battery option is enabled)</span></div>
     </div>
+    <p>In this case, the sum of the PV investment, solar thermal investment, and optional battery costs must not exceed the specified budget. Battery costs are only taken into account if the battery option is enabled.</p>
   </Section>
 
   <Section chip="06 / F" label="F · Baseline" title="Baseline Functions" id="s-6-f">
@@ -134,7 +135,7 @@ const kpis = [
   </Section>
 
   <Section chip="06 / G" label="G · Scenario" title="Scenario Functions" id="s-6-g">
-    <p>The scenario functions describe the situation after the new systems have been installed. They calculate the remaining electricity and heat demand after self-generation via PV and solar thermal systems, and additionally account for feed-in revenues, maintenance costs, system emissions, and where applicable battery effects.</p>
+    <p>The scenario functions describe the situation after the new systems have been installed. They calculate the remaining electricity and heat demand after self-generation via PV and solar thermal systems, and additionally account for feed-in revenues, maintenance costs, system emissions, and where applicable battery effects. This allows the model to determine the extent to which costs and emissions change compared to the baseline.</p>
     <p>Annual scenario cost in year <em>t</em>:</p>
     <Formula label="Annual scenario cost">
       <code>K_Scenario,t = F_electricity,t + S_res,t · P_electricity,t + H_res,t · P_heat,t
@@ -187,13 +188,13 @@ const kpis = [
   </Section>
 
   <Section chip="06 / H" label="H · Inflation" title="Inflation Assumption" id="s-6-h">
-    <p>An annual inflation factor can be enabled in the model. If activated, annual costs electricity prices, heating prices, fixed electricity charges, and maintenance costs increase each year by the specified percentage. The <strong>feed-in tariff remains constant</strong>, as it is assumed to be contractually fixed with the grid operator. Initial investments are also not adjusted for inflation, as they are incurred at the start of the project.</p>
+    <p>An annual inflation factor can be enabled in the model. If activated, annual costs such as electricity prices, heating prices, fixed electricity charges, and maintenance costs increase each year by the specified percentage. The <strong>feed-in tariff remains constant</strong>, as it is assumed to be contractually fixed with the grid operator. Initial investments are also not adjusted for inflation, as they are incurred at the start of the project.</p>
   </Section>
 
   <Section chip="06 / I" label="I · Utilisation" title="Utilisation Rates and Self-Consumption" id="s-6-i">
     <p>For photovoltaic systems, not all generated electricity can be used directly in the town hall. The <strong>self-consumption rate sc(x,t)</strong> describes what proportion of PV output in year t is used on-site. As PV area increases, this proportion tends to decrease because production more often exceeds current electricity demand. If a battery is activated, the self-consumption share can increase, as part of the excess PV electricity can be temporarily stored and used later. The value is bounded between 0 and 1.</p>
     <p>For solar thermal energy, not all generated heat can be fully utilised. The <strong>utilisation factor u_ST(y,t)</strong> describes the proportion of solar thermal production that can actually meet heat demand. For small solar thermal areas, a high utilisation rate is assumed; for larger areas, the usable portion decreases because more heat is produced than can be directly used or stored. This factor is also bounded between 0 and 1.</p>
-    <p>These dynamic rates are essential for the validity of the optimisation model. Without them, the solver would assume an unrealistic linear scalability of yields and would theoretically over-engineer the roof with solar components, since every additional square metre would produce a proportional benefit. The degressively decreasing factors model the real-world phenomenon of temporary surplus production, forcing the model to balance the marginal costs of additional area against its diminishing marginal benefit.</p>
+    <p>These dynamic rates are essential for the validity of the optimisation model. Without them, the solver would assume an unrealistic, linear scalability of yields and would theoretically completely over-engineer the town hall roof with solar components, since mathematically every additional square metre would also generate a proportional benefit in the objective function. The degressively decreasing factors specifically model the real-world phenomenon of temporary surplus production. As a result, the model must balance the economic and ecological marginal costs of an additional unit of area against the decreasing marginal benefit. This supports a practical, demand-oriented sizing of the systems and reduces the risk of over-sizing in the simulated energy system.</p>
   </Section>
 
   <Section chip="06 / J" label="J · Formal" title="Formal Representation of Utilisation Rates" id="s-6-j">
@@ -218,6 +219,8 @@ const kpis = [
   20 + (K_Batt − 16,940) / 163.25      if 16,940 ≤ K_Batt &lt; 30,000 CHF
   100 + (K_Batt − 30,000) / 266.67     if K_Batt ≥ 30,000 CHF</code>
     </Formula>
+    <p>The variable B_estimate describes the storage capacity derived from battery costs. A larger storage capacity allows for the storage of additional PV surplus, thereby increasing the proportion of self-consumption from the photovoltaic system.</p>
+    <p>γ is a calibration factor for the battery effect. It determines the extent to which an existing battery increases PV self-consumption in the model. A low value means that the battery has only a small additional effect on self-consumption. A high value means that the battery contributes more significantly to storing excess PV electricity for later use. γ can take values between 0 and 1.</p>
     <p>For solar thermal systems, the utilisation factor u_ST(y,t) is modelled as an area-dependent function. <em>u_min</em> is the minimum utilisation rate when the full roof area A_Roof is used for solar thermal. First, the effective ST area in year t (accounting for degradation) is calculated:</p>
     <Formula label="Effective ST area">
       <code>y_eff(t) = y · f_ST(t)</code>
