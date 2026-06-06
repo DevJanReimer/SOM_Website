@@ -6,10 +6,10 @@ import Section from '../components/Section.astro';
 import Formula from '../components/Formula.astro';
 
 const kpis = [
-  { label: 'Inputs', value: '7', unit: 'fields', note: 'Demand, area, prices, sources' },
-  { label: 'PV self-consumption', value: '40', unit: '% default', note: 'Rest exported to grid' },
-  { label: 'ST usable yield', value: '40', unit: '% factor', note: 'Seasonal mismatch' },
-  { label: 'Optimiser sweep', value: '0→100', unit: '% PV', note: 'Finds lowest abatement cost' },
+  { label: 'Evaluation horizon', value: '25', unit: 'years', note: 'Full lifecycle analysis period' },
+  { label: 'Optimisation objectives', value: '2', unit: 'criteria', note: 'Maximise NPV · minimise CO₂' },
+  { label: 'Weighting factor λ', value: '0→1', unit: '', note: 'Cost-only to emissions-only' },
+  { label: 'Key outputs', value: '3', unit: 'metrics', note: 'NPV · payback · CO₂ abatement' },
 ];
 ---
 
