@@ -31,7 +31,7 @@ import ProConCards from '../components/ProConCards.astro';
   <!-- 4.1 -->
   <Section chip="Chapter 04 / 01" label="Section 4.1" title="Sustainability in Municipal Administration" id="s-4-1">
     <p>In Switzerland, sustainability is a democratic effort driven by the 26 cantons and around 2,000 municipalities which each hold their own binding tools (Kammerer et al., 2023). The federal Energy Strategy 2050, locked in by referendum in 2017, sets the direction: phasing out nuclear, scaling up renewables, and capping per-capita primary energy (Notter, 2015; IEA, 2023). But most of the actual CO₂ cuts happen locally through building rules, procurement, and the way a municipality runs its own buildings.</p>
-    <p>The key tool is the <em>Energiestadt</em> label which is the Swiss arm of the European Energy Award and has certified more than 460 municipalities since 1988, Oberägeri included (Energie Schweiz für Gemeinden & Trägerverein Energiestadt, 2020). The label audits six policy areas every four years and Gold requires that 75 % of measures are in place. Evaluations by the Swiss Federal Office of Energy show, even with causal isolation difficulties, that certified municipalities make more energy and climate conscious decisions compared to non-certified ones (Iten et al., 2004). The recent literature notes that municipal sustainability work in Switzerland has so far been mostly about energy efficiency, while adaptation and integrated planning still rely on a few pioneer actors rather than institutional capacity (Desthieux &amp; Joerin, 2022).</p>
+    <p>The key tool is the <em>Energiestadt</em> label which is the Swiss arm of the European Energy Award and has certified more than 460 municipalities since 1988, Oberägeri included (Trägerverein Energiestadt, 2020). The label audits six policy areas every four years and Gold requires that 75 % of measures are in place. Evaluations by the Swiss Federal Office of Energy show, even with causal isolation difficulties, that certified municipalities make more energy and climate conscious decisions compared to non-certified ones (Iten et al., 2004). The recent literature notes that municipal sustainability work in Switzerland has so far been mostly about energy efficiency, while adaptation and integrated planning still rely on a few pioneer actors rather than institutional capacity (Desthieux &amp; Joerin, 2022).</p>
   </Section>
 
   <!-- 4.2 -->
@@ -61,9 +61,9 @@ import ProConCards from '../components/ProConCards.astro';
     <ProConCards>
       <div class="pc-card pro">
         <h4>Advantages</h4>
-        <p><strong>Significant lifecycle emission reductions.</strong> Albertí et al. (2019) show that, over the lifetime of the systems, a solar thermal system reduces greenhouse-gas emissions by ≈ <strong>65 %</strong>, ozone depletion by <strong>69 %</strong>, and photochemical ozone formation by <strong>41 %</strong> compared with a gas-only heating system.</p>
-        <p><strong>Substantial decarbonisation potential.</strong> Increasing the share of solar thermal energy in domestic hot-water production from 7.8 % to 30 % in Spain would yield annual savings of 1.24–1.64 Mt CO₂ (≈ 0.4–0.5 % of Spain's emissions). In China the potential is even greater (≈ 0.63 %) due to the coal-heavy electricity mix.</p>
-        <p><strong>High energy conversion efficiency.</strong> Solar thermal collectors achieve a very high energy-conversion efficiency of <strong>up to 70 %</strong> (BBSR, 2024), compared with ≈ 17 % for PV systems. A further benefit: in winter, the operating heat melts accumulated snow on the collectors automatically — which is not the case for PV (Omeiza et al., 2024).</p>
+        <p>Albertí et al. (2019) show that, over the lifetime of the systems, a solar thermal system reduces greenhouse-gas emissions by ≈ <strong>65 %</strong>, ozone depletion by <strong>69 %</strong>, and photochemical ozone formation by <strong>41 %</strong> compared with a gas-only heating system.</p>
+        <p>Increasing the share of solar thermal energy in domestic hot-water production from the current 7.8 % to 30 % in Spain, for example, would yield annual savings of 1.24–1.64 Mt CO₂ (≈ 0.4–0.5 % of Spain's emissions). In China the potential is even greater (≈ 0.63 %) due to the coal-heavy electricity mix.</p>
+        <p>Solar thermal collectors achieve a very high energy-conversion efficiency of <strong>up to 70 %</strong> (BBSR, 2024), whereas the figure is only ≈ 17 % for PV systems. A further benefit: in winter, the operating heat melts accumulated snow on the collectors automatically — which is not the case for PV (Omeiza et al., 2024).</p>
       </div>
       <div class="pc-card con">
         <h4>Disadvantages</h4>
@@ -93,16 +93,53 @@ import ProConCards from '../components/ProConCards.astro';
     <ProConCards>
       <div class="pc-card pro">
         <h4>Advantages</h4>
-        <p><strong>High conversion efficiency.</strong> Current models reach 400–450 W and 19–22 % efficiency. In Swiss midlands, a well-placed 1,000 W system yields ~1,000 kWh annually (Swiss Solar Verband, n.d.). Efficiency drops when panels are covered by snow, shade, or dirt.</p>
-        <p><strong>Flexible installation.</strong> Panels can be integrated into existing structures with minimal disruption. Multiple PV technologies allow cost and performance optimisation — crystalline silicon, thin films, multijunction, emerging PV, and hybrids.</p>
-        <p><strong>Long lifetime with recycling infrastructure.</strong> Panels last ~25 years (Swiss Solar Verband, n.d.) and Switzerland has a dedicated recycling network, Sens e Recycling (Swiss Solar Fachverband, n.d.).</p>
-        <p><strong>Carbon-neutral operation.</strong> During sun collection, energy production is completely carbon neutral and renewable. PV panels can be installed on roofs, façades, or land, increasing design flexibility.</p>
+        <p class="pc-sub">Energy Efficiency</p>
+        <ul class="pc-bullets">
+          <li>Current models reach 400–450 W and 19–22% efficiency. (Swiss Solar Verband, n.d.)</li>
+          <li>In the Swiss midlands, a well placed 1000 W system yields ~1000 kWh annually. (Swiss Solar Verband, n.d.)</li>
+          <li>Efficiency drops when panels are covered by snow, shade, or dirt.</li>
+        </ul>
+        <p class="pc-sub">Installation Factors</p>
+        <ul class="pc-bullets">
+          <li>Panels can be integrated into existing structures with minimal disruption.</li>
+          <li>Multiple PV technologies allow cost &amp; performance optimization (crystalline silicon, thin films, multijunction, emerging PV, hybrids).</li>
+        </ul>
+        <p class="pc-sub">Recycling</p>
+        <ul class="pc-bullets">
+          <li>Switzerland has a dedicated recycling network (Sens e Recycling) (Swiss Solar Fachverband, n.d.).</li>
+          <li>Panels have a long lifetime (~25 years) (Swiss Solar Verband, n.d.).</li>
+        </ul>
+        <p class="pc-sub">Environmental Impact</p>
+        <ul class="pc-bullets">
+          <li>During sun collection the energy produced is completely carbon neutral and renewable.</li>
+          <li>PV panels can provide a cheap and viable transition to renewable energy production.</li>
+          <li>Can be installed on roofs, façades, or land, increasing design flexibility.</li>
+        </ul>
       </div>
       <div class="pc-card con">
         <h4>Disadvantages</h4>
-        <p><strong>Output sensitive to conditions.</strong> Performance is highly sensitive to placement, orientation, and cleanliness. Snow, shading, and debris all reduce output significantly.</p>
-        <p><strong>End-of-life challenges.</strong> Panels are not designed for reuse, repair, or refurbishment, and recycling systems remain underdeveloped in many markets (El Khawad et al., 2022). Recycling is energy-intensive, loses material value, and does not recover all components. Broken solar cells also pose risks during the recycling process (El Khawad et al., 2022).</p>
-        <p><strong>Production and supply chain emissions.</strong> Production and recycling of panels are not carbon neutral — they require rare or energy-intensive materials such as glass. Energy production also depends on sunlight availability, shading, and weather conditions.</p>
+        <p class="pc-sub">Energy Efficiency</p>
+        <ul class="pc-bullets">
+          <li>Performance highly sensitive to placement, orientation, and cleanliness.</li>
+          <li>Snow, shading, and debris reduce output.</li>
+        </ul>
+        <p class="pc-sub">Installation Factors</p>
+        <ul class="pc-bullets">
+          <li>Performance highly sensitive to placement, orientation, and cleanliness.</li>
+          <li>Snow, shading, and debris reduce output.</li>
+        </ul>
+        <p class="pc-sub">Recycling</p>
+        <ul class="pc-bullets">
+          <li>Recycling systems in Germany are lacking (El Khawad et al., 2022).</li>
+          <li>Panels are not designed for reuse, repair, or refurbishment (El Khawad et al., 2022).</li>
+          <li>Recycling is energy intensive, loses material value, and does not recover all components (El Khawad et al., 2022).</li>
+          <li>Broken solar cells pose risks during recycling (El Khawad et al., 2022).</li>
+        </ul>
+        <p class="pc-sub">Environmental Impact</p>
+        <ul class="pc-bullets">
+          <li>Production and recycling of panels is not carbon neutral as it requires certain rare materials or energy intensive materials (i.e. glass).</li>
+          <li>Energy production depends on sunlight availability, shading, and weather conditions.</li>
+        </ul>
       </div>
     </ProConCards>
   </Section>
@@ -193,6 +230,38 @@ import ProConCards from '../components/ProConCards.astro';
     transition:transform 0.6s var(--ease-out);
   }
   .section-banner:hover img{transform:scale(1.02)}
+
+  /* Sub-headers inside ProConCards */
+  :global(.pc-sub){
+    font-size:11px !important;
+    letter-spacing:.16em !important;
+    text-transform:uppercase !important;
+    color:var(--chip) !important;
+    font-weight:600 !important;
+    margin:14px 0 6px !important;
+  }
+  :global(.pc-card.pro .pc-sub){color:#4a7a55 !important}
+
+  /* Bullet lists inside ProConCards */
+  :global(.pc-bullets){
+    list-style:none;
+    padding:0;
+    margin:0 0 10px;
+  }
+  :global(.pc-bullets li){
+    font-size:16px;
+    line-height:1.75;
+    color:var(--ink-soft);
+    padding:3px 0 3px 18px;
+    position:relative;
+  }
+  :global(.pc-bullets li::before){
+    content:"•";
+    position:absolute;
+    left:0;
+    color:var(--chip);
+  }
+  :global(.pc-card.pro .pc-bullets li::before){color:#4a7a55}
 
   /* Key considerations box */
   .key-box{
