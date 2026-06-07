@@ -146,7 +146,7 @@ const v = {
 
   <Section chip="06 / D" label="D · The Model" title="The Model" id="s-6-d">
     <p>The optimization model developed for the town hall is designed as a <strong>multi-criteria optimization problem</strong>. The goal of the solver is to determine the optimal system configuration and the ideal ratio between photovoltaic and solar thermal panels on the roof. The algorithm optimises a mathematical objective function composed of two competing primary objectives over a <strong>25-year time horizon</strong>: maximizing the net present value (NPV) and minimizing the building's total greenhouse gas emissions.</p>
-    <p>To allow mathematical control of these objectives, the model includes a <strong>variable weighting factor w</strong> (0 ≤ w ≤ 1) that determines whether the solver calculates a purely cost-optimized solution, a purely emissions-minimized solution, or a balanced compromise. The combined objective function Z minimized by the solver is:</p>
+    <p>To allow mathematical control of these objectives, the model includes a <strong>variable weighting factor</strong> $w$ ($0 \leq w \leq 1$) that determines whether the solver calculates a purely cost-optimized solution, a purely emissions-minimized solution, or a balanced compromise. The combined objective function $Z$ minimized by the solver is:</p>
     <Formula label="Objective function">
       <div set:html={f.objective}></div>
     </Formula>
@@ -360,7 +360,7 @@ const v = {
       </div>
       <div class="var-row">
         <span class="var" set:html={v.fPV}></span>
-        <span class="var-desc">Annual PV yield factor, accounting for degradation: max(0, 1 − (t−1) · d_PV)</span>
+        <span class="var-desc">Annual PV yield factor, accounting for degradation: $\max(0,\; 1-(t-1) \cdot d_{\text{PV}})$</span>
       </div>
       <div class="var-row">
         <span class="var" set:html={v.dPV}></span>
@@ -372,7 +372,7 @@ const v = {
       </div>
       <div class="var-row">
         <span class="var" set:html={v.sc}></span>
-        <span class="var-desc">Effective self-consumption share in year t (see section J)</span>
+        <span class="var-desc">Effective self-consumption share in year $t$ (see <a href="#s-6-j">section J</a>)</span>
       </div>
       <div class="var-row">
         <span class="var" set:html={v.PVexport}></span>
@@ -398,7 +398,7 @@ const v = {
       </div>
       <div class="var-row">
         <span class="var" set:html={v.fST}></span>
-        <span class="var-desc">Annual ST yield factor, accounting for degradation: max(0, 1 − (t−1) · d_ST)</span>
+        <span class="var-desc">Annual ST yield factor, accounting for degradation: $\max(0,\; 1-(t-1) \cdot d_{\text{ST}})$</span>
       </div>
       <div class="var-row">
         <span class="var" set:html={v.dST}></span>
@@ -410,14 +410,14 @@ const v = {
       </div>
       <div class="var-row">
         <span class="var" set:html={v.uST}></span>
-        <span class="var-desc">ST utilization factor in year t (see section J)</span>
+        <span class="var-desc">ST utilization factor in year $t$ (see <a href="#s-6-j">section J</a>)</span>
       </div>
       <div class="var-row">
         <span class="var" set:html={v.Hres}></span>
         <span class="var-desc">Residual heat demand after solar thermal in year t (kWh)</span>
       </div>
     </div>
-    <p>Total scenario cost (present value) including initial investment I₀:</p>
+    <p>Total scenario cost (present value) including initial investment $I_0$:</p>
     <Formula label="Total scenario cost (present value)">
       <div set:html={f.scenarioCostTotal}></div>
     </Formula>
@@ -428,7 +428,7 @@ const v = {
       </div>
       <div class="var-row">
         <span class="var" set:html={v.I0}></span>
-        <span class="var-desc">Initial investment at project start: Inv_PV · x + Inv_ST · y + K_Batt</span>
+        <span class="var-desc">Initial investment at project start: $\text{Inv}_{\text{PV}} \cdot x + \text{Inv}_{\text{ST}} \cdot y + K_{\text{Batt}}$</span>
       </div>
       <div class="var-row">
         <span class="var" set:html={v.i}></span>
@@ -460,13 +460,13 @@ const v = {
   </Section>
 
   <Section chip="06 / I" label="I · Utilisation" title="Utilisation Rates and Self-Consumption" id="s-6-i">
-    <p>For photovoltaic systems, not all generated electricity can be used directly in the town hall. The <strong>self-consumption rate sc(x,t)</strong> describes what proportion of PV output in year t is used on-site. As PV area increases, this proportion tends to decrease because production more often exceeds current electricity demand. If a battery is activated, the self-consumption share can increase, as part of the excess PV electricity can be temporarily stored and used later. The value is bounded between 0 and 1.</p>
-    <p>For solar thermal energy, not all generated heat can be fully utilized. The <strong>utilization factor u_ST(y,t)</strong> describes the proportion of solar thermal production that can actually meet heat demand. For small solar thermal areas, a high utilization rate is assumed; for larger areas, the usable portion decreases because more heat is produced than can be directly used or stored. This factor is also bounded between 0 and 1.</p>
+    <p>For photovoltaic systems, not all generated electricity can be used directly in the town hall. The <strong>self-consumption rate</strong> $sc(x,t)$ describes what proportion of PV output in year $t$ is used on-site. As PV area increases, this proportion tends to decrease because production more often exceeds current electricity demand. If a battery is activated, the self-consumption share can increase, as part of the excess PV electricity can be temporarily stored and used later. The value is bounded between 0 and 1.</p>
+    <p>For solar thermal energy, not all generated heat can be fully utilized. The <strong>utilization factor</strong> $u_{\text{ST}}(y,t)$ describes the proportion of solar thermal production that can actually meet heat demand. For small solar thermal areas, a high utilization rate is assumed; for larger areas, the usable portion decreases because more heat is produced than can be directly used or stored. This factor is also bounded between 0 and 1.</p>
     <p>These dynamic rates are essential for the validity of the optimization model. Without them, the solver would assume an unrealistic, linear scalability of yields and would theoretically completely over-engineer the town hall roof with solar components, since mathematically every additional square metre would also generate a proportional benefit in the objective function. The degressively decreasing factors specifically model the real-world phenomenon of temporary surplus production. As a result, the model must balance the economic and ecological marginal costs of an additional unit of area against the decreasing marginal benefit. This supports a practical, demand-oriented sizing of the systems and reduces the risk of over-sizing in the simulated energy system.</p>
   </Section>
 
   <Section chip="06 / J" label="J · Formal" title="Formal Representation of Utilisation Rates" id="s-6-j">
-    <p>For photovoltaics, the self-consumption rate sc(x,t) is modelled as an area-dependent function. <em>sc_Slider</em> is the reference self-consumption rate assumed when the PV system covers the entire available roof area A_Roof. When the battery option is activated, the dummy variable <em>ActiveBatt</em> jumps from 0 to 1:</p>
+    <p>For photovoltaics, the self-consumption rate $sc(x,t)$ is modeled as an area-dependent function. $sc_{\text{Slider}}$ is the reference self-consumption rate assumed when the PV system covers the entire available roof area $A_{\text{Roof}}$. When the battery option is activated, the dummy variable $\text{Active}_{\text{Batt}}$ jumps from 0 to 1:</p>
     <Formula label="PV self-consumption rate">
       <div set:html={f.pvSc}></div>
     </Formula>
@@ -477,7 +477,7 @@ const v = {
     <div class="var-list">
       <div class="var-row">
         <span class="var" set:html={v.scSlider}></span>
-        <span class="var-desc">Reference self-consumption rate when the full roof area A_Roof is covered by PV</span>
+        <span class="var-desc">Reference self-consumption rate when the full roof area $A_{\text{Roof}}$ is covered by PV</span>
       </div>
       <div class="var-row">
         <span class="var" set:html={v.ARoof}></span>
@@ -493,7 +493,7 @@ const v = {
       </div>
       <div class="var-row">
         <span class="var" set:html={v.Bestimate}></span>
-        <span class="var-desc">Estimated battery storage capacity in kWh (derived from K_Batt)</span>
+        <span class="var-desc">Estimated battery storage capacity in kWh (derived from $K_{\text{Batt}}$)</span>
       </div>
       <div class="var-row">
         <span class="var" set:html={v.fBatt}></span>
@@ -504,13 +504,13 @@ const v = {
         <span class="var-desc">Battery annual degradation rate (% capacity lost per year)</span>
       </div>
     </div>
-    <p>The estimated battery capacity B_estimate is derived from the battery cost entered, using a piecewise cost-to-capacity function:</p>
+    <p>The estimated battery capacity $B_{\text{estimate}}$ is derived from the battery cost entered, using a piecewise cost-to-capacity function:</p>
     <Formula label="Battery capacity estimate (piecewise)">
       <div set:html={f.battCap}></div>
     </Formula>
-    <p>The variable B_estimate describes the storage capacity derived from battery costs. A larger storage capacity allows for the storage of additional PV surplus, thereby increasing the proportion of self-consumption from the photovoltaic system.</p>
-    <p>γ is a calibration factor for the battery effect. It determines the extent to which an existing battery increases PV self-consumption in the model. A low value means that the battery has only a small additional effect on self-consumption. A high value means that the battery contributes more significantly to storing excess PV electricity for later use. γ can take values between 0 and 1.</p>
-    <p>For solar thermal systems, the utilization factor u_ST(y,t) is modelled as an area-dependent function. <em>u_min</em> is the minimum utilization rate when the full roof area A_Roof is used for solar thermal. First, the effective ST area in year t (accounting for degradation) is calculated:</p>
+    <p>The variable $B_{\text{estimate}}$ describes the storage capacity derived from battery costs. A larger storage capacity allows for the storage of additional PV surplus, thereby increasing the proportion of self-consumption from the photovoltaic system.</p>
+    <p>$\gamma$ is a calibration factor for the battery effect. It determines the extent to which an existing battery increases PV self-consumption in the model. A low value means that the battery has only a small additional effect on self-consumption. A high value means that the battery contributes more significantly to storing excess PV electricity for later use. $\gamma$ can take values between 0 and 1.</p>
+    <p>For solar thermal systems, the utilization factor $u_{\text{ST}}(y,t)$ is modeled as an area-dependent function. $u_{\min}$ is the minimum utilization rate when the full roof area $A_{\text{Roof}}$ is used for solar thermal. First, the effective ST area in year $t$ (accounting for degradation) is calculated:</p>
     <Formula label="Effective ST area">
       <div set:html={f.stEffArea}></div>
     </Formula>
@@ -532,7 +532,7 @@ const v = {
         <span class="var-desc">Total available roof area (m²)</span>
       </div>
     </div>
-    <p>For a solar thermal area of 1 m², a full utilization rate of 100 % is assumed. As the effective area grows, the factor decreases gradually until it reaches <em>u_min</em>, reflecting the fact that larger systems more frequently generate excess heat that cannot be fully utilized.</p>
+    <p>For a solar thermal area of 1 m², a full utilization rate of 100 % is assumed. As the effective area grows, the factor decreases gradually until it reaches $u_{\min}$, reflecting the fact that larger systems more frequently generate excess heat that cannot be fully utilized.</p>
   </Section>
 
   <!-- Embedded calculator -->
@@ -592,6 +592,13 @@ const v = {
     line-height:1.65;
     font-weight:300;
   }
+  .var-desc a{
+    color:var(--moss);
+    text-decoration:none;
+    border-bottom:1px solid currentColor;
+    transition:opacity 0.2s;
+  }
+  .var-desc a:hover{opacity:0.7}
   .lead strong{font-weight:500;color:var(--ink)}
   .lead-sub{
     padding:0 0 16px;
