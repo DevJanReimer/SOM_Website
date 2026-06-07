@@ -1,0 +1,348 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import KpiStrip from '../components/KpiStrip.astro';
+import Section from '../components/Section.astro';
+
+const kpis = [
+  { label: 'Scenarios evaluated', value: '3', unit: '', note: '0 % · 50 % · 100 % CO₂ weight' },
+  { label: 'Baseline CO₂', value: '7.935', unit: 't/year', note: 'Before any solar installation' },
+  { label: 'Recommended strategy', value: '50/50', unit: '', note: 'CO₂ + NPV balanced optimization' },
+  { label: 'Evaluation horizon', value: '25', unit: 'years', note: 'Full lifecycle analysis period' },
+];
+
+const scenarios = [
+  {
+    id: 1,
+    weight: '0 %',
+    title: 'Full Emissions Reduction',
+    label: 'CO₂ priority',
+    color: 'var(--moss)',
+    config: '107 PV panels · 81 ST collectors',
+    investment: 'CHF 121,050',
+    co2Before: '7.935 t',
+    co2After: '7.532 t',
+    avoided25y: '9.41 t',
+    lifetimeSavings: '≈ 190 t',
+    selfConsumption: '79 %',
+    selfSufficiency: '37 %',
+    npvNote: 'NPV curve never reaches full break-even over the project lifetime.',
+    image: '/scenario-1-npv.png',
+    imageAlt: 'NPV curve for Scenario 1 — full CO₂ optimization',
+  },
+  {
+    id: 2,
+    weight: '50 %',
+    title: 'Balanced Strategy',
+    label: 'Recommended',
+    color: '#4a7c59',
+    config: '89 PV panels · 0 ST collectors',
+    investment: 'CHF 40,050',
+    co2Before: '7.935 t',
+    co2After: '7.626 t',
+    avoided25y: '7.06 t/year',
+    lifetimeSavings: '191.3 t',
+    selfConsumption: '82 %',
+    selfSufficiency: '32 %',
+    npvNote: 'Break-even reached just before year 25.',
+    image: '/scenario-2-npv.png',
+    imageAlt: 'NPV curve for Scenario 2 — balanced optimization',
+  },
+  {
+    id: 3,
+    weight: '100 %',
+    title: 'Full Financial Priority',
+    label: 'NPV priority',
+    color: 'var(--ink-soft)',
+    config: '50 PV panels · 0 ST collectors',
+    investment: 'CHF 22,500',
+    co2Before: '7.935 t',
+    co2After: '7.707 t',
+    avoided25y: '5.21 t',
+    lifetimeSavings: '193 t',
+    selfConsumption: '90 %',
+    selfSufficiency: '20 %',
+    npvNote: 'Highest break-even point — reached just before year 23.',
+    image: '/scenario-3-npv.png',
+    imageAlt: 'NPV curve for Scenario 3 — full NPV optimization',
+  },
+];
+---
+
+<Base title="Chapter 7 · Results">
+
+  <Hero
+    eyebrow="Chapter 07"
+    title="Results &amp;<br/>Recommendation"
+    subtitle="Three optimization scenarios · Rathaus Oberägeri · 2026"
+    image="/rathaus-exterior.jpg"
+    imageAlt="Rathaus Oberägeri"
+  />
+
+  <div class="container">
+    <p class="lead reveal">
+      We evaluated three optimization scenarios by running the calculator preconfigured with Oberägeri's baseline data. The manual comparison scenario was excluded as it is intended for benchmarking rather than identifying an optimal configuration. We varied the weighting factor between CO₂ and NPV optimization — at 0 %, 50 %, and 100 % — to show how the recommended system configuration shifts depending on what the municipality prioritizes.
+    </p>
+  </div>
+
+  <KpiStrip kpis={kpis} />
+
+  <!-- Scenarios -->
+  <Section chip="07 / A" label="A · Scenarios" title="Scenario Results" id="s-7-a">
+    <p>The calculator was run under three distinct weighting settings. Each scenario produces a different optimal PV/ST split, investment level, and emissions outcome. The NPV curves below are taken directly from the calculator output.</p>
+
+    <div class="scenario-grid">
+      {scenarios.map((s) => (
+        <div class="scenario-card reveal">
+          <div class="sc-header" style={`border-left-color:${s.color}`}>
+            <span class="sc-weight" style={`color:${s.color}`}>w = {s.weight}</span>
+            <span class="sc-badge" style={`background:${s.color}`}>{s.label}</span>
+          </div>
+          <h3 class="sc-title">{s.title}</h3>
+
+          <div class="sc-metrics">
+            <div class="sc-row">
+              <span class="sc-key">Configuration</span>
+              <span class="sc-val">{s.config}</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-key">Initial investment</span>
+              <span class="sc-val bold">{s.investment}</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-key">Annual CO₂ before</span>
+              <span class="sc-val">{s.co2Before}</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-key">Annual CO₂ after</span>
+              <span class="sc-val bold" style={`color:${s.color}`}>{s.co2After}</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-key">Avoided (25 yr total)</span>
+              <span class="sc-val">{s.lifetimeSavings}</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-key">Self-consumption</span>
+              <span class="sc-val">{s.selfConsumption}</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-key">Self-sufficiency</span>
+              <span class="sc-val">{s.selfSufficiency}</span>
+            </div>
+          </div>
+
+          <figure class="sc-chart">
+            <img src={s.image} alt={s.imageAlt} loading="lazy" />
+            <figcaption>{s.npvNote}</figcaption>
+          </figure>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Interpretation -->
+  <Section chip="07 / B" label="B · Interpretation" title="Interpretation of Results" id="s-7-b">
+    <p>Each scenario reflects different municipal priorities. The 0 % CO₂ strategy maximizes emissions reduction, but the absolute reduction remains modest due to Oberägeri's already low-carbon electricity mix — municipalities with more carbon-intensive grids would see larger benefits from this configuration.</p>
+    <p>Self-consumption and self-sufficiency vary across scenarios due to the number of installed PV panels. More panels generate more electricity, but without storage (e.g., batteries), excess production cannot be used on-site. As PV capacity decreases, self-consumption increases — because there is less surplus — while self-sufficiency decreases as reliance on the grid grows.</p>
+    <p>The NPV break-even point shifts depending on the PV/ST split suggested by the calculator. Solar thermal systems typically require higher upfront investment and have longer payback periods compared to PV installations. This dynamic is clearly reflected in the model outputs: the more the optimization prioritizes NPV, the more the model reduces the share of solar thermal collectors. When financial performance is weighted more heavily, the calculator consistently favors PV-only configurations because they offer faster returns and lower investment costs relative to ST systems.</p>
+  </Section>
+
+  <!-- Recommendation -->
+  <Section chip="07 / C" label="C · Recommendation" title="Recommendation" id="s-7-c">
+    <p>Based on the results, we recommend that the municipality adopt a <strong>50/50 optimization strategy</strong>, balancing CO₂ reduction and financial performance. This provides a strong starting point for Oberägeri's sustainable transformation while maintaining economic feasibility.</p>
+    <div class="rec-card reveal">
+      <div class="rec-inner">
+        <div class="rec-config">
+          <span class="rec-label">Recommended configuration</span>
+          <span class="rec-value">89 PV panels · 0 ST collectors</span>
+        </div>
+        <div class="rec-stats">
+          <div class="rec-stat">
+            <span class="rs-num">CHF 40,050</span>
+            <span class="rs-desc">Initial investment</span>
+          </div>
+          <div class="rec-stat">
+            <span class="rs-num">191.3 t</span>
+            <span class="rs-desc">CO₂ avoided over 25 years</span>
+          </div>
+          <div class="rec-stat">
+            <span class="rs-num">82 %</span>
+            <span class="rs-desc">Self-consumption</span>
+          </div>
+          <div class="rec-stat">
+            <span class="rs-num">~25 yr</span>
+            <span class="rs-desc">NPV break-even</span>
+          </div>
+        </div>
+      </div>
+      <p class="rec-note">This strategy also allows the municipality time to monitor electricity use patterns and evaluate the potential benefits of investing in battery storage to increase on-site electricity utilization.</p>
+    </div>
+  </Section>
+
+</Base>
+
+<style>
+  .lead{
+    padding:32px 0 16px;
+    font-size:clamp(16px, 1.8vw, 19px);
+    line-height:1.75;
+    color:var(--ink-soft);
+    max-width:74ch;
+    font-weight:300;
+  }
+
+  /* Scenario grid */
+  .scenario-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    gap:32px;
+    margin:32px 0;
+  }
+  .scenario-card{
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:28px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    background:var(--bg);
+    transition:box-shadow 0.25s var(--ease-out);
+  }
+  .scenario-card:hover{box-shadow:0 4px 24px rgba(0,0,0,0.07)}
+
+  .sc-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-left:3px solid var(--moss);
+    padding-left:12px;
+  }
+  .sc-weight{
+    font-size:13px;
+    font-weight:500;
+    letter-spacing:.06em;
+  }
+  .sc-badge{
+    font-size:10px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:#fff;
+    padding:3px 8px;
+    border-radius:2px;
+    font-weight:500;
+  }
+  .sc-title{
+    font-family:var(--serif);
+    font-size:clamp(17px, 1.6vw, 20px);
+    font-weight:400;
+    margin:0;
+    color:var(--ink);
+  }
+
+  /* Metrics table */
+  .sc-metrics{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    border-top:1px solid var(--line);
+  }
+  .sc-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+    padding:9px 0;
+    border-bottom:1px solid var(--line);
+    font-size:13px;
+  }
+  .sc-key{color:var(--mute);flex-shrink:0}
+  .sc-val{
+    color:var(--ink-soft);
+    text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  .sc-val.bold{font-weight:500;color:var(--ink)}
+
+  /* NPV chart */
+  .sc-chart{
+    margin:0;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .sc-chart img{
+    width:100%;
+    height:auto;
+    border-radius:3px;
+    border:1px solid var(--line);
+    display:block;
+  }
+  .sc-chart figcaption{
+    font-size:12px;
+    color:var(--mute);
+    line-height:1.5;
+    letter-spacing:.01em;
+  }
+
+  /* Recommendation card */
+  .rec-card{
+    margin:24px 0 8px;
+    border:1px solid var(--moss);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .rec-inner{
+    background:var(--sand);
+    padding:24px 28px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+  .rec-config{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .rec-label{
+    font-size:11px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--moss);
+    font-weight:500;
+  }
+  .rec-value{
+    font-size:clamp(16px, 1.8vw, 20px);
+    font-family:var(--serif);
+    color:var(--ink);
+  }
+  .rec-stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));
+    gap:16px;
+  }
+  .rec-stat{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .rs-num{
+    font-size:clamp(18px, 2vw, 24px);
+    font-weight:300;
+    color:var(--ink);
+    font-variant-numeric:tabular-nums;
+    letter-spacing:-0.01em;
+  }
+  .rs-desc{
+    font-size:11px;
+    color:var(--mute);
+    letter-spacing:.04em;
+  }
+  .rec-note{
+    padding:16px 28px;
+    font-size:14px;
+    color:var(--ink-soft);
+    line-height:1.65;
+    margin:0;
+    border-top:1px solid var(--line);
+  }
+</style>
