@@ -359,7 +359,7 @@ const v = {
       </div>
       <div class="var-row">
         <span class="var" set:html={v.fPV}></span>
-        <span class="var-desc">Annual PV yield factor, accounting for degradation: $\max(0,\; 1-(t-1) \cdot d_{\text{PV}})$</span>
+        <span class="var-desc">Annual PV yield factor, accounting for degradation: $\max(0,\; 1-(t-1) \cdot d_&#123;\text&#123;PV&#125;&#125;)$</span>
       </div>
       <div class="var-row">
         <span class="var" set:html={v.dPV}></span>
@@ -397,7 +397,7 @@ const v = {
       </div>
       <div class="var-row">
         <span class="var" set:html={v.fST}></span>
-        <span class="var-desc">Annual ST yield factor, accounting for degradation: $\max(0,\; 1-(t-1) \cdot d_{\text{ST}})$</span>
+        <span class="var-desc">Annual ST yield factor, accounting for degradation: $\max(0,\; 1-(t-1) \cdot d_&#123;\text&#123;ST&#125;&#125;)$</span>
       </div>
       <div class="var-row">
         <span class="var" set:html={v.dST}></span>
@@ -460,12 +460,12 @@ const v = {
 
   <Section chip="06 / I" label="I · Utilisation" title="Utilisation Rates and Self-Consumption" id="s-6-i">
     <p>For photovoltaic systems, not all generated electricity can be used directly in the town hall. The <strong>self-consumption rate</strong> $sc(x,t)$ describes what proportion of PV output in year $t$ is used on-site. As PV area increases, this proportion tends to decrease because production more often exceeds current electricity demand. If a battery is activated, the self-consumption share can increase, as part of the excess PV electricity can be temporarily stored and used later. The value is bounded between 0 and 1.</p>
-    <p>For solar thermal energy, not all generated heat can be fully utilized. The <strong>utilization factor</strong> $u_{\text{ST}}(y,t)$ describes the proportion of solar thermal production that can actually meet heat demand. For small solar thermal areas, a high utilization rate is assumed; for larger areas, the usable portion decreases because more heat is produced than can be directly used or stored. This factor is also bounded between 0 and 1.</p>
+    <p>For solar thermal energy, not all generated heat can be fully utilized. The <strong>utilization factor</strong> $u_&#123;\text&#123;ST&#125;&#125;(y,t)$ describes the proportion of solar thermal production that can actually meet heat demand. For small solar thermal areas, a high utilization rate is assumed; for larger areas, the usable portion decreases because more heat is produced than can be directly used or stored. This factor is also bounded between 0 and 1.</p>
     <p>These dynamic rates are essential for the validity of the optimization model. Without them, the solver would assume an unrealistic, linear scalability of yields and would theoretically completely over-engineer the town hall roof with solar components, since mathematically every additional square metre would also generate a proportional benefit in the objective function. The degressively decreasing factors specifically model the real-world phenomenon of temporary surplus production. As a result, the model must balance the economic and ecological marginal costs of an additional unit of area against the decreasing marginal benefit. This supports a practical, demand-oriented sizing of the systems and reduces the risk of over-sizing in the simulated energy system.</p>
   </Section>
 
   <Section chip="06 / J" label="J · Formal" title="Formal Representation of Utilisation Rates" id="s-6-j">
-    <p>For photovoltaics, the self-consumption rate $sc(x,t)$ is modeled as an area-dependent function. $sc_{\text{Slider}}$ is the reference self-consumption rate assumed when the PV system covers the entire available roof area $A_{\text{Roof}}$. When the battery option is activated, the dummy variable $\text{Active}_{\text{Batt}}$ jumps from 0 to 1:</p>
+    <p>For photovoltaics, the self-consumption rate $sc(x,t)$ is modeled as an area-dependent function. $sc_&#123;\text&#123;Slider&#125;&#125;$ is the reference self-consumption rate assumed when the PV system covers the entire available roof area $A_&#123;\text&#123;Roof&#125;&#125;$. When the battery option is activated, the dummy variable $\text&#123;Active&#125;_&#123;\text&#123;Batt&#125;&#125;$ jumps from 0 to 1:</p>
     <Formula label="PV self-consumption rate">
       <div set:html={f.pvSc}></div>
     </Formula>
@@ -476,7 +476,7 @@ const v = {
     <div class="var-list">
       <div class="var-row">
         <span class="var" set:html={v.scSlider}></span>
-        <span class="var-desc">Reference self-consumption rate when the full roof area $A_{\text{Roof}}$ is covered by PV</span>
+        <span class="var-desc">Reference self-consumption rate when the full roof area $A_&#123;\text&#123;Roof&#125;&#125;$ is covered by PV</span>
       </div>
       <div class="var-row">
         <span class="var" set:html={v.ARoof}></span>
@@ -492,7 +492,7 @@ const v = {
       </div>
       <div class="var-row">
         <span class="var" set:html={v.Bestimate}></span>
-        <span class="var-desc">Estimated battery storage capacity in kWh (derived from $K_{\text{Batt}}$)</span>
+        <span class="var-desc">Estimated battery storage capacity in kWh (derived from $K_&#123;\text&#123;Batt&#125;&#125;$)</span>
       </div>
       <div class="var-row">
         <span class="var" set:html={v.fBatt}></span>
@@ -503,13 +503,13 @@ const v = {
         <span class="var-desc">Battery annual degradation rate (% capacity lost per year)</span>
       </div>
     </div>
-    <p>The estimated battery capacity $B_{\text{estimate}}$ is derived from the battery cost entered, using a piecewise cost-to-capacity function:</p>
+    <p>The estimated battery capacity $B_&#123;\text&#123;estimate&#125;&#125;$ is derived from the battery cost entered, using a piecewise cost-to-capacity function:</p>
     <Formula label="Battery capacity estimate (piecewise)">
       <div set:html={f.battCap}></div>
     </Formula>
-    <p>The variable $B_{\text{estimate}}$ describes the storage capacity derived from battery costs. A larger storage capacity allows for the storage of additional PV surplus, thereby increasing the proportion of self-consumption from the photovoltaic system.</p>
+    <p>The variable $B_&#123;\text&#123;estimate&#125;&#125;$ describes the storage capacity derived from battery costs. A larger storage capacity allows for the storage of additional PV surplus, thereby increasing the proportion of self-consumption from the photovoltaic system.</p>
     <p>$\gamma$ is a calibration factor for the battery effect. It determines the extent to which an existing battery increases PV self-consumption in the model. A low value means that the battery has only a small additional effect on self-consumption. A high value means that the battery contributes more significantly to storing excess PV electricity for later use. $\gamma$ can take values between 0 and 1.</p>
-    <p>For solar thermal systems, the utilization factor $u_{\text{ST}}(y,t)$ is modeled as an area-dependent function. $u_{\min}$ is the minimum utilization rate when the full roof area $A_{\text{Roof}}$ is used for solar thermal. First, the effective ST area in year $t$ (accounting for degradation) is calculated:</p>
+    <p>For solar thermal systems, the utilization factor $u_&#123;\text&#123;ST&#125;&#125;(y,t)$ is modeled as an area-dependent function. $u_&#123;\min&#125;$ is the minimum utilization rate when the full roof area $A_&#123;\text&#123;Roof&#125;&#125;$ is used for solar thermal. First, the effective ST area in year $t$ (accounting for degradation) is calculated:</p>
     <Formula label="Effective ST area">
       <div set:html={f.stEffArea}></div>
     </Formula>
@@ -531,7 +531,7 @@ const v = {
         <span class="var-desc">Total available roof area (m²)</span>
       </div>
     </div>
-    <p>For a solar thermal area of 1 m², a full utilization rate of 100 % is assumed. As the effective area grows, the factor decreases gradually until it reaches $u_{\min}$, reflecting the fact that larger systems more frequently generate excess heat that cannot be fully utilized.</p>
+    <p>For a solar thermal area of 1 m², a full utilization rate of 100 % is assumed. As the effective area grows, the factor decreases gradually until it reaches $u_&#123;\min&#125;$, reflecting the fact that larger systems more frequently generate excess heat that cannot be fully utilized.</p>
   </Section>
 
   <!-- Embedded calculator -->
