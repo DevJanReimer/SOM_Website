@@ -116,10 +116,16 @@ const kpis = [
 
     <p>To calculate the total energy consumption costs for 2026, it is assumed that the district heating network uses wood chips with a moisture content of <strong>M 25–35</strong>. According to Heitzmann (2026), wood chips with a moisture content of 20–30 % are typically used in heating systems up to approximately 300 kW. Wood chips with a moisture content of M 40–50 are mainly used in larger industrial combustion systems. Since the municipality's district heating system is not a large-scale industrial plant, the assumption of wood chips with a moisture content of M 25–35 appears plausible. Based on this assumption, the total energy costs would amount to <strong>CHF 23,050</strong>.</p>
 
-    <div class="total-card reveal">
-      <span class="lbl">Total energy cost 2026 (M 25–35)</span>
-      <span class="v">23,050<span class="unit">CHF</span></span>
-    </div>
+    <DataTable caption="Table 5.6 · Total Annual Energy Costs of the Town Hall in 2026">
+      <thead>
+        <tr><th>Cost category</th><th class="num">Annual cost (CHF)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Electricity</td><td class="num">8,686</td></tr>
+        <tr><td>Heating (M 25–35)</td><td class="num">14,364</td></tr>
+        <tr class="tot tot-grand"><td>Total</td><td class="num">23,050</td></tr>
+      </tbody>
+    </DataTable>
   </Section>
 
 </Base>
@@ -151,36 +157,10 @@ const kpis = [
   .lead em{font-style:italic;color:var(--ink)}
   .lead strong{font-weight:500;color:var(--ink)}
 
-  .total-card{
-    margin:32px 0 8px;
-    padding:22px 28px;
-    background:var(--sand);
-    border-left:3px solid var(--moss);
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:space-between;
-    align-items:baseline;
-    gap:16px;
-    max-width:74ch;
-  }
-  .total-card .lbl{
-    font-size:11px;
-    letter-spacing:.22em;
-    text-transform:uppercase;
-    color:var(--moss);
-    font-weight:500;
-  }
-  .total-card .v{
-    font-size:28px;
-    font-weight:300;
-    color:var(--ink);
-    font-variant-numeric:tabular-nums;
-    letter-spacing:-0.01em;
-  }
-  .total-card .v .unit{
-    font-size:13px;
-    color:var(--mute);
-    margin-left:8px;
-    letter-spacing:.04em;
+  table.data tr.tot-grand td{
+    border-top:2px solid var(--ink);
+    font-size:15px;
+    padding-top:14px;
+    padding-bottom:14px;
   }
 </style>
