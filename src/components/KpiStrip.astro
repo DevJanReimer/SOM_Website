@@ -14,7 +14,7 @@ const { kpis } = Astro.props;
 <div class="kpis reveal">
   {kpis.map((k) => (
     <div class="kpi">
-      <div class="label">{k.label}</div>
+      <div class="label" set:html={k.label}></div>
       <div class="val">{k.value}{k.unit && <span class="unit">{k.unit}</span>}</div>
       {k.note && <div class="note">{k.note}</div>}
     </div>
@@ -44,6 +44,11 @@ const { kpis } = Astro.props;
     color:var(--mute);
     margin-bottom:14px;
     font-weight:500;
+  }
+  .label :global(.katex){
+    text-transform:none;
+    font-size:1em;
+    letter-spacing:0;
   }
   .val{
     font-size:clamp(24px, 2.8vw, 32px);
