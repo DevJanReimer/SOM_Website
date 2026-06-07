@@ -7,7 +7,7 @@ import Formula from '../components/Formula.astro';
 
 const kpis = [
   { label: 'Evaluation horizon', value: '25', unit: 'years', note: 'Full lifecycle analysis period' },
-  { label: 'Optimisation objectives', value: '2', unit: 'criteria', note: 'Maximise NPV · minimise CO₂' },
+  { label: 'Optimization objectives', value: '2', unit: 'criteria', note: 'Maximize NPV · minimize CO₂' },
   { label: 'Weighting factor $w$', value: '0→1', unit: '', note: 'Emissions-only to NPV-only' },
   { label: 'Key outputs', value: '3', unit: 'metrics', note: 'NPV · payback · CO₂ abatement' },
 ];
@@ -131,13 +131,13 @@ const v = {
   </div>
 
   <Section chip="06 / A" label="A · Data Sources" title="Data Sources &amp; Methodology" id="s-6-a">
-    <p>The calculator utilises assumptions based on baseline consumption for a single municipality. For Oberägeri, the standard figures for electricity and heat demand are pre-loaded, and they come from audited consumption data and operational details provided via email correspondence with Alexander Klauz, administrative director of the Oberägeri municipality (Klauz, 2026). The data reflects the town hall's 2025 energy records, including the WWZ WasserSonneStrom tariff mix (80 % hydropower, 20 % PV) and the wood-chip district heating supply.</p>
+    <p>The calculator utilizes assumptions based on baseline consumption for a single municipality. For Oberägeri, the standard figures for electricity and heat demand are pre-loaded, and they come from audited consumption data and operational details provided via email correspondence with Alexander Klauz, administrative director of the Oberägeri municipality (Klauz, 2026). The data reflects the town hall's 2025 energy records, including the WWZ WasserSonneStrom tariff mix (80 % hydropower, 20 % PV) and the wood-chip district heating supply.</p>
     <p>The emission factors were drawn predominantly from KBOB (<em>Ökobilanzdaten im Baubereich</em> (2009/1:2022, version 8.02)), which is the Swiss federal reference dataset for life-cycle assessment in the building sector (KBOB, 2026). If a local supplier publishes its own verified figures, such as the WWZ WasserSonneStrom mix, these take precedence over the national averages. Every factor used in the model can be inspected and, if needed, overridden.</p>
   </Section>
 
   <Section chip="06 / B" label="B · Inputs" title="What You Enter" id="s-6-b">
-    <p>The tool is built around a simple principle: the user only has to enter the data available to them. For example, electricity and heat consumption from a prior year, the utilised heating method, the utilised electricity mix, and the available roof area for a PV and ST upgrade.</p>
-    <p>Optionally, the user can refine the financially relevant data points. For example, the user can adjust the model to reflect their actual electricity price and set an investment budget. When a budget is defined, the calculator uses it to calculate an optimised PV/ST split based on the financial constraints. Additionally, a weighting factor informs the model of the relative importance of CO₂ savings versus cost savings. Finally, the NPV calculation can be adjusted to include an inflation factor and the user can specify the rate of system degradation over time within a chosen depreciation period.</p>
+    <p>The tool is built around a simple principle: the user only has to enter the data available to them. For example, electricity and heat consumption from a prior year, the utilized heating method, the utilized electricity mix, and the available roof area for a PV and ST upgrade.</p>
+    <p>Optionally, the user can refine the financially relevant data points. For example, the user can adjust the model to reflect their actual electricity price and set an investment budget. When a budget is defined, the calculator uses it to calculate an optimized PV/ST split based on the financial constraints. Additionally, a weighting factor informs the model of the relative importance of CO₂ savings versus cost savings. Finally, the NPV calculation can be adjusted to include an inflation factor and the user can specify the rate of system degradation over time within a chosen depreciation period.</p>
   </Section>
 
   <Section chip="06 / C" label="C · Expert settings" title="Defaults &amp; Expert Settings" id="s-6-c">
@@ -145,15 +145,15 @@ const v = {
   </Section>
 
   <Section chip="06 / D" label="D · The Model" title="The Model" id="s-6-d">
-    <p>The optimisation model developed for the town hall is designed as a <strong>multi-criteria optimisation problem</strong>. The goal of the solver is to determine the optimal system configuration and the ideal ratio between photovoltaic and solar thermal panels on the roof. The algorithm optimises a mathematical objective function composed of two competing primary objectives over a <strong>25-year time horizon</strong>: maximising the net present value (NPV) and minimising the building's total greenhouse gas emissions.</p>
-    <p>To allow mathematical control of these objectives, the model includes a <strong>variable weighting factor w</strong> (0 ≤ w ≤ 1) that determines whether the solver calculates a purely cost-optimised solution, a purely emissions-minimised solution, or a balanced compromise. The combined objective function Z minimised by the solver is:</p>
+    <p>The optimization model developed for the town hall is designed as a <strong>multi-criteria optimization problem</strong>. The goal of the solver is to determine the optimal system configuration and the ideal ratio between photovoltaic and solar thermal panels on the roof. The algorithm optimises a mathematical objective function composed of two competing primary objectives over a <strong>25-year time horizon</strong>: maximizing the net present value (NPV) and minimizing the building's total greenhouse gas emissions.</p>
+    <p>To allow mathematical control of these objectives, the model includes a <strong>variable weighting factor w</strong> (0 ≤ w ≤ 1) that determines whether the solver calculates a purely cost-optimized solution, a purely emissions-minimized solution, or a balanced compromise. The combined objective function Z minimized by the solver is:</p>
     <Formula label="Objective function">
       <div set:html={f.objective}></div>
     </Formula>
     <div class="var-list">
       <div class="var-row">
         <span class="var" set:html={v.Z}></span>
-        <span class="var-desc">Total value of the objective function minimised by the solver</span>
+        <span class="var-desc">Total value of the objective function minimized by the solver</span>
       </div>
       <div class="var-row">
         <span class="var" set:html={v.w}></span>
@@ -248,7 +248,7 @@ const v = {
   </Section>
 
   <Section chip="06 / F" label="F · Baseline" title="Baseline Functions" id="s-6-f">
-    <p>The baseline functions describe the reference state of the town hall without any additional PV or solar thermal systems. They serve as the comparison basis for the economic and environmental assessment of optimised scenarios, accounting for current electricity and heat demand, the respective energy prices, and associated emission factors.</p>
+    <p>The baseline functions describe the reference state of the town hall without any additional PV or solar thermal systems. They serve as the comparison basis for the economic and environmental assessment of optimized scenarios, accounting for current electricity and heat demand, the respective energy prices, and associated emission factors.</p>
     <p>The annual baseline cost in year <em>t</em> is:</p>
     <Formula label="Annual baseline cost">
       <div set:html={f.baselineCost}></div>
@@ -410,7 +410,7 @@ const v = {
       </div>
       <div class="var-row">
         <span class="var" set:html={v.uST}></span>
-        <span class="var-desc">ST utilisation factor in year t (see section J)</span>
+        <span class="var-desc">ST utilization factor in year t (see section J)</span>
       </div>
       <div class="var-row">
         <span class="var" set:html={v.Hres}></span>
@@ -461,8 +461,8 @@ const v = {
 
   <Section chip="06 / I" label="I · Utilisation" title="Utilisation Rates and Self-Consumption" id="s-6-i">
     <p>For photovoltaic systems, not all generated electricity can be used directly in the town hall. The <strong>self-consumption rate sc(x,t)</strong> describes what proportion of PV output in year t is used on-site. As PV area increases, this proportion tends to decrease because production more often exceeds current electricity demand. If a battery is activated, the self-consumption share can increase, as part of the excess PV electricity can be temporarily stored and used later. The value is bounded between 0 and 1.</p>
-    <p>For solar thermal energy, not all generated heat can be fully utilised. The <strong>utilisation factor u_ST(y,t)</strong> describes the proportion of solar thermal production that can actually meet heat demand. For small solar thermal areas, a high utilisation rate is assumed; for larger areas, the usable portion decreases because more heat is produced than can be directly used or stored. This factor is also bounded between 0 and 1.</p>
-    <p>These dynamic rates are essential for the validity of the optimisation model. Without them, the solver would assume an unrealistic, linear scalability of yields and would theoretically completely over-engineer the town hall roof with solar components, since mathematically every additional square metre would also generate a proportional benefit in the objective function. The degressively decreasing factors specifically model the real-world phenomenon of temporary surplus production. As a result, the model must balance the economic and ecological marginal costs of an additional unit of area against the decreasing marginal benefit. This supports a practical, demand-oriented sizing of the systems and reduces the risk of over-sizing in the simulated energy system.</p>
+    <p>For solar thermal energy, not all generated heat can be fully utilized. The <strong>utilization factor u_ST(y,t)</strong> describes the proportion of solar thermal production that can actually meet heat demand. For small solar thermal areas, a high utilization rate is assumed; for larger areas, the usable portion decreases because more heat is produced than can be directly used or stored. This factor is also bounded between 0 and 1.</p>
+    <p>These dynamic rates are essential for the validity of the optimization model. Without them, the solver would assume an unrealistic, linear scalability of yields and would theoretically completely over-engineer the town hall roof with solar components, since mathematically every additional square metre would also generate a proportional benefit in the objective function. The degressively decreasing factors specifically model the real-world phenomenon of temporary surplus production. As a result, the model must balance the economic and ecological marginal costs of an additional unit of area against the decreasing marginal benefit. This supports a practical, demand-oriented sizing of the systems and reduces the risk of over-sizing in the simulated energy system.</p>
   </Section>
 
   <Section chip="06 / J" label="J · Formal" title="Formal Representation of Utilisation Rates" id="s-6-j">
@@ -510,18 +510,18 @@ const v = {
     </Formula>
     <p>The variable B_estimate describes the storage capacity derived from battery costs. A larger storage capacity allows for the storage of additional PV surplus, thereby increasing the proportion of self-consumption from the photovoltaic system.</p>
     <p>γ is a calibration factor for the battery effect. It determines the extent to which an existing battery increases PV self-consumption in the model. A low value means that the battery has only a small additional effect on self-consumption. A high value means that the battery contributes more significantly to storing excess PV electricity for later use. γ can take values between 0 and 1.</p>
-    <p>For solar thermal systems, the utilisation factor u_ST(y,t) is modelled as an area-dependent function. <em>u_min</em> is the minimum utilisation rate when the full roof area A_Roof is used for solar thermal. First, the effective ST area in year t (accounting for degradation) is calculated:</p>
+    <p>For solar thermal systems, the utilization factor u_ST(y,t) is modelled as an area-dependent function. <em>u_min</em> is the minimum utilization rate when the full roof area A_Roof is used for solar thermal. First, the effective ST area in year t (accounting for degradation) is calculated:</p>
     <Formula label="Effective ST area">
       <div set:html={f.stEffArea}></div>
     </Formula>
-    <p>The solar thermal utilisation factor then follows:</p>
-    <Formula label="ST utilisation factor">
+    <p>The solar thermal utilization factor then follows:</p>
+    <Formula label="ST utilization factor">
       <div set:html={f.stUtil}></div>
     </Formula>
     <div class="var-list">
       <div class="var-row">
         <span class="var" set:html={v.umin}></span>
-        <span class="var-desc">Minimum utilisation rate assumed when the full roof area is used for ST</span>
+        <span class="var-desc">Minimum utilization rate assumed when the full roof area is used for ST</span>
       </div>
       <div class="var-row">
         <span class="var" set:html={v.yeff}></span>
@@ -532,7 +532,7 @@ const v = {
         <span class="var-desc">Total available roof area (m²)</span>
       </div>
     </div>
-    <p>For a solar thermal area of 1 m², a full utilisation rate of 100 % is assumed. As the effective area grows, the factor decreases gradually until it reaches <em>u_min</em>, reflecting the fact that larger systems more frequently generate excess heat that cannot be fully utilised.</p>
+    <p>For a solar thermal area of 1 m², a full utilization rate of 100 % is assumed. As the effective area grows, the factor decreases gradually until it reaches <em>u_min</em>, reflecting the fact that larger systems more frequently generate excess heat that cannot be fully utilized.</p>
   </Section>
 
   <!-- Embedded calculator -->
