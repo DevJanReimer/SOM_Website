@@ -94,43 +94,43 @@ const scenarios = [
     <div class="scenario-grid">
       {scenarios.map((s) => (
         <div class="scenario-card reveal">
-          <div class="sc-header" style={`border-left-color:${s.color}`}>
-            <span class="sc-weight" style={`color:${s.color}`}>w = {s.weight}</span>
-            <span class="sc-badge" style={`background:${s.color}`}>{s.label}</span>
+          <div class="sc-body">
+            <div class="sc-header" style={`border-left-color:${s.color}`}>
+              <span class="sc-weight" style={`color:${s.color}`}>w = {s.weight}</span>
+              <span class="sc-badge" style={`background:${s.color}`}>{s.label}</span>
+            </div>
+            <h3 class="sc-title">{s.title}</h3>
+            <div class="sc-metrics">
+              <div class="sc-row">
+                <span class="sc-key">Configuration</span>
+                <span class="sc-val">{s.config}</span>
+              </div>
+              <div class="sc-row">
+                <span class="sc-key">Initial investment</span>
+                <span class="sc-val bold">{s.investment}</span>
+              </div>
+              <div class="sc-row">
+                <span class="sc-key">Annual CO₂ before</span>
+                <span class="sc-val">{s.co2Before}</span>
+              </div>
+              <div class="sc-row">
+                <span class="sc-key">Annual CO₂ after</span>
+                <span class="sc-val bold" style={`color:${s.color}`}>{s.co2After}</span>
+              </div>
+              <div class="sc-row">
+                <span class="sc-key">Avoided (25 yr total)</span>
+                <span class="sc-val">{s.lifetimeSavings}</span>
+              </div>
+              <div class="sc-row">
+                <span class="sc-key">Self-consumption</span>
+                <span class="sc-val">{s.selfConsumption}</span>
+              </div>
+              <div class="sc-row">
+                <span class="sc-key">Self-sufficiency</span>
+                <span class="sc-val">{s.selfSufficiency}</span>
+              </div>
+            </div>
           </div>
-          <h3 class="sc-title">{s.title}</h3>
-
-          <div class="sc-metrics">
-            <div class="sc-row">
-              <span class="sc-key">Configuration</span>
-              <span class="sc-val">{s.config}</span>
-            </div>
-            <div class="sc-row">
-              <span class="sc-key">Initial investment</span>
-              <span class="sc-val bold">{s.investment}</span>
-            </div>
-            <div class="sc-row">
-              <span class="sc-key">Annual CO₂ before</span>
-              <span class="sc-val">{s.co2Before}</span>
-            </div>
-            <div class="sc-row">
-              <span class="sc-key">Annual CO₂ after</span>
-              <span class="sc-val bold" style={`color:${s.color}`}>{s.co2After}</span>
-            </div>
-            <div class="sc-row">
-              <span class="sc-key">Avoided (25 yr total)</span>
-              <span class="sc-val">{s.lifetimeSavings}</span>
-            </div>
-            <div class="sc-row">
-              <span class="sc-key">Self-consumption</span>
-              <span class="sc-val">{s.selfConsumption}</span>
-            </div>
-            <div class="sc-row">
-              <span class="sc-key">Self-sufficiency</span>
-              <span class="sc-val">{s.selfSufficiency}</span>
-            </div>
-          </div>
-
           <figure class="sc-chart">
             <img src={s.image} alt={s.imageAlt} loading="lazy" />
             <figcaption>{s.npvNote}</figcaption>
@@ -191,24 +191,28 @@ const scenarios = [
     font-weight:300;
   }
 
-  /* Scenario grid */
+  /* Scenario grid — vertical stacked cards */
   .scenario-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
-    gap:32px;
+    display:flex;
+    flex-direction:column;
+    gap:40px;
     margin:32px 0;
+    max-width:74ch;
   }
   .scenario-card{
     border:1px solid var(--line);
     border-radius:4px;
-    padding:28px;
-    display:flex;
-    flex-direction:column;
-    gap:20px;
+    overflow:hidden;
     background:var(--bg);
     transition:box-shadow 0.25s var(--ease-out);
   }
-  .scenario-card:hover{box-shadow:0 4px 24px rgba(0,0,0,0.07)}
+  .scenario-card:hover{box-shadow:0 6px 32px rgba(0,0,0,0.07)}
+  .sc-body{
+    padding:28px 32px 24px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
 
   .sc-header{
     display:flex;
@@ -263,18 +267,17 @@ const scenarios = [
   }
   .sc-val.bold{font-weight:500;color:var(--ink)}
 
-  /* NPV chart */
+  /* NPV chart — edge-to-edge inside card */
   .sc-chart{
     margin:0;
     display:flex;
     flex-direction:column;
-    gap:10px;
+    gap:0;
+    border-top:1px solid var(--line);
   }
   .sc-chart img{
     width:100%;
     height:auto;
-    border-radius:3px;
-    border:1px solid var(--line);
     display:block;
   }
   .sc-chart figcaption{
@@ -282,6 +285,8 @@ const scenarios = [
     color:var(--mute);
     line-height:1.5;
     letter-spacing:.01em;
+    padding:10px 32px 14px;
+    background:var(--sand);
   }
 
   /* Recommendation card */
