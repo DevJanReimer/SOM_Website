@@ -191,27 +191,30 @@ const scenarios = [
     font-weight:300;
   }
 
-  /* Scenario grid — vertical stacked cards */
+  /* Scenario grid — horizontal cards */
   .scenario-grid{
     display:flex;
     flex-direction:column;
     gap:40px;
     margin:32px 0;
-    max-width:74ch;
+    max-width:900px;
   }
   .scenario-card{
     border:1px solid var(--line);
     border-radius:4px;
     overflow:hidden;
     background:var(--bg);
+    display:grid;
+    grid-template-columns:1fr 1fr;
     transition:box-shadow 0.25s var(--ease-out);
   }
   .scenario-card:hover{box-shadow:0 6px 32px rgba(0,0,0,0.07)}
   .sc-body{
-    padding:28px 32px 24px;
+    padding:28px 28px 24px;
     display:flex;
     flex-direction:column;
     gap:20px;
+    border-right:1px solid var(--line);
   }
 
   .sc-header{
@@ -267,26 +270,34 @@ const scenarios = [
   }
   .sc-val.bold{font-weight:500;color:var(--ink)}
 
-  /* NPV chart — edge-to-edge inside card */
+  /* NPV chart — fills right column */
   .sc-chart{
     margin:0;
     display:flex;
     flex-direction:column;
     gap:0;
-    border-top:1px solid var(--line);
   }
   .sc-chart img{
     width:100%;
-    height:auto;
+    height:100%;
+    object-fit:cover;
     display:block;
+    flex:1;
+    min-height:0;
   }
   .sc-chart figcaption{
     font-size:12px;
     color:var(--mute);
     line-height:1.5;
     letter-spacing:.01em;
-    padding:10px 32px 14px;
+    padding:10px 16px 14px;
     background:var(--sand);
+    border-top:1px solid var(--line);
+    flex-shrink:0;
+  }
+  @media(max-width:640px){
+    .scenario-card{grid-template-columns:1fr}
+    .sc-body{border-right:none;border-bottom:1px solid var(--line)}
   }
 
   /* Recommendation card */
